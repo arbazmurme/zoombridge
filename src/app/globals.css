@@ -24,9 +24,9 @@
   --container-max: 1280px;
   --text-max: 720px;
   --space-base: 8px;
-  --section-pad-desktop: 120px;
-  --section-pad-tablet: 80px;
-  --section-pad-mobile: 56px;
+  --section-pad-desktop: 84px;
+  --section-pad-tablet: 64px;
+  --section-pad-mobile: 48px;
 
   /* Radii */
   --radius-sm: 8px;
