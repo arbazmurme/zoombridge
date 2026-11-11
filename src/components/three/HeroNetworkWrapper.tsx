@@ -47,8 +47,8 @@ function getCapabilitySnapshot(): string {
     saveData ||
     netType === "slow-2g" ||
     netType === "2g" ||
-    cores <= 2 ||
-    mem < 2;
+    cores <= 1 ||
+    mem < 1;
 
   const lowPower = netType === "3g" || cores <= 4 || mem <= 4;
 
