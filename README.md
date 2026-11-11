@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ZoomBridge Research (ZBR) — Enterprise B2B Website
+
+Production-ready Next.js App Router website for **ZoomBridge Research** (`wearezbr.com`), combining research-led B2B demand generation storytelling, interactive 3D visuals, a 15-technique parallax motion system, GDPR-gated analytics, and Resend/HubSpot-backed lead capture APIs.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
+- **Styling:** Tailwind CSS v4 + CSS Design Tokens (`src/app/globals.css`)
+- **Motion & Smooth Scrolling:** GSAP + ScrollTrigger synchronized with Lenis; Framer Motion (`AnimatePresence`, magnetic & accordion interactions); `lottie-web` signal pulse
+- **3D Graphics:** Three.js + React Three Fiber + Drei (`next/dynamic` lazy-loaded with WebGL & reduced-motion fallbacks)
+- **Forms & Validation:** React Hook Form + Zod + Google reCAPTCHA v3 (optional) + Honeypot + Rate Limiting (`5 req / 10 min / IP`)
+- **Email & CRM:** Resend (`RESEND_API_KEY`) + HubSpot CRM Contacts API (`HUBSPOT_TOKEN`, optional)
+- **Icons:** Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure environment variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local` and supply your server and client keys:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+Key environment variables:
+- `NEXT_PUBLIC_SITE_URL` — Canonical site URL (defaults to `https://wearezbr.com`)
+- `RESEND_API_KEY` — Required for sending strategy call & contact emails to `sales@wearezbr.com` and acknowledgement emails
+- `RESEND_FROM_EMAIL` — Verified sender address in Resend
+- `SALES_NOTIFICATION_EMAIL` — Destination inbox (defaults to `sales@wearezbr.com`)
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` & `RECAPTCHA_SECRET` — Optional Google reCAPTCHA v3 protection
+- `HUBSPOT_TOKEN` — Optional HubSpot Private App token to sync leads
+- `NEXT_PUBLIC_GA_ID` & `NEXT_PUBLIC_GTM_ID` — Optional analytics IDs (strictly gated until user grants cookie consent)
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Development, Typecheck, Lint & Production Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev           # Start local development server
+pnpm exec tsc --noEmit  # Run TypeScript check
+pnpm lint          # Run ESLint
+pnpm build         # Build production bundle
+pnpm start         # Serve production build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Implemented Routes
 
-## Deploy on Vercel
+- `/` — Home Page (Hero + 3D Network, Trusted By marquee, Who We Are, Why ZoomBridge 4-stage sticky, Mission & Vision split-screen, 6 Services, ZoomBridge Advantage comparison, Global Reach + 3D Globe, Data & Compliance, FAQ, Book Strategy Call, Contact Us)
+- `/about`, `/why-zbr`, `/contact`, `/book-a-call`
+- `/services` + `/services/email-marketing`, `/services/account-based-marketing`, `/services/content-syndication`, `/services/contact-discovery`, `/services/lead-generation`, `/services/data-enrichment`
+- `/abm-scoring` — Interactive ABM Scoring Engine simulator (explicitly labeled illustrative sample data)
+- `/blog`, `/blog/[slug]`, `/resources`, `/case-studies` — CMS-ready editorial structure & verified empty states
+- `/privacy-policy`, `/terms`, `/gdpr`, `/ccpa`
+- `/404`, `/500`, `/sitemap.xml`, `/robots.txt`
+- `POST /api/book-call` & `POST /api/contact`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy on Vercel or any Node.js 20.9+ host supporting Next.js App Router:
+
+```bash
+pnpm build && pnpm start
+```
+
+Configure all secrets (`RESEND_API_KEY`, `RECAPTCHA_SECRET`, `HUBSPOT_TOKEN`) as server-side environment variables in your hosting provider.
