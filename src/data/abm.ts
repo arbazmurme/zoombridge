@@ -97,8 +97,8 @@ export const ILLUSTRATIVE_ABM_ACCOUNTS: IllustrativeAccount[] = [
   {
     id: "sample-a",
     accountLabel: "Sample Enterprise Account A",
-    industry: "Cloud Infrastructure (Illustrative)",
-    region: "North America & EMEA",
+    industry: "Cloud Computing",
+    region: "AMER & EMEA",
     companyBand: "1,000–5,000 employees",
     fitScore: 92,
     intentScore: 88,
@@ -112,7 +112,7 @@ export const ILLUSTRATIVE_ABM_ACCOUNTS: IllustrativeAccount[] = [
   {
     id: "sample-b",
     accountLabel: "Sample Mid-Market Account B",
-    industry: "B2B FinTech Software (Illustrative)",
+    industry: "Financial Services",
     region: "EMEA",
     companyBand: "250–1,000 employees",
     fitScore: 81,
@@ -127,7 +127,7 @@ export const ILLUSTRATIVE_ABM_ACCOUNTS: IllustrativeAccount[] = [
   {
     id: "sample-c",
     accountLabel: "Sample Growth Account C",
-    industry: "Industrial Manufacturing (Illustrative)",
+    industry: "Manufacturing",
     region: "APAC",
     companyBand: "500–1,500 employees",
     fitScore: 74,

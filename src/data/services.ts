@@ -20,12 +20,13 @@ export interface ServiceDetail {
     | "DatabaseZap";
   accentColor: string;
   highlights: string[];
+  deliverables: string[];
   benefits: Array<{ title: string; description: string }>;
   process: ServiceProcessStep[];
   useCases: Array<{ title: string; description: string }>;
   faqs: Array<{ question: string; answer: string }>;
   relatedSlugs: string[];
-  placeholderNote: string;
+  engagementNote: string;
 }
 
 export const SERVICES: ServiceDetail[] = [
@@ -35,57 +36,67 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "Email Marketing",
     tagline: "Precision outreach engineered for decision-maker engagement.",
     summary:
-      "Launch targeted, deliverability-tested email campaigns built around verified buyer personas and ICP intent signals.",
+      "Drive meaningful conversations with targeted outreach powered by audience intelligence and human-verified data.",
     overview:
-      "Enterprise email outreach fails when built on stale lists and generic messaging. ZoomBridge Research pairs triple-verified contact intelligence with smart personalization tailored to each stakeholder's role inside your target buying committee.",
+      "Drive meaningful conversations with targeted outreach powered by audience intelligence and human-verified data. We analyse ICP, buying signals, industry trends, and prospect behaviour to reach the right decision-maker at the right time.",
     iconName: "Mail",
     accentColor: "#1E5EFF",
     highlights: [
-      "Deliverability-tested decision-maker lists",
-      "Role-based smart personalization",
-      "GDPR & CCPA-ready outreach alignment",
+      "ICP development & persona identification",
+      "Hyper-personalised multi-step sequences",
+      "Human-verified contact data & deliverability optimization",
+    ],
+    deliverables: [
+      "ICP development",
+      "Persona identification",
+      "Hyper-personalised email content",
+      "Buying-intent analysis",
+      "Email deliverability optimization",
+      "Multi-step outreach sequences",
+      "Human-verified contact data",
+      "Performance analytics & optimization",
     ],
     benefits: [
       {
         title: "Protected Sender Reputation",
         description:
-          "Pre-campaign deliverability testing and deduplication minimize bounce rates and domain risk.",
+          "Email deliverability optimization and triple-verified contact checks minimize bounce risk and protect sender score.",
       },
       {
         title: "ICP-Aligned Segmentation",
         description:
-          "Sequences are structured by industry, seniority, and buying-committee function rather than generic blasts.",
+          "Multi-step outreach sequences are structured around ICP development, persona identification, and buying-intent analysis.",
       },
       {
-        title: "Human-Validated Contacts",
+        title: "Human-Verified Contact Data",
         description:
-          "Job-title and company checks confirm you reach active budget holders and influencers.",
+          "Job-title and company checks confirm your outreach reaches active decision-makers and budget holders.",
       },
     ],
     process: [
       {
         step: "01",
-        title: "ICP & Persona Scoping",
+        title: "ICP & Persona Development",
         description:
-          "Define target industries, geographies, company sizes, and decision-maker roles.",
+          "Define target industries, geographies, company sizes, and decision-maker personas.",
       },
       {
         step: "02",
-        title: "Contact Verification & Hygiene",
+        title: "Buying-Intent & Data Verification",
         description:
-          "Apply triple-verified contact checks, deduplication, and deliverability testing.",
+          "Pair buying-intent analysis with human-verified contact data and deliverability testing.",
       },
       {
         step: "03",
-        title: "Smart Personalization Sequencing",
+        title: "Hyper-Personalised Sequencing",
         description:
-          "Align messaging to account context, intent signals, and stakeholder priorities.",
+          "Deploy tailored, multi-step outreach sequences aligned to account context and industry trends.",
       },
       {
         step: "04",
-        title: "Campaign Execution & Hand-Off",
+        title: "Performance Analytics & Optimization",
         description:
-          "Monitor engagement patterns and route qualified replies to your revenue team.",
+          "Monitor prospect behaviour and optimize sequences to route qualified conversations to your sales team.",
       },
     ],
     useCases: [
@@ -108,12 +119,13 @@ export const SERVICES: ServiceDetail[] = [
       },
       {
         question: "How is Email Marketing priced?",
-        answer: "Contact for Pricing — scope depends on target segment size, regions, and campaign cadence.",
+        answer:
+          "Contact for Pricing — scope depends on target segment size, regions, and campaign cadence.",
       },
     ],
     relatedSlugs: ["account-based-marketing", "contact-discovery", "data-enrichment"],
-    placeholderNote:
-      "Campaign benchmark figures and client-specific reply metrics are omitted until verified performance data is approved for publication.",
+    engagementNote:
+      "Every Email Marketing engagement is tailored to your ICP, target geographies, and buyer personas. Request sample data for your segment via our strategy call form.",
   },
   {
     slug: "account-based-marketing",
@@ -121,57 +133,67 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "ABM",
     tagline: "Orchestrate multi-touch demand across high-value target accounts.",
     summary:
-      "Focus budget on prioritized accounts using fit scoring, intent analysis, and full buying-committee mapping.",
+      "Target the accounts most likely to convert with AI-powered account scoring and buying-committee intelligence.",
     overview:
-      "ZoomBridge Research transforms Account-Based Marketing from static account lists into an intelligence-led revenue motion. We identify high-fit accounts showing active buying signals, map the full buying committee, and coordinate multi-channel outreach.",
+      "Target the accounts most likely to convert with AI-powered account scoring and buying-committee intelligence. We score and rank Target Account Lists using intent and firmographic signals, then build personalised engagement that accelerates enterprise pipeline.",
     iconName: "Target",
     accentColor: "#22D3EE",
     highlights: [
-      "Fit, intent & engagement account scoring",
-      "Full buying-committee stakeholder mapping",
-      "Coordinated multi-touch activation",
+      "AI-powered TAL scoring & account prioritization",
+      "Buying-committee mapping & stakeholder identification",
+      "Intent-signal analysis & personalised ABM campaigns",
+    ],
+    deliverables: [
+      "AI-powered TAL scoring",
+      "Account prioritization models",
+      "Buying-committee mapping",
+      "Stakeholder identification",
+      "Intent-signal analysis",
+      "Opportunity ranking",
+      "Personalised ABM campaigns",
+      "Pipeline acceleration strategy",
     ],
     benefits: [
       {
-        title: "Budget Focused on Tier 1 Accounts",
+        title: "Budget Focused on Priority Accounts",
         description:
-          "Concentrate sales and marketing spend on accounts demonstrating both strong ICP fit and active intent.",
+          "Concentrate sales and marketing spend on opportunity-ranked accounts showing both strong ICP fit and active intent.",
       },
       {
         title: "Multi-Stakeholder Coverage",
         description:
-          "Engage Executive Leadership, Technical Buyers, and Procurement simultaneously rather than single contacts.",
+          "Engage Executive Leadership, Technical Buyers, and Procurement Teams across mapped buying committees.",
       },
       {
         title: "Sales & Marketing Alignment",
         description:
-          "Shared account tiers and verified stakeholder intelligence eliminate handoff friction.",
+          "Shared account tiers and verified stakeholder intelligence accelerate pipeline execution.",
       },
     ],
     process: [
       {
         step: "01",
-        title: "Target Account List & Fit Scoring",
+        title: "AI-Powered TAL Scoring",
         description:
-          "Evaluate accounts against firmographic, technographic, and regional criteria.",
+          "Score and prioritize Target Account Lists against firmographic and ICP signals.",
       },
       {
         step: "02",
-        title: "Intent & Signal Layering",
+        title: "Intent-Signal & Opportunity Ranking",
         description:
-          "Overlay buying signals and market trends to rank Tier 1, Tier 2, and Tier 3 accounts.",
+          "Overlay intent signals and engagement patterns to rank Tier 1, Tier 2, and Tier 3 accounts.",
       },
       {
         step: "03",
         title: "Buying-Committee Mapping",
         description:
-          "Human researchers verify decision-makers, technical evaluators, and budget holders.",
+          "Identify and verify decision-makers, technical evaluators, and budget holders inside target accounts.",
       },
       {
         step: "04",
-        title: "Multi-Touch Campaign Delivery",
+        title: "Personalised ABM Activation",
         description:
-          "Activate targeted outreach and track account-level engagement progression.",
+          "Execute multi-touch engagement strategies designed to accelerate enterprise pipeline.",
       },
     ],
     useCases: [
@@ -188,18 +210,19 @@ export const SERVICES: ServiceDetail[] = [
     ],
     faqs: [
       {
-        question: "Do you integrate with our existing target account list?",
+        question: "Do you work with our existing target account list?",
         answer:
-          "Yes. We can enrich and score your existing named-account list or build a net-new ICP-aligned target list.",
+          "Yes. We can enrich, map, and score your existing Target Account List or build an ICP-aligned list from scratch.",
       },
       {
         question: "What is the pricing for ABM programs?",
-        answer: "Contact for Pricing — customized to account tier volume, regions, and channel mix.",
+        answer:
+          "Contact for Pricing — customized to account tier volume, regions, and channel mix.",
       },
     ],
     relatedSlugs: ["lead-generation", "contact-discovery", "content-syndication"],
-    placeholderNote:
-      "Illustrative ABM scoring workflows are available on /abm-scoring; customer-specific ROI figures are not fabricated.",
+    engagementNote:
+      "Explore our interactive Fit, Intent & Engagement methodology on /abm-scoring, or book a strategy call to score a sample of your Target Account List.",
   },
   {
     slug: "content-syndication",
@@ -207,69 +230,79 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "Content Syndication",
     tagline: "Put your research and thought leadership in front of active buyers.",
     summary:
-      "Distribute whitepapers, analyst briefs, and solution guides to verified decision-makers matching your ICP.",
+      "Extend the reach of your thought-leadership content through precise audience targeting and engagement analytics.",
     overview:
-      "Content syndication works when your assets reach genuine buyers—not unverified form-fills. ZoomBridge Research targets role-verified professionals across your chosen industries and validates every lead before delivery.",
+      "Extend the reach of your thought-leadership content through precise audience targeting and engagement analytics. We distribute your whitepapers, reports, and webinars to highly relevant audiences, maximising consumption and lead quality.",
     iconName: "Share2",
     accentColor: "#8B5CF6",
     highlights: [
-      "ICP-gated content distribution",
-      "Role & industry human verification",
-      "GDPR & CCPA consent-aligned capture",
+      "Audience segmentation & intent-based targeting",
+      "Whitepaper promotion & webinar registrations",
+      "MQL generation with multi-channel attribution",
+    ],
+    deliverables: [
+      "Audience segmentation",
+      "Intent-based targeting",
+      "Content performance analytics",
+      "Whitepaper promotion",
+      "Webinar registrations",
+      "MQL generation",
+      "Multi-channel distribution",
+      "Campaign attribution tracking",
     ],
     benefits: [
       {
         title: "Qualified Asset Engagement",
         description:
-          "Ensure whitepapers and guides reach Directors, VPs, and technical evaluators inside your target market.",
+          "Deliver whitepapers, reports, and webinars to Directors, VPs, and technical evaluators inside your ICP.",
       },
       {
-        title: "Zero Unverified Bulk Leads",
+        title: "Human-Validated MQLs",
         description:
-          "Every syndicated lead passes job-title, company, and deduplication checks before entering your CRM.",
+          "Every syndicated lead passes job-title, industry, deduplication, and deliverability verification.",
       },
       {
-        title: "Regional & Global Reach",
+        title: "Multi-Region Distribution",
         description:
-          "Extend distribution across 120+ supported countries across Americas, EMEA, APAC, and LATAM.",
+          "Extend distribution across 120+ countries spanning AMER, EMEA, APAC, and LATAM.",
       },
     ],
     process: [
       {
         step: "01",
-        title: "Asset & Audience Alignment",
+        title: "Audience Segmentation",
         description:
-          "Match your gated assets to the exact seniority and functional personas you want to influence.",
+          "Align your whitepapers, reports, and webinars to exact industry, seniority, and buyer personas.",
       },
       {
         step: "02",
-        title: "Targeted Distribution",
+        title: "Intent-Based Distribution",
         description:
-          "Syndicate content to relevant ICP accounts with privacy-compliant consent capture.",
+          "Promote gated assets across multi-channel B2B touchpoints with GDPR and CCPA alignment.",
       },
       {
         step: "03",
         title: "Human Data Validation",
         description:
-          "Verify contact accuracy, role relevance, and account alignment on every submission.",
+          "Verify contact accuracy, role relevance, and account fit before delivery.",
       },
       {
         step: "04",
-        title: "Structured CRM Delivery",
+        title: "Attribution & MQL Handoff",
         description:
-          "Deliver clean, deduplicated lead files ready for SDR follow-up and nurture.",
+          "Deliver deduplicated MQLs with content performance analytics and attribution tracking.",
       },
     ],
     useCases: [
       {
-        title: "Top-of-Funnel Pipeline Scaling",
+        title: "Whitepaper & Report Demand Scaling",
         description:
           "Build consistent, ICP-aligned demand around flagship research reports and buyer guides.",
       },
       {
-        title: "New Market Entry",
+        title: "Webinar & Virtual Event Registrations",
         description:
-          "Introduce your brand to decision-makers in new geographic regions or industry verticals.",
+          "Drive verified executive and technical attendance across target industries and regions.",
       },
     ],
     faqs: [
@@ -280,12 +313,13 @@ export const SERVICES: ServiceDetail[] = [
       },
       {
         question: "How is Content Syndication priced?",
-        answer: "Contact for Pricing — structured around target criteria, volume, and geographies.",
+        answer:
+          "Contact for Pricing — structured around target criteria, volume, and geographies.",
       },
     ],
     relatedSlugs: ["lead-generation", "account-based-marketing", "email-marketing"],
-    placeholderNote:
-      "Detailed media-kit specifications and historical asset download benchmarks are CMS placeholders awaiting live collateral.",
+    engagementNote:
+      "Distribution mixes, content formats, and regional MQL targets are scoped directly around your campaign goals during consultation.",
   },
   {
     slug: "contact-discovery",
@@ -293,69 +327,79 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "Contact Discovery",
     tagline: "Uncover verified decision-makers and full buying committees.",
     summary:
-      "Custom research-led contact discovery mapping budget holders, technical buyers, and champions inside your target accounts.",
+      "Identify hard-to-find decision-makers faster through structured research and human validation.",
     overview:
-      "Off-the-shelf databases miss org-chart nuances and newly appointed leaders. ZoomBridge Research combines AI discovery with human researchers to map buying-committee structures and deliver verified, decision-maker-only contacts.",
+      "Identify hard-to-find decision-makers faster through structured research and human validation. We uncover organizational structures, buying committees, and key influencers across your target accounts.",
     iconName: "UserSearch",
     accentColor: "#3B7BFF",
     highlights: [
-      "Custom buying-committee mapping",
-      "Executive, VP, Director & Technical Buyer coverage",
-      "95% accuracy goal via human validation",
+      "Executive contact research & organizational mapping",
+      "Buying-committee discovery across target accounts",
+      "Human quality validation for 95% accuracy goal",
+    ],
+    deliverables: [
+      "Executive contact research",
+      "Buying-committee discovery",
+      "Organizational mapping",
+      "Data intelligence research",
+      "Decision-maker identification",
+      "Contact verification",
+      "Global market coverage",
+      "Human quality validation",
     ],
     benefits: [
       {
         title: "Reach True Budget Holders",
         description:
-          "Go beyond generic titles to pinpoint the exact stakeholders who influence and approve spend.",
+          "Go beyond generic lists to pinpoint Executive Leadership, VPs, Directors, Technical Buyers, and Procurement Teams.",
       },
       {
-        title: "Org-Level Precision",
+        title: "Organizational Mapping",
         description:
-          "Map multi-region subsidiaries, business units, and reporting lines accurately.",
+          "Uncover buying committees, functional hierarchies, and regional business units accurately.",
       },
       {
-        title: "Fresh Research Over Stale Exports",
+        title: "Structured Human Validation",
         description:
-          "Records are researched and validated specifically for your brief rather than pulled from aged static tables.",
+          "Every contact is researched and validated specifically for your brief rather than pulled from stale exports.",
       },
     ],
     process: [
       {
         step: "01",
-        title: "Account & Role Blueprint",
+        title: "Target Account & Role Blueprint",
         description:
-          "Define target accounts and the exact buying-committee personas required per account.",
+          "Define target accounts and the decision-maker personas required per account.",
       },
       {
         step: "02",
-        title: "AI Discovery Sweep",
+        title: "Data Intelligence Research",
         description:
-          "Surface candidate profiles and organizational signals across global data sources.",
+          "Identify candidate profiles and organizational structures across global business sources.",
       },
       {
         step: "03",
-        title: "Human Researcher Verification",
+        title: "Human Quality Validation",
         description:
-          "Validate current title, department relevance, and direct contact accuracy.",
+          "Verify current role, department relevance, and contact details against our multi-layer checks.",
       },
       {
         step: "04",
-        title: "Deduplicated Delivery",
+        title: "Sales-Ready Account Delivery",
         description:
-          "Deliver clean records formatted for immediate sales and ABM activation.",
+          "Deliver clean, deduplicated buying-committee intelligence formatted for your CRM and ABM workflows.",
       },
     ],
     useCases: [
       {
         title: "Strategic Account Penetration",
         description:
-          "Equip AEs and SDRs with verified buying committees for top named accounts.",
+          "Equip sales teams with verified buying committees for priority named accounts.",
       },
       {
-        title: "Multi-Region Expansion",
+        title: "Global Market Coverage",
         description:
-          "Discover local leadership across EMEA, APAC, LATAM, and North America.",
+          "Discover local decision-makers across AMER, EMEA, APAC, and LATAM.",
       },
     ],
     faqs: [
@@ -366,12 +410,13 @@ export const SERVICES: ServiceDetail[] = [
       },
       {
         question: "How is Contact Discovery priced?",
-        answer: "Contact for Pricing — scoped by account volume, persona depth, and regions.",
+        answer:
+          "Contact for Pricing — scoped by account volume, persona depth, and regions.",
       },
     ],
     relatedSlugs: ["data-enrichment", "account-based-marketing", "lead-generation"],
-    placeholderNote:
-      "Sample record schemas can be requested directly for your specific Ideal Customer Profile.",
+    engagementNote:
+      "Request a custom sample of verified decision-maker records matched to your exact target account and role criteria.",
   },
   {
     slug: "lead-generation",
@@ -379,57 +424,67 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "Lead Generation",
     tagline: "Turn verified intent into predictable, sales-ready pipeline.",
     summary:
-      "Full-funnel B2B lead generation aligning intent intelligence, human qualification, and targeted outreach.",
+      "Generate high-quality pipeline through intelligent prospect discovery, qualification, and human research.",
     overview:
-      "More leads do not equal more revenue if sales teams spend hours disqualifying poor-fit contacts. ZoomBridge Research builds demand programs grounded in ICP fit, verified buying signals, and human-validated contact records.",
+      "Generate high-quality pipeline through intelligent prospect discovery and qualification. We continuously analyse firmographic, demographic, and intent data to find prospects that match your ICP, validated by human research.",
     iconName: "TrendingUp",
     accentColor: "#1E5EFF",
     highlights: [
-      "ICP-aligned prospect qualification",
-      "Human-verified intent & buyer relevance",
-      "Faster pipeline growth with lower wasted outreach",
+      "ICP-based prospect identification & intent monitoring",
+      "Predictive lead scoring & sales-ready delivery",
+      "Data-quality validation across multi-channel prospecting",
+    ],
+    deliverables: [
+      "ICP-based prospect identification",
+      "Intent-signal monitoring",
+      "Predictive lead scoring",
+      "Sales-ready lead delivery",
+      "Multi-channel prospecting",
+      "Pipeline building",
+      "Data-quality validation",
+      "Performance optimization",
     ],
     benefits: [
       {
         title: "Higher Sales Acceptance",
         description:
-          "Lead delivery focuses on verified decision-makers inside target accounts, reducing SDR research overhead.",
+          "Deliver prospects matched to your ICP and validated by human researchers, reducing SDR qualification overhead.",
       },
       {
-        title: "Predictable Demand Cadence",
+        title: "Intent-Driven Timing",
         description:
-          "Consistent campaign execution aligned to quarterly pipeline goals.",
+          "Combine firmographic, demographic, and intent-signal monitoring to reach active buyers earlier.",
       },
       {
         title: "Privacy-First Execution",
         description:
-          "Built around GDPR and CCPA requirements from first touch through CRM handoff.",
+          "Built around GDPR and CCPA compliance standards across every prospect touchpoint.",
       },
     ],
     process: [
       {
         step: "01",
-        title: "Pipeline Goal Alignment",
+        title: "ICP & Pipeline Alignment",
         description:
-          "Calibrate lead volume, ICP filters, and qualification criteria with your revenue leaders.",
+          "Align firmographic, demographic, and qualification criteria with your revenue objectives.",
       },
       {
         step: "02",
-        title: "Signal & Account Selection",
+        title: "Intent & Predictive Scoring",
         description:
-          "Prioritize accounts showing fit and intent alignment.",
+          "Monitor buying signals and prioritize high-propensity prospects.",
       },
       {
         step: "03",
-        title: "Multi-Channel Activation & Validation",
+        title: "Multi-Channel Prospecting & Validation",
         description:
-          "Engage decision-makers and validate every lead against strict quality gates.",
+          "Engage decision-makers and run human data-quality checks before handoff.",
       },
       {
         step: "04",
-        title: "Pipeline Delivery & Feedback Loop",
+        title: "Sales-Ready Delivery & Optimization",
         description:
-          "Refine targeting continuously based on sales team feedback.",
+          "Deliver qualified leads and continuously refine targeting based on feedback.",
       },
     ],
     useCases: [
@@ -441,7 +496,7 @@ export const SERVICES: ServiceDetail[] = [
       {
         title: "Vertical-Specific Demand Campaigns",
         description:
-          "Target specialized industries with tailored value propositions and role filtering.",
+          "Target specialized B2B industries with tailored value propositions and role filtering.",
       },
     ],
     faqs: [
@@ -452,12 +507,13 @@ export const SERVICES: ServiceDetail[] = [
       },
       {
         question: "How is Lead Generation priced?",
-        answer: "Contact for Pricing — tailored to qualification criteria and target markets.",
+        answer:
+          "Contact for Pricing — tailored to qualification criteria and target markets.",
       },
     ],
     relatedSlugs: ["account-based-marketing", "content-syndication", "email-marketing"],
-    placeholderNote:
-      "Customer conversion benchmarks are intentionally omitted until verified client studies are approved.",
+    engagementNote:
+      "Lead qualification filters, SLA turnaround, and regional delivery rules are customized per campaign during your strategy call.",
   },
   {
     slug: "data-enrichment",
@@ -465,31 +521,41 @@ export const SERVICES: ServiceDetail[] = [
     shortTitle: "Data Enrichment",
     tagline: "Transform decaying CRM records into accurate revenue intelligence.",
     summary:
-      "Cleanse, deduplicate, and enrich existing CRM and MAP databases with human-verified firmographics and contacts.",
+      "Transform incomplete and outdated records into actionable business intelligence with matching, validation, and normalization.",
     overview:
-      "B2B contact and account records decay continuously as leaders change roles and companies reorganize. ZoomBridge Research restores CRM health through triple-verified contact updates, job-title normalization, deduplication, and deliverability testing.",
+      "Transform incomplete and outdated records into actionable business intelligence. Our enrichment process uses automated matching, validation, and normalization to improve accuracy and uncover missing contact and company information.",
     iconName: "DatabaseZap",
     accentColor: "#22D3EE",
     highlights: [
-      "Triple-verified contact refresh",
-      "Job-title, industry & firmographic enrichment",
-      "Deduplication & deliverability testing",
+      "Automated validation, standardization & deduplication",
+      "Contact & company intelligence enhancement",
+      "Technographic insights & continuous data refresh",
+    ],
+    deliverables: [
+      "Automated data validation",
+      "Contact information enrichment",
+      "Company intelligence enhancement",
+      "Data standardization",
+      "Duplicate removal",
+      "CRM data cleansing",
+      "Technographic insights",
+      "Continuous data refresh",
     ],
     benefits: [
       {
         title: "Eliminate CRM Decay",
         description:
-          "Identify outdated roles, bounced emails, and duplicate records before they distort attribution or routing.",
+          "Duplicate removal, CRM data cleansing, and deliverability checks remove stale records before they impact outreach.",
       },
       {
-        title: "Complete Account Profiles",
+        title: "Complete Account Intelligence",
         description:
-          "Append missing firmographic, geographic, and buying-committee fields for accurate scoring.",
+          "Append missing contact information, company attributes, and technographic insights for accurate routing and scoring.",
       },
       {
-        title: "Ready for Automated Routing & ABM",
+        title: "Continuous Refresh Readiness",
         description:
-          "Clean, standardized data improves lead routing, territory planning, and ABM scoring accuracy.",
+          "Standardized taxonomies keep territory planning, lead routing, and ABM scoring consistently reliable.",
       },
     ],
     process: [
@@ -497,37 +563,37 @@ export const SERVICES: ServiceDetail[] = [
         step: "01",
         title: "Database Audit & Gap Analysis",
         description:
-          "Assess completeness, duplicates, and decay across your current CRM/MAP records.",
+          "Assess completeness, duplicates, and outdated roles across your existing CRM records.",
       },
       {
         step: "02",
-        title: "AI Matching & Standardization",
+        title: "Automated Matching & Standardization",
         description:
-          "Normalize company hierarchies, industries, and job-title taxonomies.",
+          "Normalize company records, industry classifications, and job titles.",
       },
       {
         step: "03",
-        title: "Human Verification & Testing",
+        title: "Human Verification & Technographics",
         description:
-          "Validate key decision-maker records and run deliverability checks.",
+          "Enrich missing decision-maker details and company intelligence with human-assisted QA.",
       },
       {
         step: "04",
-        title: "Clean Re-Integration",
+        title: "Clean Delivery & Ongoing Refresh",
         description:
-          "Return structured, deduplicated records ready for CRM import.",
+          "Deliver deduplicated, validated records formatted cleanly for CRM re-integration.",
       },
     ],
     useCases: [
       {
-        title: "Pre-Campaign CRM Hygiene",
+        title: "Pre-Campaign CRM Cleansing",
         description:
           "Cleanse legacy prospect lists prior to major product or regional outreach.",
       },
       {
         title: "ABM Territory Readiness",
         description:
-          "Ensure account fit and scoring models operate on verified firmographic inputs.",
+          "Ensure account fit and scoring models operate on verified firmographic and technographic inputs.",
       },
     ],
     faqs: [
@@ -538,16 +604,16 @@ export const SERVICES: ServiceDetail[] = [
       },
       {
         question: "How is Data Enrichment priced?",
-        answer: "Contact for Pricing — based on record volume and required enrichment attributes.",
+        answer:
+          "Contact for Pricing — based on record volume and required enrichment attributes.",
       },
     ],
     relatedSlugs: ["contact-discovery", "account-based-marketing", "email-marketing"],
-    placeholderNote:
-      "Specific CRM connector field-mapping templates are customized during onboarding.",
+    engagementNote:
+      "CRM schema field mapping and enrichment attribute sets are tailored to your target fields and compliance requirements during onboarding.",
   },
 ];
 
 export function getServiceBySlug(slug: string): ServiceDetail | undefined {
   return SERVICES.find((s) => s.slug === slug);
 }
-

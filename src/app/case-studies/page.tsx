@@ -7,9 +7,9 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Case Studies",
+  title: "Case Studies & Sample Evaluation",
   description:
-    "Verified client case studies from ZoomBridge Research. Request segment-specific sample data for your Ideal Customer Profile.",
+    "Evaluate ZoomBridge Research data accuracy directly with sample records tailored to your Ideal Customer Profile.",
   path: "/case-studies",
 });
 
@@ -24,9 +24,9 @@ export default function CaseStudiesPage() {
       />
 
       <InnerHero
-        badge="Customer Evidence"
-        title="Case Studies"
-        description="ZoomBridge Research publishes only verified, client-approved customer studies and performance outcomes."
+        badge="Proof & Evaluation"
+        title="Verify Quality First-Hand"
+        description="ZoomBridge Research publishes only client-approved outcomes. Evaluate our contact verification and buying-committee precision directly on your target segment."
         breadcrumbs={[{ label: "Case Studies" }]}
       />
 
@@ -36,17 +36,17 @@ export default function CaseStudiesPage() {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1E5EFF]/10 text-[#1E5EFF]">
               <FileCheck2 className="h-7 w-7" aria-hidden="true" />
             </div>
-            <span className="mt-5 inline-block rounded-full border border-slate-300 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-slate-600">
-              CMS-Ready Empty State
+            <span className="mt-5 inline-block rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
+              Zero Fabricated Claims
             </span>
             <h2 className="type-h3 mt-4 text-[#0A1628]">
-              Verified case studies are pending publication.
+              Judge our data quality with a custom ICP sample.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              We never fabricate customer logos, testimonials, or campaign ROI
-              figures. While approved client studies are being prepared for
-              public release, you can evaluate our data quality directly with
-              sample records built for your Ideal Customer Profile.
+              We never invent client logos, testimonials, or unverified ROI
+              numbers. Instead, tell us your target industries, geographies, and
+              decision-maker roles — and our team will prepare sample records
+              for direct inspection before any engagement.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <MagneticButton href="/contact?intent=sample-data" variant="primary">
@@ -54,7 +54,7 @@ export default function CaseStudiesPage() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </MagneticButton>
               <MagneticButton href="/abm-scoring" variant="ghost">
-                <span>Try Interactive ABM Scoring Demo</span>
+                <span>Explore ABM Scoring Engine</span>
               </MagneticButton>
             </div>
           </div>
@@ -65,4 +65,3 @@ export default function CaseStudiesPage() {
     </>
   );
 }
-

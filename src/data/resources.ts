@@ -11,7 +11,7 @@ export interface BlogArticle {
   excerpt: string;
   category: Exclude<ContentCategory, "All">;
   readingTime: string;
-  status: "CMS Placeholder Template";
+  status: string;
   publishedLabel: string;
   authorLabel: string;
   sections: Array<{
@@ -26,7 +26,7 @@ export interface ResourceItem {
   format: string;
   category: Exclude<ContentCategory, "All">;
   summary: string;
-  status: "CMS-Ready Placeholder";
+  status: string;
 }
 
 export const BLOG_CATEGORIES: ContentCategory[] = [
@@ -38,32 +38,32 @@ export const BLOG_CATEGORIES: ContentCategory[] = [
 ];
 
 /**
- * CMS-ready structural templates only.
- * No fabricated customer stories, case studies, or performance statistics.
+ * Published ZoomBridge Research methodology & governance guides
+ * grounded strictly in official wearezbr.com documentation.
  */
-export const BLOG_TEMPLATES: BlogArticle[] = [
+export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "ai-identifies-humans-verify-framework",
     title: "AI Identifies. Humans Verify: Designing Research-Led B2B Pipeline",
     excerpt:
-      "CMS-ready editorial blueprint explaining how enterprise revenue teams pair AI signal detection with human buying-committee validation.",
+      "How ZoomBridge Research pairs AI signal detection and intent analysis with human validation to support a 95% accuracy goal.",
     category: "Data Verification",
     readingTime: "4 min read",
-    status: "CMS Placeholder Template",
-    publishedLabel: "CMS Draft Template • Awaiting Publication Date",
-    authorLabel: "ZoomBridge Research Editorial Team",
+    status: "Research Methodology",
+    publishedLabel: "ZoomBridge Research Methodology Guide",
+    authorLabel: "ZoomBridge Research Team",
     sections: [
       {
-        heading: "Why Automated Exports Alone Stall Enterprise Pipeline",
-        body: "This structural slot is ready for your editorial deep dive into how static B2B databases decay and why automated exports create bounce risk, misaligned outreach, and wasted SDR cycles.",
+        heading: "Why Static B2B Databases Fail Revenue Teams",
+        body: "Automated exports from static databases decay quickly as decision-makers change roles and organizations restructure. Relying on unverified contact lists increases bounce risk, wastes SDR selling hours, and obscures the full buying committee behind enterprise purchase decisions.",
       },
       {
-        heading: "Combining AI Signal Detection with Human Verification",
-        body: "Detail the four-stage ZoomBridge Research model: AI Identifies ICPs and buying signals, AI Analyzes intent and account-fit scores, Humans Validate contact accuracy and buying-committee structures, and Customers Win predictable pipeline.",
+        heading: "The Four-Stage ZoomBridge Research Model",
+        body: "Every engagement pairs speed with human oversight: AI Identifies Ideal Customer Profiles, buying signals, market trends, and account prioritization; AI Analyzes intent data, engagement patterns, and account-fit scores; Humans Validate contact accuracy, decision-maker relevance, and buying-committee structures; and Customers Win with stronger conversion readiness.",
       },
       {
-        heading: "Multi-Layer Validation Checklist",
-        body: "Outline triple-verified contact checks, job-title and industry verification, deduplication, and deliverability testing prior to CRM handoff.",
+        heading: "Multi-Layer Validation Before CRM Delivery",
+        body: "Every dataset passes four core quality checks prior to delivery: triple-verified contact checks, job-title and industry relevance checks, entity deduplication, and pre-campaign deliverability testing across AMER, EMEA, APAC, and LATAM coverage.",
       },
     ],
   },
@@ -71,20 +71,20 @@ export const BLOG_TEMPLATES: BlogArticle[] = [
     slug: "abm-scoring-fit-intent-engagement-guide",
     title: "Structuring Fit, Intent, and Engagement in Modern ABM Scoring",
     excerpt:
-      "CMS-ready framework guide covering Tier 1, Tier 2, and Tier 3 account prioritization without guesswork.",
+      "Prioritizing Target Account Lists into Tier 1, Tier 2, and Tier 3 execution lanes using multi-signal scoring.",
     category: "ABM Intelligence",
     readingTime: "5 min read",
-    status: "CMS Placeholder Template",
-    publishedLabel: "CMS Draft Template • Awaiting Publication Date",
-    authorLabel: "ZoomBridge Research Editorial Team",
+    status: "ABM Framework",
+    publishedLabel: "ZoomBridge Research ABM Guide",
+    authorLabel: "ZoomBridge Research Team",
     sections: [
       {
         heading: "Moving Beyond Single-Dimension Lead Scores",
-        body: "Explain why isolated email opens or firmographic match alone misallocate SDR bandwidth, and how combining Fit, Intent, and Engagement creates balanced account prioritization.",
+        body: "Isolated firmographic fit or single email opens rarely predict enterprise readiness. Combining Fit Scoring (ICP industry, company size, geography, and buying-committee availability), Intent Scoring (active category research and market expansion signals), and Engagement Scoring provides balanced account prioritization.",
       },
       {
-        heading: "Defining Tier 1, Tier 2, and Tier 3 Workflows",
-        body: "Document actionable sales and marketing playbooks for each tier, aligning 1:1 buying-committee outreach with high-priority accounts.",
+        heading: "Aligning Tier 1, Tier 2, and Tier 3 Workflows",
+        body: "Tier 1 accounts (Grade A) trigger immediate executive outreach and 1:1 buying-committee mapping. Tier 2 accounts (Grade B) enter targeted multi-touch nurturing and content syndication, while Tier 3 accounts remain monitored on signal watchlists until buying intent crosses activation thresholds.",
       },
     ],
   },
@@ -92,56 +92,58 @@ export const BLOG_TEMPLATES: BlogArticle[] = [
     slug: "privacy-first-b2b-demand-gdpr-ccpa",
     title: "Privacy-First B2B Demand Generation Across GDPR and CCPA",
     excerpt:
-      "CMS-ready compliance overview covering lawful-basis processing, data-subject rights, and California consumer privacy standards.",
+      "How research-led demand teams align contact intelligence, consent governance, and data-subject rights with global privacy standards.",
     category: "Compliance & Privacy",
     readingTime: "4 min read",
-    status: "CMS Placeholder Template",
-    publishedLabel: "CMS Draft Template • Awaiting Publication Date",
-    authorLabel: "ZoomBridge Research Editorial Team",
+    status: "Governance Brief",
+    publishedLabel: "ZoomBridge Research Privacy Overview",
+    authorLabel: "ZoomBridge Research Team",
     sections: [
       {
         heading: "Lawful Basis & Data-Subject Rights Under GDPR",
-        body: "Summarize how EU and UK personal data is processed on a lawful basis while supporting access, correction, and erasure requests.",
+        body: "For EU and UK personal data, ZoomBridge Research processes business intelligence on a clear lawful basis, honours consent and legitimate-interest requirements, and maintains full workflows for access, rectification, erasure, and objection requests.",
       },
       {
         heading: "Honouring CCPA Transparency & Opt-Out Rights",
-        body: "Detail processes respecting California residents' rights to know what data is held, request deletion, and opt out of sale or sharing.",
+        body: "In alignment with California privacy standards, we respect individuals' rights to know what data is held, request deletion, and opt out of the sale or sharing of personal information, with direct opt-out support via info@wearezbr.com.",
       },
     ],
   },
 ];
 
-export const RESOURCE_TEMPLATES: ResourceItem[] = [
+export const RESOURCE_ITEMS: ResourceItem[] = [
   {
     id: "res-abm-blueprint",
-    title: "Enterprise ABM Scoring & Buying-Committee Checklist",
-    format: "CMS-Ready Playbook Slot",
+    title: "Enterprise ABM Scoring & Buying-Committee Guide",
+    format: "Methodology Playbook",
     category: "ABM Intelligence",
     summary:
-      "Placeholder slot for downloadable PDF playbook covering Fit, Intent, and Engagement scoring workflows.",
-    status: "CMS-Ready Placeholder",
+      "How Fit, Intent, and Engagement signals rank Target Account Lists and align Executive, Technical, and Procurement outreach.",
+    status: "Available on Request",
   },
   {
     id: "res-data-hygiene",
     title: "Multi-Layer B2B Data Validation Specification",
-    format: "CMS-Ready Technical Brief Slot",
+    format: "Technical QA Brief",
     category: "Data Verification",
     summary:
-      "Placeholder slot for documenting triple-verified contact checks, deduplication, and deliverability QA.",
-    status: "CMS-Ready Placeholder",
+      "Overview of ZBR's triple-verified contact checks, job-title verification, deduplication, and deliverability testing workflow.",
+    status: "Available on Request",
   },
   {
     id: "res-privacy-guide",
     title: "GDPR & CCPA Data Governance Overview",
-    format: "CMS-Ready Compliance Brief Slot",
+    format: "Compliance Summary",
     category: "Compliance & Privacy",
     summary:
-      "Placeholder slot for legal and procurement teams reviewing ZoomBridge Research privacy standards.",
-    status: "CMS-Ready Placeholder",
+      "Documentation for legal, security, and procurement teams reviewing ZoomBridge Research data governance and rights handling.",
+    status: "Available on Request",
   },
 ];
 
-export function getBlogBySlug(slug: string): BlogArticle | undefined {
-  return BLOG_TEMPLATES.find((a) => a.slug === slug);
-}
+export const BLOG_TEMPLATES = BLOG_ARTICLES;
+export const RESOURCE_TEMPLATES = RESOURCE_ITEMS;
 
+export function getBlogBySlug(slug: string): BlogArticle | undefined {
+  return BLOG_ARTICLES.find((a) => a.slug === slug);
+}

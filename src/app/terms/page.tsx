@@ -26,10 +26,10 @@ export default function TermsPage() {
         breadcrumbLabel="Terms of Service"
         sections={[
           {
-            heading: "1. Website & Illustrative Demos",
+            heading: "1. Website & Evaluation Tools",
             paragraphs: [
               "Content on wearezbr.com—including our interactive ABM Scoring Engine simulator and service overviews—is provided for informational and evaluation purposes.",
-              "Sample accounts and illustrative scores displayed in the ABM Scoring Engine are strictly demonstrative and do not represent live client campaigns or guaranteed outcomes.",
+              "Sample accounts and scores shown in the ABM Scoring Engine demonstrate our scoring methodology and do not represent live client campaigns or guaranteed outcomes.",
             ],
           },
           {

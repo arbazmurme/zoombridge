@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Clock, FileWarning } from "lucide-react";
-import { BLOG_TEMPLATES, getBlogBySlug } from "@/data/resources";
+import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
+import { BLOG_ARTICLES, getBlogBySlug } from "@/data/resources";
 import { InnerHero } from "@/components/layout/InnerHero";
 import { SocialShareBar } from "@/components/resources/SocialShareBar";
 import { BookCallSection } from "@/components/landing/BookCallSection";
@@ -11,7 +11,7 @@ import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/utils";
 
 export function generateStaticParams() {
-  return BLOG_TEMPLATES.map((article) => ({ slug: article.slug }));
+  return BLOG_ARTICLES.map((article) => ({ slug: article.slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!article) {
     return buildPageMetadata({
       title: "Article Not Found",
-      description: "The requested article could not be found.",
+      description: "The requested guide could not be found.",
       path: `/blog/${slug}`,
       noIndex: true,
     });
@@ -47,7 +47,7 @@ export default async function BlogArticlePage({
     notFound();
   }
 
-  const related = BLOG_TEMPLATES.filter((a) => a.slug !== article.slug);
+  const related = BLOG_ARTICLES.filter((a) => a.slug !== article.slug);
   const articleUrl = absoluteUrl(`/blog/${article.slug}`);
 
   return (
@@ -55,9 +55,9 @@ export default async function BlogArticlePage({
       <JsonLd
         data={buildBreadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Blog", path: "/blog" },
-          { name: article.title, path: `/blog/${article.slug}` },
-        ])}
+          { name: "Insights", path: "/blog" },
+          { label: article.title, name: article.title, path: `/blog/${article.slug}` },
+        ].map(({ name, path }) => ({ name, path })))}
       />
 
       <InnerHero
@@ -65,7 +65,7 @@ export default async function BlogArticlePage({
         title={article.title}
         description={article.excerpt}
         breadcrumbs={[
-          { label: "Blog", href: "/blog" },
+          { label: "Insights", href: "/blog" },
           { label: article.category },
         ]}
       >
@@ -77,7 +77,7 @@ export default async function BlogArticlePage({
             {article.readingTime}
           </span>
           <span>•</span>
-          <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-amber-200">
+          <span className="rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3 py-1 text-[#22D3EE]">
             {article.status}
           </span>
         </div>
@@ -92,18 +92,9 @@ export default async function BlogArticlePage({
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1E5EFF] hover:underline"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                Back to Blog
+                Back to Insights
               </Link>
               <SocialShareBar title={article.title} url={articleUrl} />
-            </div>
-
-            <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-950">
-              <FileWarning className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
-              <div>
-                <strong>{article.publishedLabel}:</strong> This route
-                demonstrates the CMS-ready article layout. Replace this
-                structural outline with approved editorial prose from your CMS.
-              </div>
             </div>
 
             <div className="space-y-8">
@@ -122,7 +113,7 @@ export default async function BlogArticlePage({
             {/* Related Content */}
             <div className="mt-14 border-t border-slate-200 pt-10">
               <h2 className="font-display text-xl font-semibold text-[#0A1628]">
-                Related Editorial Slots
+                Related Methodology Guides
               </h2>
               <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                 {related.map((rel) => (
@@ -138,7 +129,7 @@ export default async function BlogArticlePage({
                       {rel.title}
                     </h3>
                     <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#1E5EFF]">
-                      Open Layout
+                      Read Guide
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </span>
                   </Link>
@@ -153,4 +144,3 @@ export default async function BlogArticlePage({
     </>
   );
 }
-

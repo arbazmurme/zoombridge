@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { WHO_WE_ARE_METRICS } from "@/data/site";
@@ -166,8 +167,8 @@ export function WhoWeAreSection() {
       </div>
 
       <div className="zbr-container relative z-10">
-        <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-6">
             <span className="who-reveal inline-flex items-center rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
               Who We Are
             </span>
@@ -177,9 +178,7 @@ export function WhoWeAreSection() {
             >
               Powering smarter revenue growth.
             </h2>
-          </div>
-          <div className="lg:col-span-5">
-            <p className="who-reveal type-body-lg text-slate-600">
+            <p className="who-reveal type-body-lg mt-5 text-slate-600">
               At ZoomBridge Research, we help organizations accelerate revenue
               growth by combining Artificial Intelligence, data intelligence,
               and human expertise — identifying high-value accounts, uncovering
@@ -187,10 +186,29 @@ export function WhoWeAreSection() {
               demand generation.
             </p>
           </div>
+
+          <div className="who-reveal lg:col-span-6">
+            <TiltCard
+              glowColor="rgba(30, 94, 255, 0.14)"
+              maxTilt={5}
+              className="overflow-hidden border-slate-200/90 bg-white/95 p-2.5 sm:p-3"
+            >
+              <div className="relative overflow-hidden rounded-xl border border-slate-200/70 bg-[#F4F7FC]">
+                <Image
+                  src="/assets/signal-pipeline.webp"
+                  alt="Signal to pipeline: Connect, Insight, Grow — 50M+ records, 120+ countries, 95% accuracy goal"
+                  width={1376}
+                  height={768}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                />
+              </div>
+            </TiltCard>
+          </div>
         </div>
 
         {/* Metrics Grid */}
-        <div className="who-metrics-grid mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="who-metrics-grid mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {WHO_WE_ARE_METRICS.map((metric, idx) => (
             <TiltCard
               key={metric.label}

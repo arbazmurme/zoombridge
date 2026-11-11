@@ -8,7 +8,7 @@ import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildPageMetadata({
   title: "Resources & Playbooks",
   description:
-    "CMS-ready B2B demand generation playbooks, data validation specifications, and privacy compliance briefs from ZoomBridge Research.",
+    "B2B demand generation playbooks, data validation specifications, and GDPR/CCPA governance briefs from ZoomBridge Research.",
   path: "/resources",
 });
 
@@ -25,7 +25,7 @@ export default function ResourcesPage() {
       <InnerHero
         badge="Resources Hub"
         title="Guides, briefs, and demand intelligence frameworks."
-        description="Structured CMS-ready slots for downloadable playbooks, technical specifications, and governance documentation."
+        description="Playbooks, multi-layer validation specifications, and privacy governance documentation prepared by the ZoomBridge Research team."
         breadcrumbs={[{ label: "Resources" }]}
       />
 
@@ -34,4 +34,3 @@ export default function ResourcesPage() {
     </>
   );
 }
-

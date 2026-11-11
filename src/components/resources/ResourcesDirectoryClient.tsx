@@ -6,7 +6,7 @@ import { ArrowRight, FolderOpen } from "lucide-react";
 import {
   BLOG_CATEGORIES,
   ContentCategory,
-  RESOURCE_TEMPLATES,
+  RESOURCE_ITEMS,
 } from "@/data/resources";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { cn } from "@/lib/utils";
@@ -16,8 +16,8 @@ export function ResourcesDirectoryClient() {
     useState<ContentCategory>("All");
 
   const filtered = useMemo(() => {
-    if (selectedCategory === "All") return RESOURCE_TEMPLATES;
-    return RESOURCE_TEMPLATES.filter((r) => r.category === selectedCategory);
+    if (selectedCategory === "All") return RESOURCE_ITEMS;
+    return RESOURCE_ITEMS.filter((r) => r.category === selectedCategory);
   }, [selectedCategory]);
 
   return (
@@ -54,7 +54,7 @@ export function ResourcesDirectoryClient() {
           <div className="mt-10 rounded-3xl border border-slate-200 bg-[#F8FAFC] p-12 text-center">
             <FolderOpen className="mx-auto h-8 w-8 text-slate-400" aria-hidden="true" />
             <h2 className="mt-4 font-display text-xl font-semibold text-[#0A1628]">
-              No resources published in this category yet
+              No resources in this category yet
             </h2>
             <p className="mt-2 text-sm text-slate-600">
               Contact our team if you need tailored compliance or ABM brief
@@ -69,7 +69,7 @@ export function ResourcesDirectoryClient() {
                   <span className="rounded-full bg-[#1E5EFF]/10 px-3 py-1 text-[11px] font-semibold text-[#1E5EFF]">
                     {item.category}
                   </span>
-                  <span className="text-[11px] font-medium text-amber-700">
+                  <span className="text-[11px] font-medium text-[#1E5EFF]">
                     {item.status}
                   </span>
                 </div>
@@ -97,4 +97,3 @@ export function ResourcesDirectoryClient() {
     </section>
   );
 }
-

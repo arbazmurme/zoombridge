@@ -70,16 +70,16 @@ export function AbmScoringInteractive() {
                 Simulate account prioritization in real time.
               </h2>
             </div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-3.5 py-1.5 text-xs font-medium text-amber-900">
-              <Info className="h-3.5 w-3.5 text-amber-700" aria-hidden="true" />
-              Illustrative sample data — not live client results
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1.5 text-xs font-medium text-[#0A1628]">
+              <Info className="h-3.5 w-3.5 text-[#1E5EFF]" aria-hidden="true" />
+              Sample scoring model — not live client data
             </span>
           </div>
 
           {/* Account Selector Tabs */}
           <div
             role="tablist"
-            aria-label="Illustrative Sample Accounts"
+            aria-label="Sample Account Profiles"
             className="mt-8 flex flex-wrap gap-3"
           >
             {ILLUSTRATIVE_ABM_ACCOUNTS.map((acc) => {
@@ -350,7 +350,7 @@ export function AbmScoringInteractive() {
               <div className="flex items-center gap-2">
                 <Target className="h-4 w-4 text-[#1E5EFF]" aria-hidden="true" />
                 <h3 className="font-display text-base font-semibold text-[#0A1628]">
-                  Sample Account Scoring Dashboard (Illustrative)
+                  Sample Account Scoring Dashboard
                 </h3>
               </div>
               <span className="text-xs text-slate-500">
@@ -361,7 +361,7 @@ export function AbmScoringInteractive() {
               <table className="w-full min-w-[640px] text-left text-sm">
                 <thead className="border-b border-slate-200 bg-white text-xs uppercase tracking-wider text-slate-500">
                   <tr>
-                    <th className="px-6 py-3.5">Account (Illustrative)</th>
+                    <th className="px-6 py-3.5">Sample Profile</th>
                     <th className="px-4 py-3.5">Fit</th>
                     <th className="px-4 py-3.5">Intent</th>
                     <th className="px-4 py-3.5">Engagement</th>

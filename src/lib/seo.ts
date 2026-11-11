@@ -58,6 +58,7 @@ export function buildOrganizationJsonLd() {
     name: SITE_NAME,
     alternateName: "ZBR",
     url,
+    logo: absoluteUrl("/assets/ZBR-logo-final-v1.9.webp"),
     email: "sales@wearezbr.com",
     description: SITE_DESCRIPTION,
     sameAs: ["https://www.linkedin.com/company/zoombridge-research/"],

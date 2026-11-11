@@ -1,6 +1,13 @@
 "use client";
 
-import React, { Component, Suspense, useSyncExternalStore } from "react";
+import React, {
+  Component,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import dynamic from "next/dynamic";
 import { useMotionConfig } from "@/components/providers/MotionProvider";
 
@@ -9,20 +16,44 @@ const HeroNetworkCanvas = dynamic(() => import("./HeroNetworkCanvas"), {
 });
 
 const subscribeNoop = () => () => {};
-let cachedWebglSupport: boolean | null = null;
+let cachedCapability: { webgl: boolean; lowPower: boolean; skip3d: boolean } | null = null;
 
-function getWebglSnapshot(): boolean {
-  if (typeof window === "undefined") return false;
-  if (cachedWebglSupport !== null) return cachedWebglSupport;
+function getCapabilitySnapshot(): string {
+  if (typeof window === "undefined") return "0:0:1";
+  if (cachedCapability) {
+    return `${cachedCapability.webgl ? 1 : 0}:${cachedCapability.lowPower ? 1 : 0}:${cachedCapability.skip3d ? 1 : 0}`;
+  }
+  let webgl = false;
   try {
     const canvas = document.createElement("canvas");
-    cachedWebglSupport = Boolean(
+    webgl = Boolean(
       canvas.getContext("webgl2") || canvas.getContext("webgl")
     );
   } catch {
-    cachedWebglSupport = false;
+    webgl = false;
   }
-  return cachedWebglSupport;
+
+  const nav = navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: { effectiveType?: string; saveData?: boolean };
+  };
+  const conn = nav.connection;
+  const saveData = Boolean(conn?.saveData);
+  const netType = conn?.effectiveType || "4g";
+  const cores = nav.hardwareConcurrency ?? 8;
+  const mem = nav.deviceMemory ?? 8;
+
+  const skip3d =
+    saveData ||
+    netType === "slow-2g" ||
+    netType === "2g" ||
+    cores <= 2 ||
+    mem < 2;
+
+  const lowPower = netType === "3g" || cores <= 4 || mem <= 4;
+
+  cachedCapability = { webgl, lowPower, skip3d };
+  return `${webgl ? 1 : 0}:${lowPower ? 1 : 0}:${skip3d ? 1 : 0}`;
 }
 
 function HeroStaticFallback() {
@@ -36,7 +67,7 @@ function HeroStaticFallback() {
     >
       <defs>
         <radialGradient id="hero-fallback-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.32" />
           <stop offset="55%" stopColor="#1E5EFF" stopOpacity="0.16" />
           <stop offset="100%" stopColor="#0A1628" stopOpacity="0" />
         </radialGradient>
@@ -109,13 +140,37 @@ class WebGLErrorBoundary extends Component<
 
 export function HeroNetworkWrapper() {
   const { prefersReducedMotion, isDesktop } = useMotionConfig();
-  const webglReady = useSyncExternalStore(
-    subscribeNoop,
-    getWebglSnapshot,
-    () => false
-  );
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(true);
 
-  if (!webglReady || prefersReducedMotion || !isDesktop) {
+  const capStr = useSyncExternalStore(
+    subscribeNoop,
+    getCapabilitySnapshot,
+    () => "0:0:1"
+  );
+  const [webglReady, lowPower, skip3d] = capStr
+    .split(":")
+    .map((v) => v === "1");
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) {
+          setInView(entry.isIntersecting);
+        }
+      },
+      { rootMargin: "120px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [webglReady, prefersReducedMotion, isDesktop, skip3d]);
+
+  if (!webglReady || prefersReducedMotion || !isDesktop || skip3d) {
     return (
       <div className="flex h-[320px] w-full items-center justify-center sm:h-[380px]">
         <HeroStaticFallback />
@@ -124,10 +179,19 @@ export function HeroNetworkWrapper() {
   }
 
   return (
-    <div className="relative h-[400px] w-full lg:h-[520px]">
+    <div ref={containerRef} className="relative h-[400px] w-full lg:h-[520px]">
+      {/* Soft luminous atmospheric aura behind the 3D globe */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-6 rounded-full opacity-75 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 56%, rgba(56,189,248,0.22) 0%, rgba(30,94,255,0.16) 45%, transparent 72%)",
+        }}
+      />
       <WebGLErrorBoundary fallback={<HeroStaticFallback />}>
         <Suspense fallback={<HeroStaticFallback />}>
-          <HeroNetworkCanvas />
+          <HeroNetworkCanvas inView={inView} lowPower={lowPower} />
         </Suspense>
       </WebGLErrorBoundary>
     </div>

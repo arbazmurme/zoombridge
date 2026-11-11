@@ -161,7 +161,7 @@ export function GlobalReachSection() {
                   <MapPin className="h-3.5 w-3.5 text-[#3B7BFF]" aria-hidden="true" />
                   <span>{region.name}</span>
                 </div>
-                <p className="mt-1 text-[11px] text-slate-400">{region.hubs}</p>
+                <p className="mt-1 text-[11px] text-slate-400">{region.scope}</p>
               </div>
             ))}
           </div>
@@ -174,7 +174,7 @@ export function GlobalReachSection() {
             <div className="mt-2 flex items-center justify-between border-t border-white/10 px-2 pt-3 text-xs text-slate-400">
               <span>4 Global Regions Active</span>
               <span className="font-mono-metric text-[#22D3EE]">
-                NAM • EMEA • APAC • LATAM
+                AMER • EMEA • APAC • LATAM
               </span>
             </div>
           </div>
