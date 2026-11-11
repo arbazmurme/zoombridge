@@ -41,25 +41,20 @@ export function WhyZoomBridgeSection() {
         );
       }
 
-      // Opacity Parallax & Active Stage Tracking
+      // Crisp Stage Entrance & Active Tracking
       const cards = gsap.utils.toArray<HTMLElement>(".why-stage-card");
       cards.forEach((card, idx) => {
-        if (isDesktop) {
-          gsap.fromTo(
-            card,
-            { opacity: 0.45 },
-            {
-              opacity: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 80%",
-                end: "top 45%",
-                scrub: true,
-              },
-            }
-          );
-        }
+        gsap.from(card, {
+          opacity: 0,
+          y: 26,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 86%",
+            once: true,
+          },
+        });
 
         ScrollTrigger.create({
           trigger: card,

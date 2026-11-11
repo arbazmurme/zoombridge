@@ -235,6 +235,50 @@ body {
   animation: zbr-aurora 14s ease-in-out infinite;
 }
 
+@keyframes zbr-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+.animate-zbr-float {
+  animation: zbr-float 5.5s ease-in-out infinite;
+}
+
+.animate-zbr-float-slow {
+  animation: zbr-float 7s ease-in-out -2.4s infinite;
+}
+
+@keyframes zbr-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-zbr-spin-slow {
+  animation: zbr-spin-slow 46s linear infinite;
+}
+
+@keyframes zbr-gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-zbr-gradient {
+  background-size: 200% 200%;
+  animation: zbr-gradient-flow 7s ease infinite;
+}
+
 /* Reduced Motion Mandatory Support */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -252,7 +296,11 @@ body {
   .animate-zbr-marquee-reverse > [aria-hidden="true"] {
     display: none;
   }
-  .animate-zbr-aurora {
+  .animate-zbr-aurora,
+  .animate-zbr-float,
+  .animate-zbr-float-slow,
+  .animate-zbr-spin-slow,
+  .animate-zbr-gradient {
     animation: none !important;
   }
   *, *::before, *::after {

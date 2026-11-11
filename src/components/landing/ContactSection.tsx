@@ -1,16 +1,46 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Globe, Mail, MessageSquare } from "lucide-react";
 import { LinkedInIcon } from "@/components/ui/SocialIcons";
 import { SITE_INFO } from "@/data/site";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { useMotionConfig } from "@/components/providers/MotionProvider";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function ContactSection({
   initialIntent = "",
 }: {
   initialIntent?: string;
 }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { prefersReducedMotion } = useMotionConfig();
+
+  useEffect(() => {
+    if (prefersReducedMotion || !sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".contact-reveal", {
+        opacity: 0,
+        y: 24,
+        duration: 0.65,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="contact-us"
       aria-labelledby="contact-heading"
       className="zbr-section relative overflow-hidden bg-gradient-to-b from-[#F4F7FE] via-[#F8FAFC] to-white text-[#0F172A]"
@@ -25,7 +55,7 @@ export function ContactSection({
       />
       <div className="zbr-container relative z-10">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="contact-reveal lg:col-span-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
               <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
               Contact Us
@@ -75,7 +105,7 @@ export function ContactSection({
             </div>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-[0_8px_32px_rgba(10,22,40,0.05)] sm:p-8 lg:col-span-7">
+          <div className="contact-reveal rounded-3xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-[0_8px_32px_rgba(10,22,40,0.05)] sm:p-8 lg:col-span-7">
             <ContactForm idPrefix="home-contact" initialIntent={initialIntent} />
           </div>
         </div>

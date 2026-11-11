@@ -20,6 +20,20 @@ export function MissionVisionSection() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Smooth staggered entrance for header and Mission/Vision cards
+      gsap.from(".mv-reveal", {
+        opacity: 0,
+        y: 24,
+        duration: 0.68,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+
       // Split-Screen Parallax (left and right columns move independently on desktop)
       if (isDesktop && leftColRef.current && rightColRef.current) {
         gsap.fromTo(
@@ -109,7 +123,7 @@ export function MissionVisionSection() {
       </svg>
 
       <div className="zbr-container relative z-10">
-        <div className="mb-12 text-center">
+        <div className="mv-reveal mb-12 text-center">
           <span className="inline-flex items-center rounded-full border border-[#1E5EFF]/20 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
             Purpose &amp; Direction
           </span>
@@ -125,7 +139,7 @@ export function MissionVisionSection() {
           {/* Mission Left Split Column */}
           <div
             ref={leftColRef}
-            className="rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_12px_40px_rgba(10,22,40,0.06)] lg:p-10"
+            className="mv-reveal rounded-3xl border border-slate-200 bg-white p-8 shadow-[0_12px_40px_rgba(10,22,40,0.06)] lg:p-10"
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1E5EFF]/10 text-[#1E5EFF]">
               <Compass className="h-6 w-6" aria-hidden="true" />
@@ -141,7 +155,7 @@ export function MissionVisionSection() {
           {/* Vision Right Split Column */}
           <div
             ref={rightColRef}
-            className="rounded-3xl border border-white/10 bg-[#0A1628] p-8 text-white shadow-[0_16px_48px_rgba(10,22,40,0.18)] lg:p-10"
+            className="mv-reveal rounded-3xl border border-white/10 bg-[#0A1628] p-8 text-white shadow-[0_16px_48px_rgba(10,22,40,0.18)] lg:p-10"
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#22D3EE]/15 text-[#22D3EE]">
               <Eye className="h-6 w-6" aria-hidden="true" />

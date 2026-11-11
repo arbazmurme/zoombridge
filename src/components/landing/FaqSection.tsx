@@ -1,10 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { CORE_FAQS, FaqItem } from "@/data/site";
+import { useMotionConfig } from "@/components/providers/MotionProvider";
 import { cn } from "@/lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function FaqSection({
   items = CORE_FAQS,
@@ -15,12 +20,37 @@ export function FaqSection({
   heading?: string;
   subheading?: string;
 }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { prefersReducedMotion } = useMotionConfig();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  useEffect(() => {
+    if (prefersReducedMotion || !sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".faq-reveal", {
+        opacity: 0,
+        y: 20,
+        duration: 0.58,
+        stagger: 0.07,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 82%",
+          once: true,
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
   return (
-    <section aria-labelledby="faq-heading" className="zbr-section bg-[#F8FAFC] text-[#0F172A]">
+    <section
+      ref={sectionRef}
+      aria-labelledby="faq-heading"
+      className="zbr-section bg-[#F8FAFC] text-[#0F172A]"
+    >
       <div className="zbr-container">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="faq-reveal mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
             <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
             FAQ &amp; Pricing Clarity
@@ -39,7 +69,7 @@ export function FaqSection({
             return (
               <div
                 key={item.question}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_16px_rgba(10,22,40,0.04)]"
+                className="faq-reveal overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_16px_rgba(10,22,40,0.04)]"
               >
                 <button
                   id={buttonId}

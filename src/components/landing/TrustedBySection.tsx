@@ -180,6 +180,19 @@ export function TrustedBySection() {
   useEffect(() => {
     if (prefersReducedMotion || !sectionRef.current || !stripRef.current) return;
     const ctx = gsap.context(() => {
+      gsap.from(".trusted-reveal", {
+        opacity: 0,
+        y: 18,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 86%",
+          once: true,
+        },
+      });
+
       gsap.fromTo(
         stripRef.current,
         { y: 14 },
@@ -219,7 +232,7 @@ export function TrustedBySection() {
         }}
       />
 
-      <div className="zbr-container relative z-10 mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
+      <div className="trusted-reveal zbr-container relative z-10 mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#1E5EFF] shadow-xs">
             <span className="h-1.5 w-1.5 rounded-full bg-[#1E5EFF]" />

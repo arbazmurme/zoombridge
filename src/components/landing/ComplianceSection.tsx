@@ -21,6 +21,19 @@ export function ComplianceSection() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.from(".compliance-card", {
+        opacity: 0,
+        y: 26,
+        duration: 0.65,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 78%",
+          once: true,
+        },
+      });
+
       // SVG Shield Path Drawing Reveal
       if (shieldPathRef.current) {
         const len = shieldPathRef.current.getTotalLength();
@@ -138,7 +151,7 @@ export function ComplianceSection() {
             <TiltCard
               key={pillar.id}
               glowColor="rgba(34, 211, 238, 0.14)"
-              className="flex flex-col p-7"
+              className="compliance-card flex flex-col p-7"
             >
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-[#0A1628] px-3 py-1 font-mono-metric text-xs font-semibold text-[#22D3EE]">

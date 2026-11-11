@@ -43,6 +43,7 @@ export function ServicesSection() {
   const progressBarRef = useRef<HTMLDivElement | null>(null);
   const cardSlotRefs = useRef<Array<HTMLDivElement | null>>([]);
   const waveLayerRefs = useRef<Array<SVGSVGElement | null>>([]);
+  const wavePathRefs = useRef<Array<SVGPathElement | null>>([]);
   const iconBadgeRefs = useRef<Array<HTMLDivElement | null>>([]);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
@@ -68,12 +69,19 @@ export function ServicesSection() {
     const track = trackRef.current;
     const cardSlots = cardSlotRefs.current;
     const waveLayers = waveLayerRefs.current;
+    const wavePaths = wavePathRefs.current;
     const iconBadges = iconBadgeRefs.current;
 
     const getScrollDistance = () =>
       Math.max(0, track.scrollWidth - viewport.clientWidth);
 
-    // Smoothly damped scroll velocity tilt for tactile momentum feel
+    const pathLengths = wavePaths.map((p) => {
+      if (!p) return 260;
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = `${len}`;
+      return len;
+    });
+
     const skewTracker = { val: 0 };
     const skewQuickTo = gsap.quickTo(skewTracker, "val", {
       duration: 0.35,
@@ -82,51 +90,65 @@ export function ServicesSection() {
 
     const applyDepthTransforms = (progress: number, velocity = 0) => {
       const vpWidth = viewport.clientWidth || 1280;
-      const clampedVel = gsap.utils.clamp(-2.8, 2.8, velocity / 520);
+      const clampedVel = gsap.utils.clamp(-3.2, 3.2, velocity / 460);
       skewQuickTo(clampedVel);
 
       const focalCenter = progress * (SERVICES.length - 1);
 
-      cardSlotRefs.current.forEach((slot, idx) => {
+      cardSlots.forEach((slot, idx) => {
         if (!slot) return;
-        const delta = idx - focalCenter; // negative = left of focus, positive = right
+        const delta = idx - focalCenter;
         const absDelta = Math.min(2.2, Math.abs(delta));
-        const normalizedDelta = gsap.utils.clamp(-1.4, 1.4, delta / 1.6);
+        const normalizedDelta = gsap.utils.clamp(-1.5, 1.5, delta / 1.4);
 
-        // Gentle curved gallery wave: active region elevates cleanly, outer cards dip & angle in 3D
-        const scale = 1.02 - absDelta * 0.038;
-        const translateY = Math.pow(absDelta, 1.35) * 10;
-        const rotateY = -normalizedDelta * 5.5;
-        const skewY = skewTracker.val * 0.35;
-        const opacity = Math.max(0.76, 1 - absDelta * 0.14);
+        const scale = 1.035 - absDelta * 0.068;
+        const translateY = Math.pow(absDelta, 1.35) * 16;
+        const rotateY = -normalizedDelta * 9.5;
+        const rotateZ = normalizedDelta * 1.1;
+        const skewY = skewTracker.val * 0.4;
+        const opacity = Math.max(0.68, 1 - absDelta * 0.16);
 
-        slot.style.transform = `perspective(1200px) translate3d(0, ${translateY.toFixed(
+        slot.style.transform = `perspective(1050px) translate3d(0, ${translateY.toFixed(
           2
         )}px, 0) scale(${scale.toFixed(4)}) rotateY(${rotateY.toFixed(
           2
-        )}deg) skewY(${skewY.toFixed(2)}deg)`;
+        )}deg) rotateZ(${rotateZ.toFixed(2)}deg) skewY(${skewY.toFixed(2)}deg)`;
         slot.style.opacity = opacity.toFixed(3);
 
-        // Internal horizontal parallax inside each card's dark header
-        const wave = waveLayerRefs.current[idx];
+        const wave = waveLayers[idx];
         if (wave) {
-          const shiftX = gsap.utils.clamp(-22, 22, -delta * 10 * (vpWidth / 1280));
-          wave.style.transform = `translate3d(${shiftX.toFixed(1)}px, 0, 0) scale(1.06)`;
+          const shiftX = gsap.utils.clamp(
+            -26,
+            26,
+            -delta * 12 * (vpWidth / 1280)
+          );
+          wave.style.transform = `translate3d(${shiftX.toFixed(
+            1
+          )}px, 0, 0) scale(1.08)`;
         }
 
-        const badge = iconBadgeRefs.current[idx];
+        const path = wavePaths[idx];
+        if (path) {
+          const totalLen = pathLengths[idx] || 260;
+          const focusProximity = Math.max(0.28, 1 - absDelta * 0.42);
+          path.style.strokeDashoffset = `${(
+            totalLen *
+            (1 - focusProximity)
+          ).toFixed(1)}`;
+        }
+
+        const badge = iconBadges[idx];
         if (badge) {
-          const badgeShift = gsap.utils.clamp(-8, 8, delta * 3.5);
+          const badgeShift = gsap.utils.clamp(-10, 10, delta * 4);
           badge.style.transform = `translate3d(${badgeShift.toFixed(1)}px, 0, 0)`;
         }
       });
     };
 
     const ctx = gsap.context(() => {
-      // Initial staggered reveal when scrolling into the section
       gsap.fromTo(
-        cardSlotRefs.current.filter(Boolean),
-        { y: 28, opacity: 0 },
+        cardSlots.filter(Boolean),
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -141,7 +163,6 @@ export function ServicesSection() {
         }
       );
 
-      // Horizontal pinned glide synced to page scroll
       const tween = gsap.to(track, {
         x: () => -getScrollDistance(),
         ease: "none",
@@ -151,11 +172,11 @@ export function ServicesSection() {
           end: () => `+=${Math.max(1080, getScrollDistance() + 260)}`,
           pin: true,
           pinSpacing: true,
-          scrub: 0.9,
+          scrub: 0.85,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onEnter: (self) => {
-            gsap.killTweensOf(cardSlotRefs.current.filter(Boolean));
+            gsap.killTweensOf(cardSlots.filter(Boolean));
             applyDepthTransforms(self.progress, 0);
           },
           onUpdate: (self) => {
@@ -181,7 +202,6 @@ export function ServicesSection() {
 
       scrollTriggerRef.current = tween.scrollTrigger ?? null;
 
-      // Subtle background dot-matrix parallax synced to horizontal travel
       if (bgDotsRef.current) {
         gsap.to(bgDotsRef.current, {
           x: -160,
@@ -211,6 +231,12 @@ export function ServicesSection() {
       waveLayers.forEach((wave) => {
         if (wave) wave.style.transform = "";
       });
+      wavePaths.forEach((path) => {
+        if (path) {
+          path.style.strokeDasharray = "";
+          path.style.strokeDashoffset = "";
+        }
+      });
       iconBadges.forEach((badge) => {
         if (badge) badge.style.transform = "";
       });
@@ -228,7 +254,11 @@ export function ServicesSection() {
     }
 
     const card = trackRef.current?.children[idx] as HTMLElement | undefined;
-    card?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    card?.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
     setActiveIndex(idx);
   };
 
@@ -320,8 +350,8 @@ export function ServicesSection() {
             prefersReducedMotion
               ? "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
               : usePinnedHorizontal
-              ? "flex w-max items-stretch gap-5 py-3 will-change-transform"
-              : "flex snap-x snap-mandatory gap-5 px-5 py-2"
+              ? "flex w-max items-stretch gap-5 py-5 will-change-transform"
+              : "flex snap-x snap-mandatory gap-5 px-5 py-3"
           )}
           style={
             usePinnedHorizontal
@@ -374,15 +404,19 @@ export function ServicesSection() {
                       }}
                       aria-hidden="true"
                       viewBox="0 0 240 100"
-                      className="relative z-10 h-full w-full opacity-70 will-change-transform"
+                      className="relative z-10 h-full w-full opacity-75 will-change-transform"
                     >
                       <path
+                        ref={(el) => {
+                          wavePathRefs.current[idx] = el;
+                        }}
                         d={`M10 ${78 - idx * 4} Q 75 ${32 + idx * 5}, 140 ${
                           55 - idx * 3
                         } T 230 ${26 + idx * 4}`}
                         fill="none"
                         stroke={service.accentColor}
-                        strokeWidth="2.2"
+                        strokeWidth="2.4"
+                        strokeLinecap="round"
                       />
                       <circle cx="75" cy={45 + idx * 2} r="3.5" fill="#22D3EE" />
                       <circle cx="155" cy={48 - idx * 2} r="3.5" fill="#FFFFFF" />
@@ -459,7 +493,7 @@ export function ServicesSection() {
 
       {/* Horizontal Progress Track & Quick-Jump Service Pills */}
       {!prefersReducedMotion && (
-        <div className="zbr-container relative z-10 mt-4">
+        <div className="zbr-container relative z-10 mt-3">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Progress Rail */}
             <div className="h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-slate-200/90">

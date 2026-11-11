@@ -33,6 +33,33 @@ export function GlobalReachSection() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.from(".reach-reveal", {
+        opacity: 0,
+        y: 22,
+        duration: 0.65,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      gsap.from(".reach-pill", {
+        opacity: 0,
+        scale: 0.92,
+        y: 12,
+        duration: 0.45,
+        stagger: 0.05,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".reach-pills-wrap",
+          start: "top 88%",
+          once: true,
+        },
+      });
+
       // Particle Parallax (each particle moves at its own depth velocity)
       const particles = gsap.utils.toArray<HTMLElement>(".reach-particle");
       particles.forEach((el) => {
@@ -106,11 +133,11 @@ export function GlobalReachSection() {
       <div className="zbr-container relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
         {/* Left Intelligence & Decision-Maker Breakdown */}
         <div className="lg:col-span-6">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#22D3EE]">
+          <span className="reach-reveal inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#22D3EE]">
             <Globe2 className="h-3.5 w-3.5" aria-hidden="true" />
             Global Decision-Maker Reach
           </span>
-          <h2 id="global-reach-heading" className="type-h2 mt-4 text-white">
+          <h2 id="global-reach-heading" className="reach-reveal type-h2 mt-4 text-white">
             {GLOBAL_REACH.heading}
           </h2>
 
@@ -137,11 +164,11 @@ export function GlobalReachSection() {
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
               Target Decision-Makers
             </p>
-            <div className="mt-3 flex flex-wrap gap-2.5">
+            <div className="reach-pills-wrap mt-3 flex flex-wrap gap-2.5">
               {GLOBAL_REACH.decisionMakers.map((role) => (
                 <span
                   key={role}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 transition hover:border-[#22D3EE]/50 hover:text-white"
+                  className="reach-pill inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 transition hover:border-[#22D3EE]/50 hover:text-white"
                 >
                   <UserCheck className="h-3.5 w-3.5 text-[#22D3EE]" aria-hidden="true" />
                   {role}
@@ -155,7 +182,7 @@ export function GlobalReachSection() {
             {GLOBAL_REACH.regions.map((region) => (
               <div
                 key={region.code}
-                className="rounded-xl border border-white/10 bg-[#0F1E38]/60 p-3.5"
+                className="reach-reveal rounded-xl border border-white/10 bg-[#0F1E38]/60 p-3.5"
               >
                 <div className="flex items-center gap-2 text-xs font-semibold text-white">
                   <MapPin className="h-3.5 w-3.5 text-[#3B7BFF]" aria-hidden="true" />

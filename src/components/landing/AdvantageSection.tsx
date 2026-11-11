@@ -19,6 +19,19 @@ export function AdvantageSection() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.from(".adv-row", {
+        opacity: 0,
+        y: 18,
+        duration: 0.55,
+        stagger: 0.07,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
       // Horizontal Parallax subtle drift on comparison rows as scroll progresses
       if (isDesktop) {
         const rows = gsap.utils.toArray<HTMLElement>(".adv-row");
