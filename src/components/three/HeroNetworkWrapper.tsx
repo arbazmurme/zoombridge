@@ -138,7 +138,7 @@ class WebGLErrorBoundary extends Component<
   }
 }
 
-export function HeroNetworkWrapper() {
+export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
   const { prefersReducedMotion, isDesktop } = useMotionConfig();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(true);
@@ -172,14 +172,23 @@ export function HeroNetworkWrapper() {
 
   if (!webglReady || prefersReducedMotion || !isDesktop || skip3d) {
     return (
-      <div className="flex h-[320px] w-full items-center justify-center sm:h-[380px]">
+      <div
+        className={`flex w-full items-center justify-center ${
+          compact ? "h-[260px] sm:h-[300px]" : "h-[320px] sm:h-[380px]"
+        }`}
+      >
         <HeroStaticFallback />
       </div>
     );
   }
 
   return (
-    <div ref={containerRef} className="relative h-[400px] w-full lg:h-[520px]">
+    <div
+      ref={containerRef}
+      className={`relative w-full ${
+        compact ? "h-[310px] lg:h-[380px]" : "h-[400px] lg:h-[520px]"
+      }`}
+    >
       {/* Soft luminous atmospheric aura behind the 3D globe */}
       <div
         aria-hidden="true"

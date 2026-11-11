@@ -8,16 +8,11 @@ import { ServicesSection } from "@/components/landing/ServicesSection";
 import { AdvantageSection } from "@/components/landing/AdvantageSection";
 import { GlobalReachSection } from "@/components/landing/GlobalReachSection";
 import { ComplianceSection } from "@/components/landing/ComplianceSection";
-import { FaqSection } from "@/components/landing/FaqSection";
 import { BookCallSection } from "@/components/landing/BookCallSection";
-import { ContactSection } from "@/components/landing/ContactSection";
-import { JsonLd } from "@/components/ui/JsonLd";
-import { CORE_FAQS } from "@/data/site";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_TAGLINE,
-  buildFaqJsonLd,
   buildPageMetadata,
 } from "@/lib/seo";
 
@@ -37,7 +32,6 @@ export const metadata: Metadata = buildPageMetadata({
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={buildFaqJsonLd(CORE_FAQS)} />
       <HeroSection />
       <TrustedBySection />
       <WhoWeAreSection />
@@ -47,10 +41,7 @@ export default function HomePage() {
       <AdvantageSection />
       <GlobalReachSection />
       <ComplianceSection />
-      <FaqSection />
       <BookCallSection />
-      <ContactSection />
     </>
   );
 }
-

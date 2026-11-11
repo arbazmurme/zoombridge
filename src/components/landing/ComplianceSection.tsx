@@ -79,7 +79,7 @@ export function ComplianceSection() {
     <section
       ref={sectionRef}
       aria-labelledby="compliance-heading"
-      className="zbr-section relative overflow-hidden bg-gradient-to-b from-[#EFF4FC] via-[#F7F9FE] to-[#FFFFFF] text-[#0F172A]"
+      className="relative overflow-hidden bg-gradient-to-b from-[#EFF4FC] via-[#F7F9FE] to-[#FFFFFF] pb-12 pt-16 text-[#0F172A] lg:pb-14 lg:pt-20"
     >
       <div
         aria-hidden="true"
