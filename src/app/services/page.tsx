@@ -47,7 +47,7 @@ export default function ServicesOverviewPage() {
         </div>
       </InnerHero>
 
-      <section className="zbr-section bg-white text-[#0F172A]">
+      <section id="services-grid" className="zbr-section bg-white text-[#0F172A]">
         <div className="zbr-container grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, idx) => (
             <TiltCard key={service.slug} className="flex flex-col p-7">

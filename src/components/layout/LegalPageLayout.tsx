@@ -30,7 +30,7 @@ export function LegalPageLayout({
         breadcrumbs={[{ label: breadcrumbLabel }]}
       />
 
-      <section className="zbr-section bg-white text-[#0F172A]">
+      <section id="legal-document-content" className="zbr-section bg-white text-[#0F172A]">
         <div className="zbr-container">
           <div className="mx-auto max-w-3xl space-y-10">
             {sections.map((section) => (

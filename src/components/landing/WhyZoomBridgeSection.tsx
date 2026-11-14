@@ -71,6 +71,7 @@ export function WhyZoomBridgeSection() {
 
   return (
     <section
+      id="why-zbr-framework"
       ref={sectionRef}
       aria-labelledby="why-zbr-heading"
       className="zbr-section relative bg-[#0A1628] text-white"

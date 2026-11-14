@@ -65,7 +65,7 @@ export function ServicePageTemplate({ service }: { service: ServiceDetail }) {
       </InnerHero>
 
       {/* Overview & Key Benefits */}
-      <section className="zbr-section bg-white text-[#0F172A]">
+      <section id="services-grid" className="zbr-section bg-white text-[#0F172A]">
         <div className="zbr-container">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">

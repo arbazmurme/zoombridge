@@ -30,7 +30,7 @@ export default function CaseStudiesPage() {
         breadcrumbs={[{ label: "Case Studies" }]}
       />
 
-      <section className="zbr-section bg-white text-[#0F172A]">
+      <section id="case-studies-list" className="zbr-section bg-white text-[#0F172A]">
         <div className="zbr-container">
           <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-[#F8FAFC] p-10 text-center shadow-sm sm:p-14">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1E5EFF]/10 text-[#1E5EFF]">

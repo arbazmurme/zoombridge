@@ -56,6 +56,7 @@ export function AbmScoringInteractive() {
     <>
       {/* Interactive Sample Scoring Engine Demo */}
       <section
+        id="scoring-engine"
         aria-labelledby="abm-demo-heading"
         className="zbr-section bg-white text-[#0F172A]"
       >

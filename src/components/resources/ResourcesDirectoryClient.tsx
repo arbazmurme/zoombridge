@@ -21,7 +21,7 @@ export function ResourcesDirectoryClient() {
   }, [selectedCategory]);
 
   return (
-    <section className="zbr-section bg-white text-[#0F172A]">
+    <section id="resources-content" className="zbr-section bg-white text-[#0F172A]">
       <div className="zbr-container">
         <div
           role="tablist"
