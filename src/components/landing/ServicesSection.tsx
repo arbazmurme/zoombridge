@@ -35,6 +35,59 @@ const ICON_MAP: Record<
   DatabaseZap,
 };
 
+interface ServiceTelemetryConfig {
+  pillLabel: string;
+  metricLabel: string;
+  metricValue: string;
+  tag1: string;
+  tag2: string;
+}
+
+const SERVICE_TELEMETRY: Record<string, ServiceTelemetryConfig> = {
+  "email-marketing": {
+    pillLabel: "Deliverability Engine",
+    metricLabel: "Sender Score",
+    metricValue: "99.4%",
+    tag1: "0% Bounce Risk",
+    tag2: "Decision-Makers",
+  },
+  "account-based-marketing": {
+    pillLabel: "Account Radar",
+    metricLabel: "TAL Fit Score",
+    metricValue: "96 / 100",
+    tag1: "Tier-1 Focus",
+    tag2: "Committee Mapped",
+  },
+  "content-syndication": {
+    pillLabel: "Executive Reach",
+    metricLabel: "Target Reader Fit",
+    metricValue: "100%",
+    tag1: "Pure CPL Model",
+    tag2: "Zero Fluff",
+  },
+  "contact-discovery": {
+    pillLabel: "Human Verification",
+    metricLabel: "Data Accuracy",
+    metricValue: "95% Goal",
+    tag1: "Direct Mobile",
+    tag2: "Work Email",
+  },
+  "lead-generation": {
+    pillLabel: "Pipeline Acceleration",
+    metricLabel: "MQL Velocity",
+    metricValue: "+38%",
+    tag1: "Sales-Ready",
+    tag2: "Pre-Qualified",
+  },
+  "data-enrichment": {
+    pillLabel: "Schema Intelligence",
+    metricLabel: "Attributes Filled",
+    metricValue: "18+ Fields",
+    tag1: "Real-Time Diff",
+    tag2: "Tech Stack",
+  },
+};
+
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -42,8 +95,7 @@ export function ServicesSection() {
   const bgDotsRef = useRef<HTMLDivElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
   const cardSlotRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const waveLayerRefs = useRef<Array<SVGSVGElement | null>>([]);
-  const wavePathRefs = useRef<Array<SVGPathElement | null>>([]);
+  const telemetryLayerRefs = useRef<Array<HTMLDivElement | null>>([]);
   const iconBadgeRefs = useRef<Array<HTMLDivElement | null>>([]);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
@@ -68,19 +120,11 @@ export function ServicesSection() {
     const viewport = viewportRef.current;
     const track = trackRef.current;
     const cardSlots = cardSlotRefs.current;
-    const waveLayers = waveLayerRefs.current;
-    const wavePaths = wavePathRefs.current;
+    const telemetryLayers = telemetryLayerRefs.current;
     const iconBadges = iconBadgeRefs.current;
 
     const getScrollDistance = () =>
       Math.max(0, track.scrollWidth - viewport.clientWidth);
-
-    const pathLengths = wavePaths.map((p) => {
-      if (!p) return 260;
-      const len = p.getTotalLength();
-      p.style.strokeDasharray = `${len}`;
-      return len;
-    });
 
     const skewTracker = { val: 0 };
     const skewQuickTo = gsap.quickTo(skewTracker, "val", {
@@ -115,26 +159,16 @@ export function ServicesSection() {
         )}deg) rotateZ(${rotateZ.toFixed(2)}deg) skewY(${skewY.toFixed(2)}deg)`;
         slot.style.opacity = opacity.toFixed(3);
 
-        const wave = waveLayers[idx];
-        if (wave) {
+        const telem = telemetryLayers[idx];
+        if (telem) {
           const shiftX = gsap.utils.clamp(
-            -26,
-            26,
-            -delta * 12 * (vpWidth / 1280)
+            -22,
+            22,
+            -delta * 10 * (vpWidth / 1280)
           );
-          wave.style.transform = `translate3d(${shiftX.toFixed(
+          telem.style.transform = `translate3d(${shiftX.toFixed(
             1
-          )}px, 0, 0) scale(1.08)`;
-        }
-
-        const path = wavePaths[idx];
-        if (path) {
-          const totalLen = pathLengths[idx] || 260;
-          const focusProximity = Math.max(0.28, 1 - absDelta * 0.42);
-          path.style.strokeDashoffset = `${(
-            totalLen *
-            (1 - focusProximity)
-          ).toFixed(1)}`;
+          )}px, 0, 0)`;
         }
 
         const badge = iconBadges[idx];
@@ -228,14 +262,8 @@ export function ServicesSection() {
           slot.style.opacity = "";
         }
       });
-      waveLayers.forEach((wave) => {
-        if (wave) wave.style.transform = "";
-      });
-      wavePaths.forEach((path) => {
-        if (path) {
-          path.style.strokeDasharray = "";
-          path.style.strokeDashoffset = "";
-        }
+      telemetryLayers.forEach((telem) => {
+        if (telem) telem.style.transform = "";
       });
       iconBadges.forEach((badge) => {
         if (badge) badge.style.transform = "";
@@ -365,6 +393,13 @@ export function ServicesSection() {
             const Icon = ICON_MAP[service.iconName];
             const isActive = idx === activeIndex;
             const stepLabel = String(idx + 1).padStart(2, "0");
+            const telem = SERVICE_TELEMETRY[service.slug] || {
+              pillLabel: "Verified Signal",
+              metricLabel: "Accuracy Goal",
+              metricValue: "95%",
+              tag1: "Human-Verified",
+              tag2: "Decision-Makers",
+            };
 
             return (
               <div
@@ -388,58 +423,86 @@ export function ServicesSection() {
                       : "border-slate-200/90"
                   )}
                 >
-                  {/* Visual Header with Internal Parallax Wave */}
-                  <div className="relative h-24 overflow-hidden rounded-xl border border-slate-200/80 bg-[#0A1628] p-3.5">
+                  {/* High-Tech B2B Intelligence Micro-Console Header */}
+                  <div className="relative h-28 overflow-hidden rounded-xl border border-slate-700/60 bg-[#0A1628] p-3 text-white shadow-inner sm:h-32">
+                    {/* Ambient Accent Radial Glow */}
                     <div
                       aria-hidden="true"
-                      className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-110"
+                      className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full blur-2xl"
                       style={{
-                        background: `radial-gradient(circle at 80% 25%, ${service.accentColor}48, transparent 62%), linear-gradient(135deg, #0A1628 0%, #0F1E38 100%)`,
+                        background: `radial-gradient(circle, ${service.accentColor}55 0%, transparent 70%)`,
                       }}
                     />
 
-                    <svg
-                      ref={(el) => {
-                        waveLayerRefs.current[idx] = el;
-                      }}
-                      aria-hidden="true"
-                      viewBox="0 0 240 100"
-                      className="relative z-10 h-full w-full opacity-75 will-change-transform"
-                    >
-                      <path
-                        ref={(el) => {
-                          wavePathRefs.current[idx] = el;
-                        }}
-                        d={`M10 ${78 - idx * 4} Q 75 ${32 + idx * 5}, 140 ${
-                          55 - idx * 3
-                        } T 230 ${26 + idx * 4}`}
-                        fill="none"
-                        stroke={service.accentColor}
-                        strokeWidth="2.4"
-                        strokeLinecap="round"
-                      />
-                      <circle cx="75" cy={45 + idx * 2} r="3.5" fill="#22D3EE" />
-                      <circle cx="155" cy={48 - idx * 2} r="3.5" fill="#FFFFFF" />
-                      <circle
-                        cx="215"
-                        cy={30 + idx * 3}
-                        r="4"
-                        fill={service.accentColor}
-                      />
-                    </svg>
-
+                    {/* Subtle Cyber Matrix Grid Background */}
                     <div
-                      ref={(el) => {
-                        iconBadgeRefs.current[idx] = el;
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 opacity-[0.14]"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)",
+                        backgroundSize: "16px 16px",
                       }}
-                      className="absolute left-3.5 top-3.5 z-20 flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110 will-change-transform"
-                    >
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    />
+
+                    {/* Top Row: Icon Badge + Telemetry Pill + Step Index */}
+                    <div className="relative z-10 flex items-center justify-between">
+                      <div
+                        ref={(el) => {
+                          iconBadgeRefs.current[idx] = el;
+                        }}
+                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-white shadow-sm backdrop-blur-md transition-transform duration-300 group-hover:scale-105 will-change-transform"
+                        style={{
+                          boxShadow: `0 0 16px ${service.accentColor}33`,
+                        }}
+                      >
+                        <Icon className="h-4 w-4" aria-hidden="true" />
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-300 backdrop-blur-sm">
+                          <span
+                            className="h-1.5 w-1.5 animate-pulse rounded-full"
+                            style={{ backgroundColor: service.accentColor }}
+                          />
+                          <span>{telem.pillLabel}</span>
+                        </span>
+
+                        <span className="rounded-md border border-white/15 bg-[#0F1E38] px-2 py-0.5 font-mono-metric text-[11px] font-semibold text-[#22D3EE]">
+                          {stepLabel}
+                        </span>
+                      </div>
                     </div>
 
-                    <span className="absolute right-3 top-3 z-20 rounded-full border border-white/15 bg-[#0A1628]/80 px-2.5 py-0.5 font-mono-metric text-[11px] font-semibold text-[#22D3EE] backdrop-blur-sm">
-                      {stepLabel}
-                    </span>
+                    {/* Middle: Real-time Metric & Data Signals Console */}
+                    <div
+                      ref={(el) => {
+                        telemetryLayerRefs.current[idx] = el;
+                      }}
+                      className="relative z-10 mt-2.5 will-change-transform"
+                    >
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[11px] font-semibold tracking-wide text-slate-300">
+                          {telem.metricLabel}
+                        </span>
+                        <span
+                          className="font-mono-metric text-base font-bold tracking-tight text-white"
+                          style={{ color: service.accentColor }}
+                        >
+                          {telem.metricValue}
+                        </span>
+                      </div>
+
+                      {/* Verified Micro-Badges */}
+                      <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[9px] font-medium text-slate-300">
+                          ✓ {telem.tag1}
+                        </span>
+                        <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[9px] font-medium text-slate-300">
+                          ✓ {telem.tag2}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Card Copy */}
