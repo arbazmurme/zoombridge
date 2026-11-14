@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Globe2, MapPin, UserCheck } from "lucide-react";
+import { Globe2, MapPin, Move3d, UserCheck } from "lucide-react";
 import { GLOBAL_REACH } from "@/data/site";
 import { GlobalGlobeWrapper } from "@/components/three/GlobalGlobeWrapper";
 import { useMotionConfig } from "@/components/providers/MotionProvider";
@@ -194,15 +194,55 @@ export function GlobalReachSection() {
           </div>
         </div>
 
-        {/* Right 3D Low-Poly Globe */}
+        {/* Right 3D Global Intelligence Network Stage */}
         <div className="lg:col-span-6">
-          <div className="relative rounded-3xl border border-white/10 bg-[#0F1E38]/40 p-4 backdrop-blur-sm">
+          <div className="relative rounded-3xl border border-white/15 bg-[#0F1E38]/85 p-4 shadow-2xl backdrop-blur-md">
+            {/* Top Telemetry Header */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-2 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22D3EE]" />
+                </span>
+                <span className="font-mono-metric text-xs font-semibold uppercase tracking-wider text-[#22D3EE]">
+                  Live Global Corridors • 120+ Countries
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[11px] text-slate-300">
+                <Move3d className="h-3 w-3 text-[#22D3EE]" />
+                <span>Drag to Spin</span>
+              </div>
+            </div>
+
+            {/* 3D Earth Data Matrix Globe */}
             <GlobalGlobeWrapper />
-            <div className="mt-2 flex items-center justify-between border-t border-white/10 px-2 pt-3 text-xs text-slate-400">
-              <span>4 Global Regions Active</span>
-              <span className="font-mono-metric text-[#22D3EE]">
-                AMER • EMEA • APAC • LATAM
-              </span>
+
+            {/* Bottom Regional Coverage Chips */}
+            <div className="mt-2 border-t border-white/10 pt-3">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[
+                  { code: "AMER", label: "Americas", value: "24M+", color: "#22D3EE" },
+                  { code: "EMEA", label: "Europe & ME", value: "16M+", color: "#3B7BFF" },
+                  { code: "APAC", label: "Asia-Pacific", value: "8.5M+", color: "#8B5CF6" },
+                  { code: "LATAM", label: "Latin Amer", value: "3.5M+", color: "#10B981" },
+                ].map((hub) => (
+                  <div
+                    key={hub.code}
+                    className="group rounded-xl border border-white/8 bg-[#0A1628]/80 p-2 text-center transition-all duration-200 hover:border-white/20 hover:bg-[#0A1628]"
+                  >
+                    <p
+                      className="font-mono-metric text-xs font-bold"
+                      style={{ color: hub.color }}
+                    >
+                      {hub.value}
+                    </p>
+                    <p className="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">
+                      {hub.code} • {hub.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
