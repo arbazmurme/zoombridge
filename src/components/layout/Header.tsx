@@ -70,6 +70,11 @@ export function Header() {
     };
   }, []);
 
+  // Hide website header on standalone ABM Scoring application
+  if (pathname?.startsWith("/abm-scoring")) {
+    return null;
+  }
+
   return (
     <header
       className={cn(
@@ -198,6 +203,8 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                target={item.newTab ? "_blank" : undefined}
+                rel={item.newTab ? "noopener noreferrer" : undefined}
                 className={cn(
                   "group relative inline-flex min-h-[44px] items-center rounded-lg px-3.5 py-2 text-sm font-medium transition-colors",
                   isActive
@@ -266,6 +273,8 @@ export function Header() {
                 <div key={item.href} className="flex flex-col">
                   <Link
                     href={item.href}
+                    target={item.newTab ? "_blank" : undefined}
+                    rel={item.newTab ? "noopener noreferrer" : undefined}
                     onClick={() => setMobileOpenPath(null)}
                     className={cn(
                       "flex min-h-[44px] items-center justify-between rounded-xl px-4 py-2.5 text-base font-medium",

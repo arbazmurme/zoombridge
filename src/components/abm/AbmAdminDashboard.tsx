@@ -6,18 +6,14 @@ import {
   ArrowRight,
   CheckCircle2,
   Download,
-  Filter,
-  Layers,
   LogOut,
-  RefreshCw,
   ShieldCheck,
   Sparkles,
-  UserCheck,
 } from "lucide-react";
 import { InnerHero } from "@/components/layout/InnerHero";
 import { AbmScoringInteractive } from "@/components/abm/AbmScoringInteractive";
-import { BookCallSection } from "@/components/landing/BookCallSection";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ZbrLogo } from "@/components/ui/ZbrLogo";
 
 interface AbmAdminDashboardProps {
   adminEmail: string;
@@ -57,15 +53,25 @@ export function AbmAdminDashboard({
   };
 
   return (
-    <div className="relative">
-      {/* Top Persistent Admin Session Banner */}
-      <aside
+    <div className="relative min-h-screen bg-[#070e1b] text-white">
+      {/* Top Standalone Admin Application Header */}
+      <header
         aria-label="Admin Session Status"
-        className="sticky top-16 z-40 border-b border-cyan-500/20 bg-[#0B1528]/95 px-4 py-2.5 backdrop-blur-md"
+        className="sticky top-0 z-50 border-b border-cyan-500/20 bg-[#0B1528]/95 px-4 py-3 backdrop-blur-md"
       >
         <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-          {/* Left: Admin Status Indicator */}
-          <div className="flex items-center gap-2.5 text-white">
+          {/* Left: Branding & Status */}
+          <div className="flex items-center gap-3 text-white">
+            <Link
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ZoomBridge Research Home (opens in new tab)"
+              className="inline-flex items-center transition hover:opacity-90"
+            >
+              <ZbrLogo light size={30} />
+            </Link>
+            <span className="h-4 w-px bg-slate-700" />
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
@@ -79,12 +85,12 @@ export function AbmAdminDashboard({
             </span>
           </div>
 
-          {/* Right: Admin Session Controls */}
+          {/* Right: Actions */}
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleExportCsv}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-2.5 py-1 font-medium text-slate-200 hover:border-cyan-500/50 hover:bg-slate-700 hover:text-white transition"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 font-medium text-slate-200 hover:border-cyan-500/50 hover:bg-slate-700 hover:text-white transition"
             >
               <Download className="h-3.5 w-3.5 text-cyan-400" />
               <span className="hidden sm:inline">Export TAL</span> CSV
@@ -93,7 +99,7 @@ export function AbmAdminDashboard({
             <button
               type="button"
               onClick={onSignOut}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-2.5 py-1 font-medium text-red-300 hover:bg-red-500/20 hover:text-red-200 transition"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 font-medium text-red-300 hover:bg-red-500/20 hover:text-red-200 transition"
             >
               <LogOut className="h-3.5 w-3.5" />
               <span>Sign Out</span>
@@ -103,12 +109,12 @@ export function AbmAdminDashboard({
 
         {/* Export Toast Notice */}
         {exportNotice && (
-          <div className="container mx-auto mt-1 flex items-center gap-2 text-[11px] text-cyan-300">
+          <div className="container mx-auto mt-1.5 flex items-center gap-2 text-[11px] text-cyan-300">
             <CheckCircle2 className="h-3.5 w-3.5" />
             <span>{exportNotice}</span>
           </div>
         )}
-      </aside>
+      </header>
 
       {/* Hero Section */}
       <InnerHero
@@ -144,8 +150,18 @@ export function AbmAdminDashboard({
       {/* Interactive Scoring Engine */}
       <AbmScoringInteractive />
 
-      {/* Book Call Section */}
-      <BookCallSection />
+      {/* Dedicated Portal Footer */}
+      <footer className="border-t border-white/10 bg-[#060D19] py-8 text-center text-xs text-slate-400">
+        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-cyan-400" />
+            <span>ZoomBridge Research ABM Intelligence &bull; Enterprise Admin Security Level 4</span>
+          </div>
+          <p className="text-slate-500 font-mono text-[11px]">
+            &copy; 2026 ZoomBridge Research. Confidential &bull; Internal Use Only.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

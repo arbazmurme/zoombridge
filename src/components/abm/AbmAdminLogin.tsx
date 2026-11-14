@@ -40,64 +40,57 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
       const cleanPass = password.trim();
 
       // Check admin credentials
-      // Valid admin accounts: admin@zoombridgeresearch.com, admin@wearezbr.com, or contains "admin"
       const isAdminEmail =
+        cleanEmail === "sales@wearezbr.com" ||
         cleanEmail === "admin@zoombridgeresearch.com" ||
         cleanEmail === "admin@wearezbr.com" ||
-        cleanEmail === "admin" ||
-        cleanEmail.startsWith("admin@");
+        cleanEmail === "admin";
 
       const isValidPassword =
+        password.trim() === "Ferrari@786" ||
+        cleanPass.toLowerCase() === "ferrari@786" ||
         cleanPass === "admin2026" ||
         cleanPass === "admin123" ||
         cleanPass === "zbrAdmin2026!" ||
         cleanPass === "admin";
 
       if (isAdminEmail && isValidPassword) {
+        const resolvedEmail = cleanEmail.includes("@") ? cleanEmail : "sales@wearezbr.com";
+        const sessionPayload = JSON.stringify({
+          email: resolvedEmail,
+          authenticated: true,
+          role: "Administrator",
+          timestamp: Date.now(),
+        });
+
         if (rememberMe) {
-          localStorage.setItem(
-            "zbr_abm_admin_session",
-            JSON.stringify({
-              email: cleanEmail.includes("@") ? cleanEmail : "admin@zoombridgeresearch.com",
-              authenticated: true,
-              role: "Administrator",
-              timestamp: Date.now(),
-            })
-          );
+          localStorage.setItem("zbr_abm_admin_session", sessionPayload);
         } else {
-          sessionStorage.setItem(
-            "zbr_abm_admin_session",
-            JSON.stringify({
-              email: cleanEmail.includes("@") ? cleanEmail : "admin@zoombridgeresearch.com",
-              authenticated: true,
-              role: "Administrator",
-              timestamp: Date.now(),
-            })
-          );
+          sessionStorage.setItem("zbr_abm_admin_session", sessionPayload);
         }
         setLoading(false);
-        onSuccess(cleanEmail.includes("@") ? cleanEmail : "admin@zoombridgeresearch.com");
+        onSuccess(resolvedEmail);
       } else {
         setLoading(false);
         if (!isAdminEmail) {
           setError(
-            "Access Restricted: Only authorized ZBR administrators can access the ABM Scoring platform. Non-admin accounts do not have permission."
+            "Access Restricted: Only authorized administrators (sales@wearezbr.com) can access the ABM Scoring platform."
           );
         } else {
-          setError("Invalid admin credentials. Please enter your administrator password or use Demo Admin.");
+          setError("Invalid admin password. Please enter the correct password (Ferrari@786) or click Demo Admin Fill.");
         }
       }
-    }, 600);
+    }, 500);
   };
 
   const handleQuickDemoFill = () => {
-    setEmail("admin@zoombridgeresearch.com");
-    setPassword("admin2026");
+    setEmail("sales@wearezbr.com");
+    setPassword("Ferrari@786");
     setError(null);
   };
 
   return (
-    <section className="relative min-h-[92vh] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-[#070e1b] overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8 bg-[#070e1b] overflow-hidden">
       {/* Background Cyber Ambient Glows */}
       <div
         aria-hidden="true"
@@ -338,7 +331,7 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
                   <span>Demo Admin Fill (1-Click)</span>
                 </button>
                 <p className="mt-2 text-[11px] text-slate-400 text-center">
-                  Credentials: <code className="text-slate-600 font-mono">admin@zoombridgeresearch.com</code> / <code className="text-slate-600 font-mono">admin2026</code>
+                  Credentials: <code className="text-slate-600 font-mono">sales@wearezbr.com</code> / <code className="text-slate-600 font-mono">Ferrari@786</code>
                 </p>
               </div>
             </div>
@@ -382,3 +375,4 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
     </section>
   );
 }
+

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUp, Mail, Globe, Clock, SlidersHorizontal } from "lucide-react";
@@ -16,6 +17,7 @@ import { trackEvent } from "@/lib/analytics";
 gsap.registerPlugin(ScrollTrigger);
 
 export function Footer() {
+  const pathname = usePathname();
   const footerRef = useRef<HTMLElement | null>(null);
   const bgGlowRef = useRef<HTMLDivElement | null>(null);
   const { prefersReducedMotion, scrollToTop } = useMotionConfig();
@@ -57,6 +59,11 @@ export function Footer() {
 
     return () => ctx.revert();
   }, [prefersReducedMotion]);
+
+  // Hide website footer on standalone ABM Scoring application
+  if (pathname?.startsWith("/abm-scoring")) {
+    return null;
+  }
 
   return (
     <footer
@@ -157,7 +164,12 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/abm-scoring" className="hover:text-white hover:underline underline-offset-4">
+                  <Link
+                    href="/abm-scoring"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white hover:underline underline-offset-4"
+                  >
                     ABM Scoring
                   </Link>
                 </li>

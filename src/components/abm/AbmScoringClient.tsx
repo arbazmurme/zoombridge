@@ -37,7 +37,7 @@ export function AbmScoringClient() {
   );
 
   let isAuthenticated = false;
-  let adminEmail = "admin@zoombridgeresearch.com";
+  let adminEmail = "sales@wearezbr.com";
 
   if (sessionString) {
     try {

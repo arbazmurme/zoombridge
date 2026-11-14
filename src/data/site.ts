@@ -2,6 +2,7 @@ export interface NavLinkItem {
   label: string;
   href: string;
   hasDropdown?: boolean;
+  newTab?: boolean;
 }
 
 export const SITE_INFO = {
@@ -24,7 +25,7 @@ export const HEADER_LINKS: NavLinkItem[] = [
   { label: "Services", href: "/services", hasDropdown: true },
   { label: "Why ZBR", href: "/why-zbr" },
   { label: "Contact", href: "/contact" },
-  { label: "ABM Scoring", href: "/abm-scoring" },
+  { label: "ABM Scoring", href: "/abm-scoring", newTab: true },
 ];
 
 export const TRUST_INDICATORS = [
