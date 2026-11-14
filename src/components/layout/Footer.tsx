@@ -156,6 +156,11 @@ export function Footer() {
                     Case Studies
                   </Link>
                 </li>
+                <li>
+                  <Link href="/abm-scoring" className="hover:text-white hover:underline underline-offset-4">
+                    ABM Scoring
+                  </Link>
+                </li>
               </ul>
             </div>
 

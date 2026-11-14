@@ -77,6 +77,19 @@ function getHeroMetaForPath(pathname: string): InnerHeroMeta {
       nextSectionId: "why-zbr-framework",
     };
   }
+  if (pathname.startsWith("/abm-scoring")) {
+    return {
+      pill: "Account Prioritization",
+      metricLabel: "Scoring Model",
+      metricValue: "Fit + Intent",
+      subValue: "Tier 1 • Tier 2 • Tier 3",
+      illustrationSrc: "/images/abm-scoring/abm-scoring-hero.webp",
+      illustrationAlt: "Predictive Target Account Scoring Radar",
+      bgSrc: "/images/abm-scoring/abm-scoring-hero-bg.webp",
+      hintPill: "Predictive TAL Scoring",
+      nextSectionId: "scoring-engine",
+    };
+  }
   if (pathname.startsWith("/case-studies")) {
     return {
       pill: "Enterprise Proof",
