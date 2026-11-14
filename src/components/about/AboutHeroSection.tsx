@@ -116,14 +116,14 @@ export function AboutHeroSection() {
       ref={heroRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0A1628] pb-16 pt-24 text-white lg:pb-24 lg:pt-32"
+      className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0A1628] pb-16 pt-24 text-white"
     >
       {/* Cybernetic Background Image Layer with Wave Ribbons & Pedestal */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-95"
         style={{
-          backgroundImage: "url('/images/about/about-hero-bg.png')",
+          backgroundImage: "url('/images/about/about-hero-bg.webp')",
         }}
       />
 
@@ -270,7 +270,7 @@ export function AboutHeroSection() {
             {/* Floating 3D Team Illustration */}
             <div className="animate-zbr-float-slow relative z-10 w-full drop-shadow-[0_20px_50px_rgba(30,94,255,0.35)]">
               <Image
-                src="/images/about/about-hero-team.png"
+                src="/images/about/about-hero-team.webp"
                 alt="ZoomBridge Research AI, Data and Human Intelligence Team"
                 width={1024}
                 height={682}
