@@ -26,12 +26,13 @@ export function BookCallSection() {
     const ctx = gsap.context(() => {
       gsap.from(cardRef.current, {
         opacity: 0,
-        y: 28,
-        duration: 0.7,
+        y: 20,
+        duration: 0.6,
         ease: "power3.out",
+        clearProps: "all",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",
+          start: "top 95%",
           once: true,
         },
       });

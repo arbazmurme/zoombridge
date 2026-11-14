@@ -68,9 +68,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${displayFace.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${displayFace.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-white text-[#0F172A]">
+      <body className="flex min-h-screen flex-col bg-white text-[#0F172A]">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

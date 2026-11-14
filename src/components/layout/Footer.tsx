@@ -42,13 +42,14 @@ export function Footer() {
 
       gsap.from(".footer-stagger", {
         opacity: 0,
-        y: 22,
-        duration: 0.65,
-        stagger: 0.08,
+        y: 18,
+        duration: 0.5,
+        stagger: 0.05,
         ease: "power3.out",
+        clearProps: "all",
         scrollTrigger: {
           trigger: footerRef.current,
-          start: "top 85%",
+          start: "top 98%",
           once: true,
         },
       });

@@ -24,9 +24,10 @@ export default function BookACallPage() {
 
       <InnerHero
         badge="Strategy Consultation"
-        title="Book a strategy call."
-        description="Tell us your targets and we'll set up a no-obligation strategy call. We can also share sample data for your ideal customer profile, so you can judge the quality first-hand."
+        title="Accelerate pipeline with human-verified research."
+        description="Tell us your targets and we'll set up a no-obligation strategy call with our research directors. Sample data for your ICP available on request."
         breadcrumbs={[{ label: "Book a Strategy Call" }]}
+        nextSectionId="book-strategy-call"
       />
 
       <BookCallSection />

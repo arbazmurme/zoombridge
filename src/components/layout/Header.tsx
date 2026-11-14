@@ -266,6 +266,7 @@ export function Header() {
                 <div key={item.href} className="flex flex-col">
                   <Link
                     href={item.href}
+                    onClick={() => setMobileOpenPath(null)}
                     className={cn(
                       "flex min-h-[44px] items-center justify-between rounded-xl px-4 py-2.5 text-base font-medium",
                       pathname === item.href
@@ -281,6 +282,7 @@ export function Header() {
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}
+                          onClick={() => setMobileOpenPath(null)}
                           className="flex min-h-[40px] items-center text-sm text-slate-300 hover:text-[#22D3EE]"
                         >
                           {service.title}
@@ -293,12 +295,13 @@ export function Header() {
               <div className="mt-4 pt-3 border-t border-white/10">
                 <Link
                   href="/book-a-call"
-                  onClick={() =>
+                  onClick={() => {
+                    setMobileOpenPath(null);
                     trackEvent("cta_click", {
                       cta_location: "mobile_drawer",
                       cta_label: "Book a Strategy Call",
-                    })
-                  }
+                    });
+                  }}
                   className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#1E5EFF] px-5 py-3 text-sm font-semibold text-white"
                 >
                   Book a Strategy Call
