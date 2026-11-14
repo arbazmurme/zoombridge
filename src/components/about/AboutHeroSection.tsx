@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowRight,
   BarChart3,
+  ChevronDown,
   ChevronRight,
   Globe,
   Move3d,
@@ -99,6 +100,15 @@ export function AboutHeroSection() {
       gridSpotlightRef.current.style.opacity = "0";
     }
     setMouseOffset({ x: 0, y: 0 });
+  };
+
+  const handleScrollDown = () => {
+    const next = document.getElementById("who-we-are");
+    if (next) {
+      next.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollBy({ top: window.innerHeight * 0.85, behavior: "smooth" });
+    }
   };
 
   return (
@@ -331,6 +341,36 @@ export function AboutHeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Bottom Ambient Vignette Fade */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/30 to-transparent"
+      />
+
+      {/* Interactive Bottom Scroll Indicator */}
+      <div className="about-hero-reveal absolute bottom-3 sm:bottom-5 left-1/2 z-30 -translate-x-1/2">
+        <button
+          type="button"
+          onClick={handleScrollDown}
+          aria-label="Scroll to explore more about ZoomBridge Research"
+          className="group flex flex-col items-center gap-1.5 transition-transform duration-300 hover:scale-105 focus:outline-none"
+        >
+          <div className="flex items-center gap-2 rounded-full border border-white/20 bg-[#0F1E38]/90 px-4 py-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 group-hover:border-[#22D3EE]/60 group-hover:bg-[#0F1E38] group-hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]">
+            {/* Animated Cyber Mouse Wheel */}
+            <div className="relative flex h-5 w-3.5 items-start justify-center rounded-full border border-white/50 p-0.5 transition-colors group-hover:border-[#22D3EE]">
+              <span className="h-1.5 w-1 rounded-full bg-[#22D3EE] animate-bounce" />
+            </div>
+
+            <span className="font-mono-metric text-[11px] font-semibold uppercase tracking-wider text-slate-200 transition-colors group-hover:text-white">
+              Scroll to explore
+            </span>
+
+            <ChevronDown className="h-3.5 w-3.5 text-[#22D3EE] transition-transform duration-300 group-hover:translate-y-0.5" />
+          </div>
+        </button>
+      </div>
     </section>
   );
 }
+

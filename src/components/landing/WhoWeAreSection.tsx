@@ -102,6 +102,7 @@ export function WhoWeAreSection() {
   return (
     <section
       ref={sectionRef}
+      id="who-we-are"
       aria-labelledby="who-we-are-heading"
       className="zbr-section relative overflow-hidden bg-gradient-to-b from-[#EDF2FC] via-[#F5F8FF] to-[#EAF1FC] text-[#0F172A]"
     >
