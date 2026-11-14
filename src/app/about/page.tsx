@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2, Layers3, Sparkles } from "lucide-react";
-import { InnerHero } from "@/components/layout/InnerHero";
+import { AboutHeroSection } from "@/components/about/AboutHeroSection";
 import { WhoWeAreSection } from "@/components/landing/WhoWeAreSection";
 import { MissionVisionSection } from "@/components/landing/MissionVisionSection";
 import { GlobalReachSection } from "@/components/landing/GlobalReachSection";
@@ -34,22 +34,7 @@ export default function AboutPage() {
         ])}
       />
 
-      <InnerHero
-        badge="About ZoomBridge Research"
-        title="Powering smarter B2B growth through AI, data & human intelligence."
-        description="At ZoomBridge Research, we help businesses identify, engage, and convert the right prospects through AI-powered research, verified data, and human expertise across 120+ countries."
-        breadcrumbs={[{ label: "About Us" }]}
-      >
-        <div className="flex flex-wrap gap-4">
-          <MagneticButton href="/why-zbr" variant="primary">
-            <span>Why ZoomBridge</span>
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </MagneticButton>
-          <MagneticButton href="/services" variant="secondary">
-            <span>Explore Services</span>
-          </MagneticButton>
-        </div>
-      </InnerHero>
+      <AboutHeroSection />
 
       <WhoWeAreSection />
 
