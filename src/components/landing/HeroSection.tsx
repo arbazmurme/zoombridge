@@ -119,7 +119,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative flex min-h-[92vh] items-center overflow-hidden bg-[#0A1628] pb-20 pt-32 text-white lg:pb-28 lg:pt-36"
+      className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0A1628] pb-20 pt-20 text-white"
     >
       {/* Layered Background Gradient & Grid (Layer 1) */}
       <div
