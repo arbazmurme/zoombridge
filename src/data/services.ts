@@ -115,12 +115,27 @@ export const SERVICES: ServiceDetail[] = [
       {
         question: "How do you maintain high email deliverability?",
         answer:
-          "Every contact list undergoes deduplication, job-title verification, and multi-layer deliverability testing prior to deployment.",
+          "Every contact list undergoes deduplication, direct MX ping verification, job-title validation, and multi-layer deliverability testing prior to deployment to keep bounce rates below 3%.",
+      },
+      {
+        question: "How do you build and verify custom ICP contact lists?",
+        answer:
+          "We combine AI signal detection across firmographics and buying intent with manual analyst validation, ensuring every prospect matches your exact ICP, seniority level, and decision-making authority.",
+      },
+      {
+        question: "Can you integrate sequences with our CRM or marketing stack?",
+        answer:
+          "Yes. We support direct integration and export to major enterprise CRMs including HubSpot, Salesforce, Marketo, and Outreach, tailored to your existing sales workflows.",
+      },
+      {
+        question: "Is your email outreach compliant with GDPR, CCPA, and CAN-SPAM?",
+        answer:
+          "Yes. All B2B outreach is conducted strictly under legitimate interest provisions with verified opt-out mechanisms and full transparency across all global regulatory frameworks.",
       },
       {
         question: "How is Email Marketing priced?",
         answer:
-          "Contact for Pricing — scope depends on target segment size, regions, and campaign cadence.",
+          "Contact for Pricing — scope depends on target segment size, geographic coverage, campaign cadence, and dedicated analyst requirements.",
       },
     ],
     relatedSlugs: ["account-based-marketing", "contact-discovery", "data-enrichment"],
@@ -212,12 +227,27 @@ export const SERVICES: ServiceDetail[] = [
       {
         question: "Do you work with our existing target account list?",
         answer:
-          "Yes. We can enrich, map, and score your existing Target Account List or build an ICP-aligned list from scratch.",
+          "Yes. We can enrich, map, and score your existing Target Account List or build an ICP-aligned list from scratch based on dynamic intent signals.",
+      },
+      {
+        question: "How does your ABM scoring model determine account priority?",
+        answer:
+          "We synthesize Fit Scoring (firmographics, technographics), Intent Scoring (topic surges, buying triggers), and Engagement Scoring to classify accounts into Tier 1, Tier 2, and Tier 3.",
+      },
+      {
+        question: "How do you map buying committees across enterprise accounts?",
+        answer:
+          "Enterprise B2B purchases typically involve 6-10 stakeholders. We map champions, economic buyers, technical evaluators, and legal gatekeepers so your sales team engages the entire committee.",
+      },
+      {
+        question: "Which outreach channels are supported in ABM campaigns?",
+        answer:
+          "We orchestrate multi-touch engagement across 1:1 and 1:few email sequences, LinkedIn executive positioning, syndicated content, and personalized digital touchpoints.",
       },
       {
         question: "What is the pricing for ABM programs?",
         answer:
-          "Contact for Pricing — customized to account tier volume, regions, and channel mix.",
+          "Contact for Pricing — customized to account tier volume, geographic regions, and dedicated research analyst requirements.",
       },
     ],
     relatedSlugs: ["lead-generation", "contact-discovery", "content-syndication"],
@@ -309,12 +339,27 @@ export const SERVICES: ServiceDetail[] = [
       {
         question: "Are syndicated leads checked before delivery?",
         answer:
-          "Yes. Every record undergoes job-title and industry checks, deduplication, and deliverability validation.",
+          "Yes. Every record undergoes job-title and industry checks, deduplication, and direct deliverability validation by human analysts before appearing on your report.",
+      },
+      {
+        question: "What content assets perform best for B2B syndication?",
+        answer:
+          "Original research reports, benchmarks, buyer guides, whitepapers, and high-value webinar recordings generate the highest engagement among enterprise decision-makers.",
+      },
+      {
+        question: "How do you ensure leads match our strict qualification criteria?",
+        answer:
+          "We implement custom qualifying questions (e.g. project timelines, current vendor stack, budget horizons) so you receive sales-ready prospects, not casual downloads.",
+      },
+      {
+        question: "What lead data fields are provided in delivery reports?",
+        answer:
+          "Deliverables include full name, verified business email, direct phone/extension, job title, company name, employee band, annual revenue, industry, and download timestamp.",
       },
       {
         question: "How is Content Syndication priced?",
         answer:
-          "Contact for Pricing — structured around target criteria, volume, and geographies.",
+          "Contact for Pricing — structured on cost-per-lead (CPL) models scaled around your target criteria, lead volume, and regional requirements.",
       },
     ],
     relatedSlugs: ["lead-generation", "account-based-marketing", "email-marketing"],
@@ -406,12 +451,27 @@ export const SERVICES: ServiceDetail[] = [
       {
         question: "Can we request sample data for our ICP?",
         answer:
-          "Yes. Request sample data via our strategy call form so you can inspect data quality first-hand.",
+          "Yes. We encourage teams to request sample data for their exact target accounts and titles so you can inspect deliverability, accuracy, and depth first-hand.",
+      },
+      {
+        question: "How does your human validation process work?",
+        answer:
+          "AI algorithms discover potential matches across 50M+ records. Then, specialized research analysts verify active employment, job scope, direct email, and phone connectivity.",
+      },
+      {
+        question: "What geographies and industries does your database cover?",
+        answer:
+          "We cover decision-makers across 120+ countries across North America, EMEA, APAC, and LATAM, specializing in SaaS, Cloud, Fintech, Manufacturing, and Healthcare.",
+      },
+      {
+        question: "How frequently is contact data refreshed?",
+        answer:
+          "Every record delivered is verified in real time during the campaign cycle (under 30 days old) to guarantee zero decayed contacts and sub-3% bounce rates.",
       },
       {
         question: "How is Contact Discovery priced?",
         answer:
-          "Contact for Pricing — scoped by account volume, persona depth, and regions.",
+          "Contact for Pricing — scoped by named account volume, committee persona depth, and regional requirements.",
       },
     ],
     relatedSlugs: ["data-enrichment", "account-based-marketing", "lead-generation"],
@@ -503,12 +563,27 @@ export const SERVICES: ServiceDetail[] = [
       {
         question: "What differentiates ZBR lead generation from standard lead vendors?",
         answer:
-          "Instead of automated exports from static lists, we combine AI intent analysis with human validation and buying-committee mapping.",
+          "Instead of automated scrapes from static databases, we combine predictive AI intent signals with manual analyst validation, ensuring you only receive active decision-makers with proven budget authority.",
+      },
+      {
+        question: "How do you identify active buying signals and in-market intent?",
+        answer:
+          "We analyze multi-source intent data including digital research surges, hiring spikes, technographic adoption, and content engagement to detect accounts actively searching for your solutions.",
+      },
+      {
+        question: "What is the typical turnaround time from brief to lead delivery?",
+        answer:
+          "Initial verified lead cohorts are delivered within 5 to 7 business days following campaign brief sign-off, with real-time feedback loops to refine ongoing targeting.",
+      },
+      {
+        question: "Can we review and approve target accounts before outreach begins?",
+        answer:
+          "Yes. We provide complete list transparency — you can review, filter, and approve all target accounts and buyer personas prior to campaign activation.",
       },
       {
         question: "How is Lead Generation priced?",
         answer:
-          "Contact for Pricing — tailored to qualification criteria and target markets.",
+          "Contact for Pricing — tailored around agreed qualification criteria, lead volume, and regional target markets.",
       },
     ],
     relatedSlugs: ["account-based-marketing", "content-syndication", "email-marketing"],
@@ -598,14 +673,29 @@ export const SERVICES: ServiceDetail[] = [
     ],
     faqs: [
       {
-        question: "What checks are included in Data Enrichment?",
+        question: "What validation checks are included in Data Enrichment?",
         answer:
-          "Our multi-layer validation covers triple-verified contacts, job-title and industry checks, deduplication, and deliverability testing.",
+          "Our multi-layer validation covers direct email SMTP pinging, LinkedIn job-title verification, phone validity checks, company domain normalization, and cross-record deduplication.",
+      },
+      {
+        question: "How do you handle decayed or duplicate records in our database?",
+        answer:
+          "We flag obsolete contacts whose positions have changed, match them to successor decision-makers where possible, and eliminate duplicates based on normalized company and person identifiers.",
+      },
+      {
+        question: "Which CRM platforms and formats do you support for exports?",
+        answer:
+          "We provide native field-mapped imports for Salesforce, HubSpot, Marketo, and standard formats (CSV, XLSX, JSON) configured directly to your internal CRM data schema.",
+      },
+      {
+        question: "What is your data accuracy guarantee on enriched contacts?",
+        answer:
+          "All enriched records are backed by our 95%+ data accuracy benchmark. Any contact flagged as invalid within 30 days is replaced or credited promptly.",
       },
       {
         question: "How is Data Enrichment priced?",
         answer:
-          "Contact for Pricing — based on record volume and required enrichment attributes.",
+          "Contact for Pricing — structured on volume tiers and depth of requested enrichment attributes (firmographic, technographic, intent signals).",
       },
     ],
     relatedSlugs: ["contact-discovery", "account-based-marketing", "email-marketing"],

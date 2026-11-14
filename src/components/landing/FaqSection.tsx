@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -25,6 +25,19 @@ export function FaqSection({
   const { prefersReducedMotion } = useMotionConfig();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  // Ensure proportional layout: if service has fewer than 4 FAQs, supplement with core questions
+  const displayItems = useMemo(() => {
+    if (items && items.length >= 4) return items;
+    const combined = [...(items || [])];
+    for (const core of CORE_FAQS) {
+      if (!combined.some((item) => item.question === core.question)) {
+        combined.push(core);
+      }
+      if (combined.length >= 5) break;
+    }
+    return combined;
+  }, [items]);
+
   useEffect(() => {
     if (prefersReducedMotion || !sectionRef.current) return;
     const ctx = gsap.context(() => {
@@ -32,11 +45,12 @@ export function FaqSection({
         opacity: 0,
         y: 18,
         duration: 0.52,
-        stagger: 0.06,
+        stagger: 0.05,
         ease: "power3.out",
+        clearProps: "all",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 84%",
+          start: "top 95%",
           once: true,
         },
       });
@@ -111,7 +125,7 @@ export function FaqSection({
 
         {/* Right Compact Interactive Accordion List */}
         <div className="space-y-2.5 lg:col-span-7">
-          {items.map((item, idx) => {
+          {displayItems.map((item, idx) => {
             const isOpen = openIndex === idx;
             const panelId = `faq-panel-${idx}`;
             const buttonId = `faq-button-${idx}`;
