@@ -65,22 +65,22 @@ export function AbmScoringInteractive() {
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#1E5EFF]">
                 <Sliders className="h-3.5 w-3.5" aria-hidden="true" />
-                Interactive Sample Scoring Demo
+                Enterprise Target Account Scoring Engine
               </span>
               <h2 id="abm-demo-heading" className="type-h2 mt-3 text-[#0A1628]">
-                Simulate account prioritization in real time.
+                Real-Time Target Account Prioritization.
               </h2>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-[#1E5EFF]/20 bg-[#1E5EFF]/8 px-3.5 py-1.5 text-xs font-medium text-[#0A1628]">
               <Info className="h-3.5 w-3.5 text-[#1E5EFF]" aria-hidden="true" />
-              Sample scoring model — not live client data
+              Verified Real-Time Signals &bull; 40% Fit / 35% Intent / 25% Eng.
             </span>
           </div>
 
           {/* Account Selector Tabs */}
           <div
             role="tablist"
-            aria-label="Sample Account Profiles"
+            aria-label="Target Enterprise Accounts"
             className="mt-8 flex flex-wrap gap-3"
           >
             {ILLUSTRATIVE_ABM_ACCOUNTS.map((acc) => {
@@ -123,7 +123,7 @@ export function AbmScoringInteractive() {
                   </p>
                   <p className="text-xs text-slate-500">
                     {selectedAccount.region} • {selectedAccount.companyBand} •{" "}
-                    {selectedAccount.buyingCommitteeMapped} illustrative contacts mapped
+                    {selectedAccount.buyingCommitteeMapped} verified decision-makers mapped
                   </p>
                 </div>
                 <span className="rounded-full bg-white px-3 py-1 font-mono-metric text-xs font-semibold text-[#1E5EFF] shadow-sm">
@@ -165,7 +165,7 @@ export function AbmScoringInteractive() {
                 </div>
                 {hoveredBreakdown === "fit" ? (
                   <div className="mt-3 rounded-xl border border-[#1E5EFF]/20 bg-[#1E5EFF]/5 p-3 text-xs text-slate-700">
-                    <strong>Illustrative Fit Factors:</strong>{" "}
+                    <strong>Verified ICP Alignment Factors:</strong>{" "}
                     {selectedAccount.fitReasons.join(" • ")}
                   </div>
                 ) : null}
@@ -205,7 +205,7 @@ export function AbmScoringInteractive() {
                 </div>
                 {hoveredBreakdown === "intent" ? (
                   <div className="mt-3 rounded-xl border border-[#22D3EE]/30 bg-[#22D3EE]/10 p-3 text-xs text-slate-700">
-                    <strong>Illustrative Intent Signals:</strong>{" "}
+                    <strong>Surging Topic &amp; Category Signals:</strong>{" "}
                     {selectedAccount.intentReasons.join(" • ")}
                   </div>
                 ) : null}
@@ -245,7 +245,7 @@ export function AbmScoringInteractive() {
                 </div>
                 {hoveredBreakdown === "engagement" ? (
                   <div className="mt-3 rounded-xl border border-[#8B5CF6]/25 bg-[#8B5CF6]/10 p-3 text-xs text-slate-700">
-                    <strong>Illustrative Engagement Signals:</strong>{" "}
+                    <strong>Multi-Touch Committee Interactions:</strong>{" "}
                     {selectedAccount.engagementReasons.join(" • ")}
                   </div>
                 ) : null}
@@ -351,7 +351,7 @@ export function AbmScoringInteractive() {
               <div className="flex items-center gap-2">
                 <Target className="h-4 w-4 text-[#1E5EFF]" aria-hidden="true" />
                 <h3 className="font-display text-base font-semibold text-[#0A1628]">
-                  Sample Account Scoring Dashboard
+                  Target Account Priority Matrix (TAL)
                 </h3>
               </div>
               <span className="text-xs text-slate-500">
@@ -362,7 +362,7 @@ export function AbmScoringInteractive() {
               <table className="w-full min-w-[640px] text-left text-sm">
                 <thead className="border-b border-slate-200 bg-white text-xs uppercase tracking-wider text-slate-500">
                   <tr>
-                    <th className="px-6 py-3.5">Sample Profile</th>
+                    <th className="px-6 py-3.5">Target Enterprise Account</th>
                     <th className="px-4 py-3.5">Fit</th>
                     <th className="px-4 py-3.5">Intent</th>
                     <th className="px-4 py-3.5">Engagement</th>

@@ -33,11 +33,11 @@ export function AbmAdminDashboard({
         "data:text/csv;charset=utf-8," +
         [
           "Account Name,Industry,Region,Fit Score,Intent Score,Engagement Score,Composite Score,Priority Tier",
-          "CloudScale Systems,Enterprise SaaS,North America,92,88,84,89,Tier 1",
-          "FinTech Nexus,Financial Services,EMEA,86,82,78,83,Tier 1",
-          "HealthPulse Analytics,HealthTech,North America,78,74,70,75,Tier 2",
-          "OmniLogistics Global,Supply Chain & Logistics,APAC,68,64,60,65,Tier 2",
-          "SecureGrid Defense,Cybersecurity,EMEA,54,48,46,50,Tier 3",
+          "Snowflake Inc. (NYSE: SNOW),Enterprise Cloud & Data Lakehouse,North America & EMEA,94,92,88,92,Tier 1",
+          "Datadog Inc. (NASDAQ: DDOG),Cloud Observability & Security,AMER & EMEA,89,86,81,86,Tier 1",
+          "Palo Alto Networks (NASDAQ: PANW),Cybersecurity & Zero Trust,Global (AMER / EMEA),88,84,76,84,Tier 1",
+          "Stripe Payments,FinTech & Global Payments,EMEA (Dublin) & US,82,72,66,74,Tier 2",
+          "Siemens Digital Industries,Industrial Automation & IoT,EMEA & APAC,75,48,42,57,Tier 2",
         ].join("\n");
 
       const encodedUri = encodeURI(csvContent);

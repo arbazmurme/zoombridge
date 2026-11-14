@@ -304,7 +304,7 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-1.5 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 py-2.5 px-4 font-semibold text-xs sm:text-sm text-white shadow-md shadow-blue-500/20 transition hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] disabled:opacity-75"
+                  className="w-full mt-2 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 py-2.5 px-4 font-semibold text-xs sm:text-sm text-white shadow-md shadow-blue-500/20 transition hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] disabled:opacity-75"
                 >
                   {loading ? (
                     <div className="flex items-center gap-2">
@@ -319,21 +319,6 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
                   )}
                 </button>
               </form>
-
-              {/* Quick Fill Admin Access Helper */}
-              <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-col items-center">
-                <button
-                  type="button"
-                  onClick={handleQuickDemoFill}
-                  className="group inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-600 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition"
-                >
-                  <Sparkles className="h-3 w-3 text-amber-500 group-hover:text-blue-600" />
-                  <span>Demo Admin Fill (1-Click)</span>
-                </button>
-                <p className="mt-1.5 text-[10px] text-slate-400 text-center">
-                  Credentials: <code className="text-slate-600 font-mono">sales@wearezbr.com</code> / <code className="text-slate-600 font-mono">Ferrari@786</code>
-                </p>
-              </div>
             </div>
           </div>
 
@@ -359,9 +344,6 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
             <div className="mt-2.5 rounded-md bg-slate-50 p-2 text-xs font-mono text-slate-700 border border-slate-200">
               admin-security@zoombridgeresearch.com
             </div>
-            <p className="mt-2 text-[11px] text-slate-500">
-              Or use the <strong>Demo Admin Fill</strong> button to sign in directly.
-            </p>
             <button
               type="button"
               onClick={() => setShowForgotModal(false)}
