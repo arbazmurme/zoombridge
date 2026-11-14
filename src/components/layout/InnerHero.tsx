@@ -406,17 +406,9 @@ export function InnerHero({
               }}
             />
 
-            {/* Layer 2: Dedicated Themed Illustration with Float Animation & Soft Edge Blend */}
+            {/* Layer 2: Dedicated Themed Illustration with Float Animation (100% Alpha Transparent) */}
             {activeIllustration ? (
-              <div
-                className="animate-zbr-float-slow relative z-10 w-full drop-shadow-[0_20px_50px_rgba(30,94,255,0.35)]"
-                style={{
-                  maskImage:
-                    "radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%)",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 92% 88% at 50% 50%, #000 70%, transparent 100%)",
-                }}
-              >
+              <div className="animate-zbr-float-slow relative z-10 w-full drop-shadow-[0_20px_50px_rgba(30,94,255,0.35)]">
                 <Image
                   src={activeIllustration}
                   alt={activeAlt}
