@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { isLowEndDevice } from "@/lib/preloadHomeAssets";
 
 interface Particle {
   x: number;
@@ -23,13 +24,14 @@ export function ParticleBackground() {
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
+    const isLowDevice = isLowEndDevice();
+
     let animationId = 0;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Responsive particle count (fewer on mobile to preserve 60fps)
-    const isMobile = width < 768;
-    const particleCount = isMobile ? 32 : 55;
+    // Responsive particle count (reduced on low devices to guarantee 60fps)
+    const particleCount = isLowDevice ? 20 : 48;
 
     const colors = ["#00D4FF", "#873BFF", "#1E5EFF", "#FFFFFF"];
     const particles: Particle[] = [];
@@ -40,9 +42,9 @@ export function ParticleBackground() {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 1.6 + 0.8,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.5 + 0.8,
         alpha: baseAlpha,
         baseAlpha,
         color,
@@ -61,44 +63,46 @@ export function ParticleBackground() {
       ctx.clearRect(0, 0, width, height);
 
       // Draw subtle connecting lines when particles are close
-      const maxDistance = isMobile ? 90 : 130;
+      const maxDistance = isLowDevice ? 75 : 120;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < maxDistance) {
-            const lineAlpha = (1 - dist / maxDistance) * 0.12;
+          if (distSq < maxDistance * maxDistance) {
+            const dist = Math.sqrt(distSq);
+            const lineAlpha = (1 - dist / maxDistance) * (isLowDevice ? 0.09 : 0.14);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = `rgba(0, 212, 255, ${lineAlpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.75;
             ctx.stroke();
           }
         }
       }
 
-      // Update and draw particles
+      // Draw particle orbs with boundary bouncing
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+
         p.x += p.vx;
         p.y += p.vy;
 
-        // Wrap around boundaries smoothly
+        // Wrap around boundaries
         if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
+        else if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+        else if (p.y > height) p.y = 0;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.alpha;
         ctx.fill();
-        ctx.globalAlpha = 1.0;
       }
+      ctx.globalAlpha = 1;
 
       animationId = requestAnimationFrame(render);
     };
@@ -106,15 +110,16 @@ export function ParticleBackground() {
     render();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none absolute inset-0 z-0 opacity-80"
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60 will-change-transform"
     />
   );
 }

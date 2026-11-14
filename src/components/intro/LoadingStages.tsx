@@ -129,3 +129,4 @@ export function LoadingStages({ progress }: LoadingStagesProps) {
     </div>
   );
 }
+

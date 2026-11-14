@@ -10,8 +10,9 @@ import { ProgressBar } from "@/components/intro/ProgressBar";
 import { LoadingStages } from "@/components/intro/LoadingStages";
 import { ParticleBackground } from "@/components/intro/ParticleBackground";
 import { WaveBackground } from "@/components/intro/WaveBackground";
+import { preloadHomeAssets } from "@/lib/preloadHomeAssets";
 
-const PRELOADER_SESSION_KEY = "zbr_preloader_shown_v4";
+const PRELOADER_SESSION_KEY = "zbr_preloader_shown_v5";
 
 export function Preloader() {
   const pathname = usePathname() || "/";
@@ -26,7 +27,7 @@ export function Preloader() {
       return;
     }
 
-    // Play on any fresh visit / URL paste to "/", and on first visit per session for subpages.
+    // Play on any fresh visit to "/", and on first visit per session for subpages
     let skipForSubpage = false;
     try {
       if (
@@ -43,9 +44,13 @@ export function Preloader() {
       return;
     }
 
+    // Kick off homepage asset preloading (critical images, 3D model, 3D chunk)
+    // so everything is already warm in memory and cache when preloader lifts
+    preloadHomeAssets();
+
+    // Exactly 3.0 Seconds Animation Duration
+    const animationDurationMs = 3000;
     const startTime = performance.now();
-    const minDisplayMs = 1850;
-    const maxDuration = 2400;
     let rafId = 0;
     let closeTimer = 0;
 
@@ -61,18 +66,16 @@ export function Preloader() {
     const tick = (now: number) => {
       setVisible(true);
       const elapsed = now - startTime;
-      const t = Math.min(1, elapsed / maxDuration);
-      // High-order easing curve for natural deceleration
-      const eased = 1 - Math.pow(1 - t, 2.8);
+      const t = Math.min(1, elapsed / animationDurationMs);
+
+      // Smooth cubic ease out progression for natural pacing
+      const eased = 1 - Math.pow(1 - t, 2.6);
       const pct = Math.min(100, Math.round(eased * 100));
       setProgress(pct);
 
-      if (
-        elapsed >= maxDuration ||
-        (document.readyState === "complete" && elapsed >= minDisplayMs)
-      ) {
+      if (elapsed >= animationDurationMs) {
         setProgress(100);
-        closeTimer = window.setTimeout(finish, 320);
+        closeTimer = window.setTimeout(finish, 260);
         return;
       }
       rafId = window.requestAnimationFrame(tick);
@@ -80,8 +83,8 @@ export function Preloader() {
 
     rafId = window.requestAnimationFrame(tick);
 
-    const skipTimer = window.setTimeout(() => setShowSkip(true), 2600);
-    const hardStopTimer = window.setTimeout(finish, 3500);
+    const skipTimer = window.setTimeout(() => setShowSkip(true), 2000);
+    const hardStopTimer = window.setTimeout(finish, 3600);
 
     return () => {
       window.cancelAnimationFrame(rafId);
@@ -103,10 +106,12 @@ export function Preloader() {
 
   const phaseLabel =
     progress < 36
-      ? "Mapping Target Accounts..."
+      ? "Stage 1: Identifying Target Accounts..."
       : progress < 76
-      ? "Human-Verified Intelligence..."
-      : "Enterprise Intelligence Ready";
+      ? "Stage 2: Analyzing Intent Signals & Research..."
+      : progress < 100
+      ? "Stage 3: Preparing Market Intelligence..."
+      : "Enterprise Intelligence Ready • Welcome";
 
   return (
     <AnimatePresence>
@@ -119,7 +124,7 @@ export function Preloader() {
           initial={{ y: 0, opacity: 1 }}
           exit={{
             y: "-100%",
-            transition: { duration: 0.78, ease: [0.76, 0, 0.24, 1] },
+            transition: { duration: 0.72, ease: [0.76, 0, 0.24, 1] },
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-between overflow-hidden bg-[#071426] p-4 sm:p-8 text-white will-change-transform select-none"
         >
@@ -167,10 +172,8 @@ export function Preloader() {
 
           {/* 3. Center Cinematic Composition */}
           <div className="relative z-10 flex w-full max-w-2xl flex-col items-center text-center my-auto px-2">
-            
             {/* Interactive 3D Digital Globe + Logo Container */}
             <div className="relative flex flex-col items-center justify-center">
-              
               {/* 3D Three.js Globe rendered above/behind */}
               <div className="relative h-44 w-44 sm:h-52 sm:w-52 -mb-10">
                 <AnimatedGlobe size={208} />

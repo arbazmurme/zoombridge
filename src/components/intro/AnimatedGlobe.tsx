@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { isLowEndDevice } from "@/lib/preloadHomeAssets";
 
 interface AnimatedGlobeProps {
   size?: number;
@@ -15,7 +16,9 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     const container = mountRef.current;
     if (!container) return;
 
-    // 1. Scene, Camera, Renderer
+    const isLowDevice = isLowEndDevice();
+
+    // 1. Scene, Camera, Renderer with Device-Adaptive Profiling
     const width = container.clientWidth || size;
     const height = container.clientHeight || size;
 
@@ -25,11 +28,12 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: !isLowDevice,
       powerPreference: "high-performance",
+      precision: isLowDevice ? "mediump" : "highp",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isLowDevice ? 1.0 : Math.min(window.devicePixelRatio, 1.75));
     container.appendChild(renderer.domElement);
 
     // Group holding the globe and all orbital elements
@@ -42,7 +46,7 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
 
     // 2. Wireframe / Dot Matrix Digital Sphere
     const sphereRadius = 54;
-    const dotsCount = 480;
+    const dotsCount = isLowDevice ? 200 : 380;
     const dotPositions = new Float32Array(dotsCount * 3);
     const dotColors = new Float32Array(dotsCount * 3);
 
@@ -77,7 +81,7 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     dotGeometry.setAttribute("color", new THREE.BufferAttribute(dotColors, 3));
 
     const dotMaterial = new THREE.PointsMaterial({
-      size: 2.2,
+      size: isLowDevice ? 2.6 : 2.2,
       vertexColors: true,
       transparent: true,
       opacity: 0.9,
@@ -88,7 +92,7 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     globeGroup.add(dotSphere);
 
     // 3. Inner Wireframe Latitude/Longitude Grid Lines
-    const wireframeGeo = new THREE.IcosahedronGeometry(sphereRadius * 0.98, 2);
+    const wireframeGeo = new THREE.IcosahedronGeometry(sphereRadius * 0.98, isLowDevice ? 1 : 2);
     const wireframeMat = new THREE.MeshBasicMaterial({
       color: 0x00d4ff,
       wireframe: true,
@@ -99,7 +103,8 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     globeGroup.add(wireframeSphere);
 
     // 4. Subtle Inner Glow Sphere
-    const innerGeo = new THREE.SphereGeometry(sphereRadius * 0.94, 24, 24);
+    const innerSegments = isLowDevice ? 14 : 22;
+    const innerGeo = new THREE.SphereGeometry(sphereRadius * 0.94, innerSegments, innerSegments);
     const innerMat = new THREE.MeshBasicMaterial({
       color: 0x071e3d,
       transparent: true,
@@ -109,7 +114,7 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     globeGroup.add(innerSphere);
 
     // 5. Connecting Network Arcs / Great Circles
-    const arcCount = 9;
+    const arcCount = isLowDevice ? 4 : 7;
     const arcLines: THREE.Line[] = [];
     for (let k = 0; k < arcCount; k++) {
       const idxA = Math.floor(Math.random() * dotsCount);
@@ -132,7 +137,7 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
       mid.normalize().multiplyScalar(sphereRadius + distance * 0.22);
 
       const curve = new THREE.QuadraticBezierCurve3(vA, mid, vB);
-      const curvePoints = curve.getPoints(24);
+      const curvePoints = curve.getPoints(isLowDevice ? 14 : 22);
       const curveGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
 
       const curveMat = new THREE.LineBasicMaterial({
@@ -142,33 +147,31 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
         blending: THREE.AdditiveBlending,
       });
 
-      const arc = new THREE.Line(curveGeo, curveMat);
-      arcLines.push(arc);
-      globeGroup.add(arc);
+      const line = new THREE.Line(curveGeo, curveMat);
+      globeGroup.add(line);
+      arcLines.push(line);
     }
 
-    // 6. Orbital Rings (Cyan & Purple tilted ellipses)
-    // Primary Cyan Ring
-    const ring1RadiusX = sphereRadius * 1.55;
-    const ring1RadiusY = sphereRadius * 1.55;
-    const ring1Curve = new THREE.EllipseCurve(0, 0, ring1RadiusX, ring1RadiusY, 0, 2 * Math.PI, false, 0);
-    const ring1Points = ring1Curve.getPoints(80);
+    // 6. Dual Luminous Orbital Rings with Revolving Satellites
+    const ringRadius1 = sphereRadius * 1.55;
+    const ring1Curve = new THREE.EllipseCurve(0, 0, ringRadius1, ringRadius1 * 0.42, 0, 2 * Math.PI, false, 0);
+    const ring1Points = ring1Curve.getPoints(isLowDevice ? 32 : 56);
     const ring1Geo = new THREE.BufferGeometry().setFromPoints(
       ring1Points.map((p) => new THREE.Vector3(p.x, p.y, 0))
     );
     const ring1Mat = new THREE.LineBasicMaterial({
       color: 0x00d4ff,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.55,
       blending: THREE.AdditiveBlending,
     });
-    const orbitalRing1 = new THREE.Line(ring1Geo, ring1Mat);
-    orbitalRing1.rotation.x = Math.PI / 2.3;
-    orbitalRing1.rotation.y = 0.35;
+    const orbitalRing1 = new THREE.LineLoop(ring1Geo, ring1Mat);
+    orbitalRing1.rotation.x = Math.PI / 3;
+    orbitalRing1.rotation.y = Math.PI / 7;
     globeGroup.add(orbitalRing1);
 
-    // Orbiting Cyan Satellite Bead
-    const bead1Geo = new THREE.SphereGeometry(2.4, 12, 12);
+    // Satellite Bead 1
+    const bead1Geo = new THREE.SphereGeometry(2.4, isLowDevice ? 8 : 12, isLowDevice ? 8 : 12);
     const bead1Mat = new THREE.MeshBasicMaterial({
       color: 0x00d4ff,
       blending: THREE.AdditiveBlending,
@@ -176,27 +179,26 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     const bead1 = new THREE.Mesh(bead1Geo, bead1Mat);
     globeGroup.add(bead1);
 
-    // Secondary Purple Ring
-    const ring2RadiusX = sphereRadius * 1.75;
-    const ring2RadiusY = sphereRadius * 1.75;
-    const ring2Curve = new THREE.EllipseCurve(0, 0, ring2RadiusX, ring2RadiusY, 0, 2 * Math.PI, false, 0);
-    const ring2Points = ring2Curve.getPoints(80);
+    // Orbital Ring 2 (Purple - counter angle)
+    const ringRadius2 = sphereRadius * 1.72;
+    const ring2Curve = new THREE.EllipseCurve(0, 0, ringRadius2, ringRadius2 * 0.38, 0, 2 * Math.PI, false, 0);
+    const ring2Points = ring2Curve.getPoints(isLowDevice ? 32 : 56);
     const ring2Geo = new THREE.BufferGeometry().setFromPoints(
       ring2Points.map((p) => new THREE.Vector3(p.x, p.y, 0))
     );
     const ring2Mat = new THREE.LineBasicMaterial({
       color: 0x873bff,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.45,
       blending: THREE.AdditiveBlending,
     });
-    const orbitalRing2 = new THREE.Line(ring2Geo, ring2Mat);
-    orbitalRing2.rotation.x = -Math.PI / 2.6;
-    orbitalRing2.rotation.y = -0.45;
+    const orbitalRing2 = new THREE.LineLoop(ring2Geo, ring2Mat);
+    orbitalRing2.rotation.x = -Math.PI / 4;
+    orbitalRing2.rotation.y = -Math.PI / 5;
     globeGroup.add(orbitalRing2);
 
-    // Orbiting Purple Satellite Bead
-    const bead2Geo = new THREE.SphereGeometry(2.2, 12, 12);
+    // Satellite Bead 2
+    const bead2Geo = new THREE.SphereGeometry(2.2, isLowDevice ? 8 : 12, isLowDevice ? 8 : 12);
     const bead2Mat = new THREE.MeshBasicMaterial({
       color: 0x873bff,
       blending: THREE.AdditiveBlending,
@@ -204,19 +206,18 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
     const bead2 = new THREE.Mesh(bead2Geo, bead2Mat);
     globeGroup.add(bead2);
 
-    // 7. Surrounding Cloud of Floating Star Dust Particles
-    const starCount = 180;
+    // 7. Ambient Stardust Particles
+    const starCount = isLowDevice ? 45 : 120;
+    const starGeo = new THREE.BufferGeometry();
     const starPositions = new Float32Array(starCount * 3);
     for (let s = 0; s < starCount; s++) {
-      const radius = sphereRadius * 1.2 + Math.random() * 55;
-      const theta = Math.random() * Math.PI * 2;
-      const phiAngle = Math.acos(2 * Math.random() - 1);
-
-      starPositions[s * 3] = radius * Math.sin(phiAngle) * Math.cos(theta);
-      starPositions[s * 3 + 1] = radius * Math.sin(phiAngle) * Math.sin(theta);
-      starPositions[s * 3 + 2] = radius * Math.cos(phiAngle);
+      const rad = sphereRadius * 1.3 + Math.random() * 50;
+      const th = Math.random() * Math.PI * 2;
+      const ph = (Math.random() - 0.5) * Math.PI;
+      starPositions[s * 3] = Math.cos(ph) * Math.cos(th) * rad;
+      starPositions[s * 3 + 1] = Math.sin(ph) * rad;
+      starPositions[s * 3 + 2] = Math.cos(ph) * Math.sin(th) * rad;
     }
-    const starGeo = new THREE.BufferGeometry();
     starGeo.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
     const starMat = new THREE.PointsMaterial({
       size: 1.5,
@@ -246,12 +247,12 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
       bead1.position.copy(ring1Vec);
 
       const angle2 = elapsed * -0.65;
-      const ring2Pt = ring2Curve.getPoint((angle2 % 1 + 1) % 1);
+      const ring2Pt = ring2Curve.getPoint(((angle2 % 1) + 1) % 1);
       const ring2Vec = new THREE.Vector3(ring2Pt.x, ring2Pt.y, 0).applyEuler(orbitalRing2.rotation);
       bead2.position.copy(ring2Vec);
 
-      // Subtle breathing pulse on dot material
-      dotMaterial.size = 2.0 + Math.sin(elapsed * 2.5) * 0.35;
+      // Breathing pulse on dot material
+      dotMaterial.size = (isLowDevice ? 2.6 : 2.0) + Math.sin(elapsed * 2.5) * 0.35;
       dotMaterial.opacity = 0.85 + Math.sin(elapsed * 2.0) * 0.12;
 
       renderer.render(scene, camera);
@@ -259,53 +260,36 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
 
     animate();
 
-    // 9. Resize Handling
-    const handleResize = () => {
-      if (!container) return;
-      const newW = container.clientWidth || size;
-      const newH = container.clientHeight || size;
-      camera.aspect = newW / newH;
-      camera.updateProjectionMatrix();
-      renderer.setSize(newW, newH);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // 10. Memory Safe Cleanup & Resource Disposal
+    // 9. Cleanup and Comprehensive GPU Memory Disposal
     return () => {
-      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
 
-      // Dispose geometries & materials
+      // Dispose Geometries
       dotGeometry.dispose();
-      dotMaterial.dispose();
       wireframeGeo.dispose();
-      wireframeMat.dispose();
       innerGeo.dispose();
-      innerMat.dispose();
       ring1Geo.dispose();
-      ring1Mat.dispose();
       bead1Geo.dispose();
-      bead1Mat.dispose();
       ring2Geo.dispose();
-      ring2Mat.dispose();
       bead2Geo.dispose();
-      bead2Mat.dispose();
       starGeo.dispose();
+      arcLines.forEach((l) => l.geometry.dispose());
+
+      // Dispose Materials
+      dotMaterial.dispose();
+      wireframeMat.dispose();
+      innerMat.dispose();
+      ring1Mat.dispose();
+      bead1Mat.dispose();
+      ring2Mat.dispose();
+      bead2Mat.dispose();
       starMat.dispose();
+      arcLines.forEach((l) => (l.material as THREE.Material).dispose());
 
-      arcLines.forEach((arc) => {
-        arc.geometry.dispose();
-        if (Array.isArray(arc.material)) {
-          arc.material.forEach((m) => m.dispose());
-        } else {
-          arc.material.dispose();
-        }
-      });
-
+      // Dispose Renderer & Remove DOM Element
       renderer.dispose();
-      if (renderer.domElement && renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
       }
     };
   }, [size]);
@@ -313,8 +297,9 @@ export function AnimatedGlobe({ size = 320, className = "" }: AnimatedGlobeProps
   return (
     <div
       ref={mountRef}
-      className={`relative flex items-center justify-center pointer-events-none ${className}`}
-      style={{ width: "100%", height: "100%" }}
+      className={`relative flex items-center justify-center pointer-events-none will-change-transform ${className}`}
+      style={{ width: size, height: size }}
+      aria-hidden="true"
     />
   );
 }

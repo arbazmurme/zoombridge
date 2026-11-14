@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { isLowEndDevice } from "@/lib/preloadHomeAssets";
 
 export function WaveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,6 +12,8 @@ export function WaveBackground() {
 
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
+
+    const isLowDevice = isLowEndDevice();
 
     let animationId = 0;
     let width = (canvas.width = window.innerWidth);
@@ -25,12 +28,13 @@ export function WaveBackground() {
     window.addEventListener("resize", handleResize);
 
     let step = 0;
-    const lines = 3;
+    const lines = isLowDevice ? 2 : 3;
+    const xStep = isLowDevice ? 12 : 6;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // We render 3 sine-wave ribbon layers along the bottom
+      // Render sine-wave ribbon layers along the bottom
       const baseY = height * 0.88;
 
       for (let l = 0; l < lines; l++) {
@@ -58,11 +62,11 @@ export function WaveBackground() {
         ctx.strokeStyle = gradient;
         ctx.lineWidth = 1.5;
 
-        for (let x = 0; x <= width; x += 6) {
+        for (let x = 0; x <= width; x += xStep) {
           const y =
             baseY +
             Math.sin(x * wavelength + step * speed) * amplitude +
-            Math.cos((x * 0.5) * wavelength + step * speed * 0.7) * (amplitude * 0.4);
+            Math.cos(x * 0.5 * wavelength + step * speed * 0.7) * (amplitude * 0.4);
 
           if (x === 0) {
             ctx.moveTo(x, y);
@@ -80,15 +84,16 @@ export function WaveBackground() {
     render();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none absolute inset-0 z-0 opacity-70"
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-80 will-change-transform"
     />
   );
 }
