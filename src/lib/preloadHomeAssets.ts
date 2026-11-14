@@ -67,3 +67,4 @@ export function preloadHomeAssets(): void {
     // Graceful silent fallback
   }
 }
+

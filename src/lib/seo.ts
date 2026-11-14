@@ -47,11 +47,12 @@ export function buildPageMetadata({
   path,
   keywords,
   noIndex = false,
-  ogImage = "/images/og-image.png",
+  ogImage = "/images/og-image.jpg",
 }: PageMetadataInput): Metadata {
   const canonical = absoluteUrl(path);
   const ogTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
   const ogImageUrl = absoluteUrl(ogImage);
+  const ogPngUrl = absoluteUrl("/images/og-image.png");
 
   const mergedKeywords = Array.from(
     new Set([...(keywords || []), ...DEFAULT_KEYWORDS])
@@ -87,6 +88,15 @@ export function buildPageMetadata({
       images: [
         {
           url: ogImageUrl,
+          secureUrl: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
+          type: ogImage.endsWith(".png") ? "image/png" : "image/jpeg",
+        },
+        {
+          url: ogPngUrl,
+          secureUrl: ogPngUrl,
           width: 1200,
           height: 630,
           alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
@@ -98,8 +108,11 @@ export function buildPageMetadata({
       card: "summary_large_image",
       title: ogTitle,
       description,
-      images: [ogImageUrl],
+      images: [ogImageUrl, ogPngUrl],
       creator: "@wearezbr",
+    },
+    other: {
+      image_src: ogImageUrl,
     },
     icons: {
       icon: [

@@ -38,7 +38,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = getSiteUrl();
-const ogImage = absoluteUrl("/images/og-image.png");
+const ogImageJpg = absoluteUrl("/images/og-image.jpg");
+const ogImagePng = absoluteUrl("/images/og-image.png");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -86,7 +87,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: ogImage,
+        url: ogImageJpg,
+        secureUrl: ogImageJpg,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
+        type: "image/jpeg",
+      },
+      {
+        url: ogImagePng,
+        secureUrl: ogImagePng,
         width: 1200,
         height: 630,
         alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
@@ -98,8 +108,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
-    images: [ogImage],
+    images: [ogImageJpg, ogImagePng],
     creator: "@wearezbr",
+  },
+  other: {
+    image_src: ogImageJpg,
   },
 };
 
@@ -113,6 +126,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${displayFace.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
     >
+      <head>
+        <link rel="image_src" href={ogImageJpg} />
+      </head>
       <body className="flex min-h-screen flex-col bg-white text-[#0F172A]">
         <a href="#main-content" className="skip-link">
           Skip to main content
