@@ -178,7 +178,7 @@ export function HeroSection() {
       {/* Foreground Content */}
       <div className="zbr-container relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
         {/* Left Copy Column */}
-        <div className="relative z-20 lg:col-span-6 pointer-events-auto">
+        <div className="relative z-10 lg:col-span-6">
           <div className="hero-stagger inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/6 px-4 py-1.5 backdrop-blur-sm">
             <LottieSignal className="h-5 w-5" />
             <span className="text-xs font-semibold tracking-wide text-[#22D3EE]">
@@ -248,9 +248,9 @@ export function HeroSection() {
           </ul>
         </div>
 
-        {/* Right Interactive 3D Intelligence Core Stage (Extends behind text) */}
-        <div className="hero-stagger relative z-10 lg:col-span-6 lg:-ml-28 xl:-ml-40 lg:-mr-12 xl:-mr-20">
-          <div ref={modelStageZoomRef} className="relative w-full">
+        {/* Right Interactive 3D Intelligence Core Stage */}
+        <div className="hero-stagger relative z-10 flex justify-center lg:col-span-6">
+          <div ref={modelStageZoomRef} className="relative mx-auto w-full max-w-[540px]">
             {/* Soft radial backdrop glow behind 3D model */}
             <div
               aria-hidden="true"
@@ -274,7 +274,7 @@ export function HeroSection() {
                     : undefined,
                 transition: "transform 220ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
-              className="pointer-events-none absolute left-4 sm:left-10 top-3 hidden sm:inline-flex"
+              className="pointer-events-none absolute left-2 top-3 hidden sm:inline-flex xl:left-4"
             >
               <div className="animate-zbr-float inline-flex items-center gap-2 rounded-full border border-white/15 bg-[#0F1E38]/85 px-3.5 py-1.5 text-[11px] font-medium text-slate-200 shadow-lg backdrop-blur-md">
                 <Move3d className="h-3.5 w-3.5 text-[#22D3EE]" />
@@ -291,7 +291,7 @@ export function HeroSection() {
                     : undefined,
                 transition: "transform 240ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
-              className="pointer-events-none absolute right-2 top-3 hidden sm:block"
+              className="pointer-events-none absolute right-2 top-3 hidden sm:block xl:right-4"
             >
               <div className="animate-zbr-float-slow rounded-2xl border border-white/15 bg-[#0F1E38]/90 px-4 py-3 shadow-xl backdrop-blur-md">
                 <div className="flex items-center gap-2 text-[11px] font-medium text-slate-300">
@@ -313,7 +313,7 @@ export function HeroSection() {
                     : undefined,
                 transition: "transform 240ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
-              className="pointer-events-none mt-2 inline-flex lg:absolute lg:bottom-4 lg:left-10 lg:mt-0"
+              className="pointer-events-none mt-2 inline-flex lg:absolute lg:bottom-3 lg:left-2 lg:mt-0 xl:left-4"
             >
               <div className="animate-zbr-float-slow inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-[#0F1E38]/90 px-4 py-3 shadow-xl backdrop-blur-md">
                 <ShieldCheck className="h-5 w-5 text-[#22D3EE]" aria-hidden="true" />
@@ -338,7 +338,7 @@ export function HeroSection() {
                     : undefined,
                 transition: "transform 260ms cubic-bezier(0.22, 1, 0.36, 1)",
               }}
-              className="pointer-events-none absolute bottom-4 right-2 hidden sm:inline-flex"
+              className="pointer-events-none absolute bottom-3 right-2 hidden sm:inline-flex xl:right-4"
             >
               <div className="animate-zbr-float inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#0F1E38]/90 px-3.5 py-2 text-xs font-medium text-slate-200 shadow-xl backdrop-blur-md">
                 <Sparkles className="h-3.5 w-3.5 text-[#22D3EE]" />
