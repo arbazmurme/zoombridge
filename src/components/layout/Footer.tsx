@@ -115,16 +115,6 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/abm-scoring"
-                  className="group inline-flex items-center gap-1 font-medium text-[#22D3EE] transition hover:text-white"
-                >
-                  <span className="border-b border-transparent transition group-hover:border-[#22D3EE]">
-                    ABM Scoring Engine
-                  </span>
-                </Link>
-              </li>
             </ul>
           </div>
 

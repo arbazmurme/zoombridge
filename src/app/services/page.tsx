@@ -38,8 +38,8 @@ export default function ServicesOverviewPage() {
             <span>Book a Strategy Call</span>
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </MagneticButton>
-          <MagneticButton href="/abm-scoring" variant="secondary">
-            <span>Explore ABM Scoring Engine</span>
+          <MagneticButton href="/services/account-based-marketing" variant="secondary">
+            <span>Explore Account-Based Marketing</span>
           </MagneticButton>
           <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-200">
             {SITE_INFO.pricingLabel}

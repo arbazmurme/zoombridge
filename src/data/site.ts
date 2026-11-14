@@ -24,7 +24,6 @@ export const HEADER_LINKS: NavLinkItem[] = [
   { label: "Services", href: "/services", hasDropdown: true },
   { label: "Why ZBR", href: "/why-zbr" },
   { label: "Contact", href: "/contact" },
-  { label: "ABM Scoring", href: "/abm-scoring" },
 ];
 
 export const TRUST_INDICATORS = [

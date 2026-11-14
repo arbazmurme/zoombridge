@@ -53,8 +53,8 @@ export default function CaseStudiesPage() {
                 <span>Request Sample Data</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </MagneticButton>
-              <MagneticButton href="/abm-scoring" variant="ghost">
-                <span>Explore ABM Scoring Engine</span>
+              <MagneticButton href="/services/account-based-marketing" variant="ghost">
+                <span>Explore ABM Services</span>
               </MagneticButton>
             </div>
           </div>
