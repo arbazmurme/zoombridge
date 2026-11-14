@@ -480,7 +480,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Equatorial Ring (Cyan) */}
         <OrbitalRing
-          radius={1.72}
+          radius={1.62}
           rotation={[0.38, -0.4, 0.22]}
           color="#22D3EE"
           speed={0.7}
@@ -489,7 +489,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Inclined Ring (Electric Blue) */}
         <OrbitalRing
-          radius={1.92}
+          radius={1.78}
           rotation={[-0.65, 0.45, 0.8]}
           color="#3B7BFF"
           speed={-0.55}
@@ -498,7 +498,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Polar Ring (Violet) */}
         <OrbitalRing
-          radius={2.10}
+          radius={1.94}
           rotation={[1.1, -0.28, -0.48]}
           color="#8B5CF6"
           speed={0.42}
@@ -538,7 +538,7 @@ export default function HeroNetworkCanvas({
     <Canvas
       dpr={lowPower ? 1 : [1, 1.5]}
       frameloop={inView ? "always" : "never"}
-      camera={{ position: [0, 0.04, 5.12], fov: 44 }}
+      camera={{ position: [0.08, 0.02, 5.4], fov: 45 }}
       gl={{
         antialias: !lowPower,
         alpha: true,
