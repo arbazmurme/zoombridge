@@ -54,6 +54,7 @@ export default function WhyZbrPage() {
         title="Turning intelligence into opportunity."
         description="In today's competitive B2B landscape, growth isn't driven by access to more data — it's driven by access to the right intelligence. We combine strategic thinking, AI-powered research, and human expertise."
         breadcrumbs={[{ label: "Why ZBR" }]}
+        illustrationSrc="/images/why-zbr/why-zbr-ai-verification.webp"
       >
         <div className="flex flex-wrap gap-4">
           <MagneticButton href="/book-a-call" variant="primary">

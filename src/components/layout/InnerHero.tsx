@@ -70,7 +70,7 @@ function getHeroMetaForPath(pathname: string): InnerHeroMeta {
       metricLabel: "Accuracy Goal",
       metricValue: "95%",
       subValue: "AI Identifies • Humans Verify",
-      illustrationSrc: "/images/why-zbr/why-zbr-hero.webp",
+      illustrationSrc: "/images/why-zbr/why-zbr-ai-verification.webp",
       illustrationAlt: "Dual Intelligence Verification Matrix",
       bgSrc: "/images/why-zbr/why-zbr-hero-bg.webp",
       hintPill: "AI Identifies • Humans Verify",
