@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -384,6 +384,16 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
   const geoCage2Ref = useRef<THREE.Mesh>(null);
   const atmosphereMatRef = useRef<THREE.ShaderMaterial>(null);
 
+  const { viewport } = useThree();
+
+  // Dynamically auto-scale so outer rings NEVER clip regardless of column aspect ratio
+  const safeDim = Math.min(viewport.width, viewport.height);
+  const responsiveScale = useMemo(() => {
+    const assemblyDiameter = 3.88;
+    const targetDim = safeDim * 0.84;
+    return Math.min(1.0, targetDim / assemblyDiameter);
+  }, [safeDim]);
+
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
     if (atmosphereMatRef.current) {
@@ -426,7 +436,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
   });
 
   return (
-    <group ref={outerRef} scale={1.0} rotation={[0.15, -0.3, 0]}>
+    <group ref={outerRef} scale={responsiveScale} rotation={[0.15, -0.3, 0]}>
       <Float speed={1.15} rotationIntensity={0.06} floatIntensity={0.12}>
         {/* Central Midnight Obsidian Glass Sphere */}
         <mesh ref={coreRef}>
@@ -480,7 +490,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Equatorial Ring (Cyan) */}
         <OrbitalRing
-          radius={1.56}
+          radius={1.50}
           rotation={[0.38, -0.4, 0.22]}
           color="#22D3EE"
           speed={0.7}
@@ -489,7 +499,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Inclined Ring (Electric Blue) */}
         <OrbitalRing
-          radius={1.72}
+          radius={1.66}
           rotation={[-0.65, 0.45, 0.8]}
           color="#3B7BFF"
           speed={-0.55}
@@ -498,7 +508,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Polar Ring (Violet) */}
         <OrbitalRing
-          radius={1.88}
+          radius={1.82}
           rotation={[1.1, -0.28, -0.48]}
           color="#8B5CF6"
           speed={0.42}
@@ -538,7 +548,7 @@ export default function HeroNetworkCanvas({
     <Canvas
       dpr={lowPower ? 1 : [1, 1.5]}
       frameloop={inView ? "always" : "never"}
-      camera={{ position: [0, 0.03, 5.35], fov: 44 }}
+      camera={{ position: [0, 0.02, 5.75], fov: 42 }}
       gl={{
         antialias: !lowPower,
         alpha: true,

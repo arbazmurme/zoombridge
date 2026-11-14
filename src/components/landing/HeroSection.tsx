@@ -234,7 +234,7 @@ export function HeroSection() {
           {/* Trust Indicators */}
           <ul
             aria-label="Core Trust Indicators"
-            className="hero-stagger mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-slate-300"
+            className="hero-stagger mt-9 flex max-w-lg flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-slate-300"
           >
             {TRUST_INDICATORS.map((item) => (
               <li key={item} className="inline-flex items-center gap-2">
