@@ -273,7 +273,7 @@ export function InnerHero({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-95 transition-opacity duration-700"
         style={{
-          backgroundImage: `url('${activeBg}')`,
+          backgroundImage: `url('${activeBg}?v=2')`,
         }}
       />
 

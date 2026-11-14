@@ -123,7 +123,7 @@ export function AboutHeroSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-95"
         style={{
-          backgroundImage: "url('/images/about/about-hero-bg.webp')",
+          backgroundImage: "url('/images/about/about-hero-bg.webp?v=2')",
         }}
       />
 
