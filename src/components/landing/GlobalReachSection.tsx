@@ -110,7 +110,7 @@ export function GlobalReachSection() {
     <section
       ref={sectionRef}
       aria-labelledby="global-reach-heading"
-      className="zbr-section relative overflow-hidden bg-[#0A1628] text-white"
+      className="relative overflow-hidden bg-[#0A1628] py-10 lg:py-14 text-white"
     >
       {/* Multi-depth Particle Parallax Layer */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -130,29 +130,29 @@ export function GlobalReachSection() {
         ))}
       </div>
 
-      <div className="zbr-container relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+      <div className="zbr-container relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10">
         {/* Left Intelligence & Decision-Maker Breakdown */}
         <div className="lg:col-span-6">
-          <span className="reach-reveal inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#22D3EE]">
+          <span className="reach-reveal inline-flex items-center gap-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/10 px-3 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-[#22D3EE]">
             <Globe2 className="h-3.5 w-3.5" aria-hidden="true" />
             Global Decision-Maker Reach
           </span>
-          <h2 id="global-reach-heading" className="reach-reveal type-h2 mt-4 text-white">
+          <h2 id="global-reach-heading" className="reach-reveal type-h2 mt-3 text-white">
             {GLOBAL_REACH.heading}
           </h2>
 
           {/* Counters */}
-          <div className="reach-counters mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="reach-counters mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {GLOBAL_REACH.metrics.map((metric, idx) => (
               <div
                 key={metric.label}
-                className="rounded-2xl border border-white/10 bg-[#0F1E38]/90 p-5"
+                className="rounded-xl border border-white/10 bg-[#0F1E38]/90 p-4"
               >
-                <p className="font-mono-metric text-4xl font-bold text-[#22D3EE]">
+                <p className="font-mono-metric text-2xl sm:text-3xl font-bold text-[#22D3EE]">
                   {displayCounts[idx]}
                   {metric.suffix}
                 </p>
-                <p className="mt-1.5 text-sm font-medium text-slate-200">
+                <p className="mt-1 text-xs font-medium text-slate-200">
                   {metric.label}
                 </p>
               </div>
@@ -160,17 +160,17 @@ export function GlobalReachSection() {
           </div>
 
           {/* Target Decision-Makers */}
-          <div className="mt-8">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <div className="mt-5">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
               Target Decision-Makers
             </p>
-            <div className="reach-pills-wrap mt-3 flex flex-wrap gap-2.5">
+            <div className="reach-pills-wrap mt-2 flex flex-wrap gap-2">
               {GLOBAL_REACH.decisionMakers.map((role) => (
                 <span
                   key={role}
-                  className="reach-pill inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-200 transition hover:border-[#22D3EE]/50 hover:text-white"
+                  className="reach-pill inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-slate-200 transition hover:border-[#22D3EE]/50 hover:text-white"
                 >
-                  <UserCheck className="h-3.5 w-3.5 text-[#22D3EE]" aria-hidden="true" />
+                  <UserCheck className="h-3 w-3 text-[#22D3EE]" aria-hidden="true" />
                   {role}
                 </span>
               ))}
@@ -178,17 +178,17 @@ export function GlobalReachSection() {
           </div>
 
           {/* Regional Hub Indicators */}
-          <div className="mt-8 grid grid-cols-2 gap-3">
+          <div className="mt-5 grid grid-cols-2 gap-2.5">
             {GLOBAL_REACH.regions.map((region) => (
               <div
                 key={region.code}
-                className="reach-reveal rounded-xl border border-white/10 bg-[#0F1E38]/60 p-3.5"
+                className="reach-reveal rounded-lg border border-white/10 bg-[#0F1E38]/60 p-2.5"
               >
-                <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                  <MapPin className="h-3.5 w-3.5 text-[#3B7BFF]" aria-hidden="true" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
+                  <MapPin className="h-3 w-3 text-[#3B7BFF]" aria-hidden="true" />
                   <span>{region.name}</span>
                 </div>
-                <p className="mt-1 text-[11px] text-slate-400">{region.scope}</p>
+                <p className="mt-0.5 text-[10px] text-slate-400">{region.scope}</p>
               </div>
             ))}
           </div>
@@ -196,21 +196,21 @@ export function GlobalReachSection() {
 
         {/* Right 3D Global Intelligence Network Stage */}
         <div className="lg:col-span-6">
-          <div className="relative rounded-3xl border border-white/15 bg-[#0F1E38]/85 p-4 shadow-2xl backdrop-blur-md">
+          <div className="relative rounded-2xl border border-white/15 bg-[#0F1E38]/85 p-3.5 shadow-2xl backdrop-blur-md">
             {/* Top Telemetry Header */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-2 pb-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-1 pb-2.5">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22D3EE] opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22D3EE]" />
                 </span>
-                <span className="font-mono-metric text-xs font-semibold uppercase tracking-wider text-[#22D3EE]">
+                <span className="font-mono-metric text-[11px] font-semibold uppercase tracking-wider text-[#22D3EE]">
                   Live Global Corridors • 120+ Countries
                 </span>
               </div>
 
-              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[11px] text-slate-300">
-                <Move3d className="h-3 w-3 text-[#22D3EE]" />
+              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-slate-300">
+                <Move3d className="h-2.5 w-2.5 text-[#22D3EE]" />
                 <span>Drag to Spin</span>
               </div>
             </div>
@@ -219,7 +219,7 @@ export function GlobalReachSection() {
             <GlobalGlobeWrapper />
 
             {/* Bottom Regional Coverage Chips */}
-            <div className="mt-2 border-t border-white/10 pt-3">
+            <div className="mt-2 border-t border-white/10 pt-2.5">
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
                   { code: "AMER", label: "Americas", value: "24M+", color: "#22D3EE" },
@@ -229,7 +229,7 @@ export function GlobalReachSection() {
                 ].map((hub) => (
                   <div
                     key={hub.code}
-                    className="group rounded-xl border border-white/8 bg-[#0A1628]/80 p-2 text-center transition-all duration-200 hover:border-white/20 hover:bg-[#0A1628]"
+                    className="group rounded-lg border border-white/8 bg-[#0A1628]/80 p-1.5 text-center transition-all duration-200 hover:border-white/20 hover:bg-[#0A1628]"
                   >
                     <p
                       className="font-mono-metric text-xs font-bold"

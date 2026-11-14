@@ -106,14 +106,14 @@ export function GlobalGlobeWrapper() {
 
   if (!webglReady || prefersReducedMotion || !isDesktop) {
     return (
-      <div className="flex h-[340px] items-center justify-center">
+      <div className="flex h-[260px] sm:h-[300px] lg:h-[340px] items-center justify-center">
         <GlobeFallback />
       </div>
     );
   }
 
   return (
-    <div className="h-[380px] w-full sm:h-[440px] lg:h-[480px]">
+    <div className="h-[260px] w-full sm:h-[300px] lg:h-[340px]">
       <GlobeErrorBoundary fallback={<GlobeFallback />}>
         <Suspense fallback={<GlobeFallback />}>
           <GlobalGlobeCanvas />
