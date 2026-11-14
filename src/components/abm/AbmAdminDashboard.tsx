@@ -626,7 +626,7 @@ export function AbmAdminDashboard({ adminEmail, onSignOut }: AbmAdminDashboardPr
               <HelpCircle className="h-4 w-4" />
             </button>
 
-            {/* User Profile — AM / Arbaz Murme / Admin matching screenshot */}
+            {/* User Profile — AM / Sales Team / Admin matching screenshot */}
             <div className="relative">
               <button
                 type="button"
@@ -637,7 +637,7 @@ export function AbmAdminDashboard({ adminEmail, onSignOut }: AbmAdminDashboardPr
                   AM
                 </div>
                 <div className="hidden sm:flex flex-col text-left leading-tight">
-                  <span className="text-xs font-bold text-slate-900">Arbaz Murme</span>
+                  <span className="text-xs font-bold text-slate-900">Sales Team</span>
                   <span className="text-[10px] text-slate-500 font-medium">Admin</span>
                 </div>
                 <ChevronDown className="h-3 w-3 text-slate-400 hidden sm:block" />
@@ -648,7 +648,7 @@ export function AbmAdminDashboard({ adminEmail, onSignOut }: AbmAdminDashboardPr
                   <div className="flex items-center gap-3 p-2 border-b border-slate-100 mb-2">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center">AM</div>
                     <div>
-                      <p className="font-bold text-slate-900">Arbaz Murme</p>
+                      <p className="font-bold text-slate-900">Sales Team</p>
                       <p className="text-slate-500 text-[10px]">{adminEmail}</p>
                       <span className="inline-block mt-0.5 px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-[9px] font-bold">Admin Portal</span>
                     </div>
@@ -1333,8 +1333,8 @@ export function AbmAdminDashboard({ adminEmail, onSignOut }: AbmAdminDashboardPr
                                 className={cn(
                                   "inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold",
                                   account.stage === "Qualified" ? "bg-emerald-100 text-emerald-800" :
-                                  account.stage === "Engaged" ? "bg-blue-100 text-blue-800" :
-                                  "bg-slate-100 text-slate-700"
+                                    account.stage === "Engaged" ? "bg-blue-100 text-blue-800" :
+                                      "bg-slate-100 text-slate-700"
                                 )}
                               >
                                 {account.stage}
@@ -1902,7 +1902,7 @@ export function AbmAdminDashboard({ adminEmail, onSignOut }: AbmAdminDashboardPr
                   <div className="space-y-2 text-xs">
                     <div>
                       <span className="text-slate-400 font-medium">Full Name</span>
-                      <p className="font-bold text-slate-900">Arbaz Murme</p>
+                      <p className="font-bold text-slate-900">Sales Team</p>
                     </div>
                     <div>
                       <span className="text-slate-400 font-medium">Email Address</span>
