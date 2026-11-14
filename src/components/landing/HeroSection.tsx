@@ -249,8 +249,8 @@ export function HeroSection() {
         </div>
 
         {/* Right Interactive 3D Intelligence Core Stage */}
-        <div className="hero-stagger relative lg:col-span-6">
-          <div ref={modelStageZoomRef} className="relative">
+        <div className="hero-stagger relative lg:col-span-6 lg:-mr-4 xl:-mr-8">
+          <div ref={modelStageZoomRef} className="relative w-full">
             {/* Soft radial backdrop glow behind 3D model */}
             <div
               aria-hidden="true"

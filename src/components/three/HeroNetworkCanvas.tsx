@@ -426,11 +426,11 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
   });
 
   return (
-    <group ref={outerRef} scale={1.08} rotation={[0.15, -0.3, 0]}>
-      <Float speed={1.2} rotationIntensity={0.08} floatIntensity={0.16}>
+    <group ref={outerRef} scale={1.05} rotation={[0.15, -0.3, 0]}>
+      <Float speed={1.15} rotationIntensity={0.06} floatIntensity={0.12}>
         {/* Central Midnight Obsidian Glass Sphere */}
         <mesh ref={coreRef}>
-          <sphereGeometry args={[1.22, 48, 48]} />
+          <sphereGeometry args={[1.24, 48, 48]} />
           <meshPhysicalMaterial
             color="#08101E"
             emissive="#0A1E3C"
@@ -453,7 +453,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Geodesic Lattice Cage 1 (Cyan) */}
         <mesh ref={geoCage1Ref}>
-          <icosahedronGeometry args={[1.34, lowPower ? 2 : 3]} />
+          <icosahedronGeometry args={[1.36, lowPower ? 2 : 3]} />
           <meshBasicMaterial
             color="#22D3EE"
             wireframe
@@ -465,7 +465,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Geodesic Lattice Cage 2 (Electric Violet) */}
         <mesh ref={geoCage2Ref}>
-          <icosahedronGeometry args={[1.29, lowPower ? 1 : 2]} />
+          <icosahedronGeometry args={[1.30, lowPower ? 1 : 2]} />
           <meshBasicMaterial
             color="#8B5CF6"
             wireframe
@@ -480,7 +480,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Equatorial Ring (Cyan) */}
         <OrbitalRing
-          radius={1.82}
+          radius={1.72}
           rotation={[0.38, -0.4, 0.22]}
           color="#22D3EE"
           speed={0.7}
@@ -489,7 +489,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Inclined Ring (Electric Blue) */}
         <OrbitalRing
-          radius={2.06}
+          radius={1.92}
           rotation={[-0.65, 0.45, 0.8]}
           color="#3B7BFF"
           speed={-0.55}
@@ -498,7 +498,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
 
         {/* Holographic Polar Ring (Violet) */}
         <OrbitalRing
-          radius={2.26}
+          radius={2.10}
           rotation={[1.1, -0.28, -0.48]}
           color="#8B5CF6"
           speed={0.42}
@@ -506,7 +506,7 @@ function B2BIntelligenceCore({ lowPower = false }: { lowPower?: boolean }) {
         />
 
         {/* Luminous Fresnel Atmospheric Halo */}
-        <mesh scale={1.24}>
+        <mesh scale={1.26}>
           <sphereGeometry args={[1, 40, 40]} />
           <shaderMaterial
             ref={atmosphereMatRef}
@@ -538,7 +538,7 @@ export default function HeroNetworkCanvas({
     <Canvas
       dpr={lowPower ? 1 : [1, 1.5]}
       frameloop={inView ? "always" : "never"}
-      camera={{ position: [0, 0.08, 4.9], fov: 42 }}
+      camera={{ position: [0, 0.04, 5.12], fov: 44 }}
       gl={{
         antialias: !lowPower,
         alpha: true,

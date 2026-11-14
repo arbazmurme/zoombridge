@@ -186,7 +186,9 @@ export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
     <div
       ref={containerRef}
       className={`relative w-full ${
-        compact ? "h-[310px] lg:h-[380px]" : "h-[400px] lg:h-[520px]"
+        compact
+          ? "h-[320px] sm:h-[380px] lg:h-[420px]"
+          : "h-[450px] sm:h-[540px] lg:h-[600px] xl:h-[640px]"
       }`}
     >
       {/* Soft luminous atmospheric aura behind the 3D globe */}

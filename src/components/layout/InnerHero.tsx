@@ -248,7 +248,7 @@ export function InnerHero({
 
         {/* Right Interactive 3D Intelligence Core & Context Telemetry Stage */}
         <div className="inner-hero-reveal relative lg:col-span-5">
-          <div className="relative mx-auto max-w-[440px]">
+          <div className="relative mx-auto max-w-[460px]">
             {/* Rotating Dashed Orbital Frame */}
             <div
               aria-hidden="true"
