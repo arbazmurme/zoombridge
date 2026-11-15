@@ -15,45 +15,18 @@ const HeroNetworkCanvas = dynamic(() => import("./HeroNetworkCanvas"), {
   ssr: false,
 });
 
-const subscribeNoop = () => () => {};
-let cachedCapability: { webgl: boolean; lowPower: boolean; skip3d: boolean } | null = null;
+const emptySubscribe = () => () => {};
 
-function getCapabilitySnapshot(): string {
-  if (typeof window === "undefined") return "0:0:1";
-  if (cachedCapability) {
-    return `${cachedCapability.webgl ? 1 : 0}:${cachedCapability.lowPower ? 1 : 0}:${cachedCapability.skip3d ? 1 : 0}`;
-  }
-  let webgl = false;
+function getWebglSupportedSnapshot(): boolean {
+  if (typeof window === "undefined") return false;
   try {
     const canvas = document.createElement("canvas");
-    webgl = Boolean(
+    return Boolean(
       canvas.getContext("webgl2") || canvas.getContext("webgl")
     );
   } catch {
-    webgl = false;
+    return false;
   }
-
-  const nav = navigator as Navigator & {
-    deviceMemory?: number;
-    connection?: { effectiveType?: string; saveData?: boolean };
-  };
-  const conn = nav.connection;
-  const saveData = Boolean(conn?.saveData);
-  const netType = conn?.effectiveType || "4g";
-  const cores = nav.hardwareConcurrency ?? 8;
-  const mem = nav.deviceMemory ?? 8;
-
-  const skip3d =
-    saveData ||
-    netType === "slow-2g" ||
-    netType === "2g" ||
-    cores <= 1 ||
-    mem < 1;
-
-  const lowPower = netType === "3g" || cores <= 4 || mem <= 4;
-
-  cachedCapability = { webgl, lowPower, skip3d };
-  return `${webgl ? 1 : 0}:${lowPower ? 1 : 0}:${skip3d ? 1 : 0}`;
 }
 
 function HeroStaticFallback() {
@@ -143,14 +116,17 @@ export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(true);
 
-  const capStr = useSyncExternalStore(
-    subscribeNoop,
-    getCapabilitySnapshot,
-    () => "0:0:1"
+  const isClient = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
   );
-  const [webglReady, lowPower, skip3d] = capStr
-    .split(":")
-    .map((v) => v === "1");
+
+  const webglSupported = useSyncExternalStore(
+    emptySubscribe,
+    getWebglSupportedSnapshot,
+    () => false
+  );
 
   useEffect(() => {
     const el = containerRef.current;
@@ -168,9 +144,13 @@ export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [webglReady, prefersReducedMotion, isDesktop, skip3d]);
+  }, [isClient]);
 
-  if (!webglReady || prefersReducedMotion || !isDesktop || skip3d) {
+  // Enable 3D on both desktop and mobile; on mobile use lowPower mode for silky 60fps
+  const isMobile = !isDesktop;
+  const useLowPower = isMobile;
+
+  if (!isClient || !webglSupported || prefersReducedMotion) {
     return (
       <div
         className={`flex w-full items-center justify-center ${
@@ -187,14 +167,14 @@ export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
       ref={containerRef}
       className={`relative w-full ${
         compact
-          ? "h-[300px] sm:h-[360px] lg:h-[400px]"
-          : "h-[420px] sm:h-[480px] lg:h-[520px] xl:h-[550px]"
+          ? "h-[280px] sm:h-[340px] lg:h-[400px]"
+          : "h-[340px] sm:h-[440px] lg:h-[520px] xl:h-[550px]"
       }`}
     >
       {/* Soft luminous atmospheric aura behind the 3D globe */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-6 rounded-full opacity-75 blur-3xl"
+        className="pointer-events-none absolute inset-4 sm:inset-6 rounded-full opacity-75 blur-3xl"
         style={{
           background:
             "radial-gradient(circle at 50% 56%, rgba(56,189,248,0.22) 0%, rgba(30,94,255,0.16) 45%, transparent 72%)",
@@ -202,7 +182,7 @@ export function HeroNetworkWrapper({ compact = false }: { compact?: boolean }) {
       />
       <WebGLErrorBoundary fallback={<HeroStaticFallback />}>
         <Suspense fallback={<HeroStaticFallback />}>
-          <HeroNetworkCanvas inView={inView} lowPower={lowPower} />
+          <HeroNetworkCanvas inView={inView} lowPower={useLowPower} />
         </Suspense>
       </WebGLErrorBoundary>
     </div>

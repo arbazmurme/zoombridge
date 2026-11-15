@@ -72,21 +72,9 @@ export function AbmAdminLogin({ onSuccess }: AbmAdminLoginProps) {
         onSuccess(resolvedEmail);
       } else {
         setLoading(false);
-        if (!isAdminEmail) {
-          setError(
-            "Access Restricted: Only authorized administrators (sales@wearezbr.com) can access the ABM Scoring platform."
-          );
-        } else {
-          setError("Invalid admin password. Please enter the correct password (Ferrari@786) or click Demo Admin Fill.");
-        }
+        setError("Invalid administrator credentials. Please check your email and password.");
       }
     }, 450);
-  };
-
-  const handleQuickDemoFill = () => {
-    setEmail("sales@wearezbr.com");
-    setPassword("Ferrari@786");
-    setError(null);
   };
 
   return (
