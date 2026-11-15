@@ -11,13 +11,12 @@ function escapeHtml(value: string): string {
 
 function getResendConfig() {
   const apiKey = process.env.RESEND_API_KEY?.trim();
-  // If user configured a verified custom domain, use it; otherwise fallback to Resend's active sandbox sender
   const from =
     process.env.RESEND_FROM_EMAIL?.trim() ||
-    "ZoomBridge Research <onboarding@resend.dev>";
+    "ZoomBridge Research <noreply@wearezbr.com>";
   const salesTo =
     process.env.SALES_NOTIFICATION_EMAIL?.trim() ||
-    "arbazmurme.work@gmail.com";
+    "sales@wearezbr.com";
 
   return { apiKey, from, salesTo };
 }
