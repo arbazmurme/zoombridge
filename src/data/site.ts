@@ -12,7 +12,7 @@ export const SITE_INFO = {
   domain: "wearezbr.com",
   email: "sales@wearezbr.com",
   privacyEmail: "info@wearezbr.com",
-  linkedin: "https://www.linkedin.com/company/zoombridge-research/",
+  linkedin: "https://www.linkedin.com/company/zoombridge-researchs/home/",
   turnaround: "< 24h",
   pricingLabel: "Contact for Pricing",
   copyright: "© 2026 ZoomBridge Research. All rights reserved.",

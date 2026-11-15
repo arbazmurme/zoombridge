@@ -139,7 +139,7 @@ export function buildOrganizationJsonLd() {
     image: absoluteUrl("/images/og-image.png"),
     email: "sales@wearezbr.com",
     description: SITE_DESCRIPTION,
-    sameAs: ["https://www.linkedin.com/company/zoombridge-research/"],
+    sameAs: ["https://www.linkedin.com/company/zoombridge-researchs/home/"],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
