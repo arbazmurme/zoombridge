@@ -279,6 +279,17 @@ export function Footer() {
           <p>{SITE_INFO.copyright}</p>
 
           <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={SITE_INFO.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ZoomBridge Research on LinkedIn"
+              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-md border border-white/10 px-2.5 py-1 text-xs text-slate-300 transition hover:border-[#22D3EE]/50 hover:text-white"
+            >
+              <LinkedInIcon className="h-3.5 w-3.5 text-[#22D3EE]" />
+              <span>LinkedIn</span>
+            </a>
+
             <button
               type="button"
               onClick={openPreferences}
