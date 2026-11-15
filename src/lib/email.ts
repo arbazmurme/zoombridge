@@ -11,11 +11,13 @@ function escapeHtml(value: string): string {
 
 function getResendConfig() {
   const apiKey = process.env.RESEND_API_KEY?.trim();
+  // If user configured a verified custom domain, use it; otherwise fallback to Resend's active sandbox sender
   const from =
     process.env.RESEND_FROM_EMAIL?.trim() ||
-    "ZoomBridge Research <noreply@wearezbr.com>";
+    "ZoomBridge Research <onboarding@resend.dev>";
   const salesTo =
-    process.env.SALES_NOTIFICATION_EMAIL?.trim() || "sales@wearezbr.com";
+    process.env.SALES_NOTIFICATION_EMAIL?.trim() ||
+    "arbazmurme.work@gmail.com";
 
   return { apiKey, from, salesTo };
 }
@@ -38,52 +40,90 @@ export async function sendStrategyCallEmails(data: {
   const resend = new Resend(apiKey);
 
   try {
-    const salesEmail = await resend.emails.send({
-      from,
+    // 1. Primary Lead Notification to Sales Desk
+    let activeFrom = from;
+    let salesEmail = await resend.emails.send({
+      from: activeFrom,
       to: [salesTo],
       replyTo: data.workEmail,
-      subject: `Strategy Call Request: ${data.company} (${data.fullName})`,
+      subject: `🎯 New Strategy Call Request: ${data.company} (${data.fullName})`,
       html: `
-        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;">
-          <h2 style="color:#0A1628;">New Strategy Call Request</h2>
+        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+          <h2 style="color:#0A1628;border-bottom:2px solid #00D4FF;padding-bottom:8px;">New Strategy Call Request</h2>
           <p><strong>Full Name:</strong> ${escapeHtml(data.fullName)}</p>
-          <p><strong>Work Email:</strong> ${escapeHtml(data.workEmail)}</p>
+          <p><strong>Work Email:</strong> <a href="mailto:${escapeHtml(data.workEmail)}">${escapeHtml(data.workEmail)}</a></p>
           <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
-          <p><strong>Pipeline Goal:</strong></p>
-          <p style="background:#F8FAFC;padding:12px;border-radius:8px;border:1px solid #E2E8F0;">${escapeHtml(
-            data.pipelineGoal
-          )}</p>
+          <p><strong>Pipeline Goal / Target:</strong></p>
+          <div style="background:#F8FAFC;padding:14px;border-radius:8px;border:1px solid #E2E8F0;font-size:14px;">
+            ${escapeHtml(data.pipelineGoal)}
+          </div>
+          <p style="margin-top:20px;font-size:12px;color:#64748B;">
+            Sent from ZoomBridge Research Web Platform • Reply directly to this email to reach ${escapeHtml(data.fullName)}.
+          </p>
         </div>
       `,
     });
 
+    // If custom domain is not yet verified in Resend, automatically fallback to onboarding@resend.dev
+    if (salesEmail.error && salesEmail.error.message?.includes("domain is not verified")) {
+      console.warn("[Resend Warning] Domain not verified, retrying with onboarding@resend.dev...");
+      activeFrom = "ZoomBridge Research <onboarding@resend.dev>";
+      salesEmail = await resend.emails.send({
+        from: activeFrom,
+        to: [salesTo],
+        replyTo: data.workEmail,
+        subject: `🎯 New Strategy Call Request: ${data.company} (${data.fullName})`,
+        html: `
+          <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+            <h2 style="color:#0A1628;border-bottom:2px solid #00D4FF;padding-bottom:8px;">New Strategy Call Request</h2>
+            <p><strong>Full Name:</strong> ${escapeHtml(data.fullName)}</p>
+            <p><strong>Work Email:</strong> <a href="mailto:${escapeHtml(data.workEmail)}">${escapeHtml(data.workEmail)}</a></p>
+            <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
+            <p><strong>Pipeline Goal / Target:</strong></p>
+            <div style="background:#F8FAFC;padding:14px;border-radius:8px;border:1px solid #E2E8F0;font-size:14px;">
+              ${escapeHtml(data.pipelineGoal)}
+            </div>
+            <p style="margin-top:20px;font-size:12px;color:#64748B;">
+              Sent from ZoomBridge Research Web Platform • Reply directly to this email to reach ${escapeHtml(data.fullName)}.
+            </p>
+          </div>
+        `,
+      });
+    }
+
     if (salesEmail.error) {
+      console.error("[Resend Error - Sales Lead]:", salesEmail.error);
       return {
         ok: false,
-        error: "Unable to deliver your request right now. Please email sales@wearezbr.com.",
+        error: salesEmail.error.message || "Unable to deliver your request right now. Please email sales@wearezbr.com.",
       };
     }
 
-    // Send acknowledgement email to requester
-    await resend.emails.send({
-      from,
-      to: [data.workEmail],
-      replyTo: salesTo,
-      subject: "ZoomBridge Research — Strategy Call Request Received",
-      html: `
-        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;">
-          <h2 style="color:#0A1628;">Thank you, ${escapeHtml(data.fullName)}.</h2>
-          <p>We have received your strategy call request for <strong>${escapeHtml(
-            data.company
-          )}</strong>.</p>
-          <p>A specialist from ZoomBridge Research will respond within one business day (&lt; 24h) to confirm your session and discuss sample data for your Ideal Customer Profile.</p>
-          <p style="margin-top:24px;color:#475569;font-size:13px;">ZoomBridge Research • sales@wearezbr.com • wearezbr.com</p>
-        </div>
-      `,
-    });
+    // 2. Client Auto-Acknowledgment (Non-blocking: if Resend sandbox restricts third-party recipients, don't fail the lead)
+    try {
+      await resend.emails.send({
+        from: activeFrom,
+        to: [data.workEmail],
+        replyTo: salesTo,
+        subject: "ZoomBridge Research — Strategy Call Request Received",
+        html: `
+          <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+            <h2 style="color:#0A1628;">Thank you, ${escapeHtml(data.fullName)}.</h2>
+            <p>We have received your strategy call request for <strong>${escapeHtml(data.company)}</strong>.</p>
+            <p>A specialist from ZoomBridge Research will respond within one business day (&lt; 24h) to confirm your session and discuss sample data for your Ideal Customer Profile.</p>
+            <hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0;" />
+            <p style="color:#64748B;font-size:13px;">ZoomBridge Research • <a href="mailto:${salesTo}">${salesTo}</a> • wearezbr.com</p>
+          </div>
+        `,
+      });
+    } catch (clientEmailErr) {
+      console.warn("[Resend Notice] Client auto-acknowledgment skipped (sandbox mode):", clientEmailErr);
+    }
 
     return { ok: true };
-  } catch {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Email service error";
+    console.error("[Email Exception]:", message);
     return {
       ok: false,
       error: "Email service error while submitting your request. Please try again or email sales@wearezbr.com.",
@@ -111,23 +151,22 @@ export async function sendContactEmails(data: {
   const resend = new Resend(apiKey);
 
   try {
-    const salesEmail = await resend.emails.send({
-      from,
+    let activeFrom = from;
+    let salesEmail = await resend.emails.send({
+      from: activeFrom,
       to: [salesTo],
       replyTo: data.email,
-      subject: `Contact Inquiry${data.intent ? ` [${data.intent}]` : ""}: ${
-        data.company
-      } (${data.name})`,
+      subject: `📩 Contact Inquiry${data.intent ? ` [${data.intent}]` : ""}: ${data.company} (${data.name})`,
       html: `
-        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;">
-          <h2 style="color:#0A1628;">New Contact Inquiry</h2>
+        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+          <h2 style="color:#0A1628;border-bottom:2px solid #00D4FF;padding-bottom:8px;">New Contact Inquiry</h2>
           ${
             data.intent
               ? `<p><strong>Intent:</strong> ${escapeHtml(data.intent)}</p>`
               : ""
           }
           <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></p>
           <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
           ${
             data.phone
@@ -135,42 +174,86 @@ export async function sendContactEmails(data: {
               : ""
           }
           <p><strong>Message:</strong></p>
-          <p style="background:#F8FAFC;padding:12px;border-radius:8px;border:1px solid #E2E8F0;">${escapeHtml(
-            data.message
-          )}</p>
+          <div style="background:#F8FAFC;padding:14px;border-radius:8px;border:1px solid #E2E8F0;font-size:14px;">
+            ${escapeHtml(data.message)}
+          </div>
+          <p style="margin-top:20px;font-size:12px;color:#64748B;">
+            Sent from ZoomBridge Research Web Platform • Reply directly to this email to reach ${escapeHtml(data.name)}.
+          </p>
         </div>
       `,
     });
 
+    if (salesEmail.error && salesEmail.error.message?.includes("domain is not verified")) {
+      console.warn("[Resend Warning] Domain not verified, retrying with onboarding@resend.dev...");
+      activeFrom = "ZoomBridge Research <onboarding@resend.dev>";
+      salesEmail = await resend.emails.send({
+        from: activeFrom,
+        to: [salesTo],
+        replyTo: data.email,
+        subject: `📩 Contact Inquiry${data.intent ? ` [${data.intent}]` : ""}: ${data.company} (${data.name})`,
+        html: `
+          <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+            <h2 style="color:#0A1628;border-bottom:2px solid #00D4FF;padding-bottom:8px;">New Contact Inquiry</h2>
+            ${
+              data.intent
+                ? `<p><strong>Intent:</strong> ${escapeHtml(data.intent)}</p>`
+                : ""
+            }
+            <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
+            <p><strong>Email:</strong> <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></p>
+            <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
+            ${
+              data.phone
+                ? `<p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>`
+                : ""
+            }
+            <p><strong>Message:</strong></p>
+            <div style="background:#F8FAFC;padding:14px;border-radius:8px;border:1px solid #E2E8F0;font-size:14px;">
+              ${escapeHtml(data.message)}
+            </div>
+            <p style="margin-top:20px;font-size:12px;color:#64748B;">
+              Sent from ZoomBridge Research Web Platform • Reply directly to this email to reach ${escapeHtml(data.name)}.
+            </p>
+          </div>
+        `,
+      });
+    }
+
     if (salesEmail.error) {
+      console.error("[Resend Error - Contact Lead]:", salesEmail.error);
       return {
         ok: false,
-        error: "Unable to send your message right now. Please email sales@wearezbr.com.",
+        error: salesEmail.error.message || "Unable to send your message right now. Please email sales@wearezbr.com.",
       };
     }
 
-    await resend.emails.send({
-      from,
-      to: [data.email],
-      replyTo: salesTo,
-      subject: "ZoomBridge Research — Inquiry Received",
-      html: `
-        <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;">
-          <h2 style="color:#0A1628;">We received your message, ${escapeHtml(
-            data.name
-          )}.</h2>
-          <p>Thank you for contacting ZoomBridge Research. Our team reviews every inquiry and responds within one business day.</p>
-          <p style="margin-top:24px;color:#475569;font-size:13px;">ZoomBridge Research • sales@wearezbr.com • wearezbr.com</p>
-        </div>
-      `,
-    });
+    try {
+      await resend.emails.send({
+        from: activeFrom,
+        to: [data.email],
+        replyTo: salesTo,
+        subject: "ZoomBridge Research — Inquiry Received",
+        html: `
+          <div style="font-family:Inter,Arial,sans-serif;color:#0F172A;max-width:600px;line-height:1.6;">
+            <h2 style="color:#0A1628;">We received your message, ${escapeHtml(data.name)}.</h2>
+            <p>Thank you for contacting ZoomBridge Research. Our team reviews every inquiry and responds within one business day.</p>
+            <hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0;" />
+            <p style="color:#64748B;font-size:13px;">ZoomBridge Research • <a href="mailto:${salesTo}">${salesTo}</a> • wearezbr.com</p>
+          </div>
+        `,
+      });
+    } catch (clientEmailErr) {
+      console.warn("[Resend Notice] Client auto-acknowledgment skipped (sandbox mode):", clientEmailErr);
+    }
 
     return { ok: true };
-  } catch {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Email service error";
+    console.error("[Email Exception]:", message);
     return {
       ok: false,
       error: "Email service error while sending your message. Please try again or email sales@wearezbr.com.",
     };
   }
 }
-
